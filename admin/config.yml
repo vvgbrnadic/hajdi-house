@@ -1,0 +1,19 @@
+backend:
+  name: git-gateway
+  branch: main
+media_folder: "images"
+public_folder: "/images"
+collections:
+  - name: "settings"
+    label: "Postavke"
+    files:
+      - name: "config"
+        label: "Hajdi Config"
+        file: "public/js/config.json"
+        fields:
+          - {label: "Hero naslov", name: "hero_title", widget: "string", default: "Hajdi House"}
+          - {label: "Hero slika", name: "hero_image", widget: "image"}
+          - {label: "Blur", name: "hero_blur", widget: "number", default: 6, min: 0, max: 20}
+          - {label: "Adresa", name: "address", widget: "string", default: "Noršić Selo 52B"}
+          - {label: "Lat", name: "lat", widget: "string", default: "45.783450"}
+          - {label: "Lng", name: "lng", widget: "string", default: "15.568973"}
