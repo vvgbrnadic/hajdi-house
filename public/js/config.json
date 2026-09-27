@@ -1,11 +1,11 @@
 {
-  "hero_title": "Hajdi House - Kuća na brdu",
-  "hero_image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1920",
-  "hero_blur": 6,
-  "lat": "45.783450",
-  "lng": "15.568973",
-  "address": "Noršić Selo 52B, 10430 Samobor",
-  "background": "#f2ece0",
   "gold": "#b8952a",
-  "footer": "© 2026 Hajdi House — Noršić Selo 52B (SEO red maknut)"
+  "lng": "15.568973",
+  "hero_blur": 6,
+  "background": "#f2ece0",
+  "hero_title": "Hajdi House - Kuća na brdu",
+  "address": "Noršić Selo 52B, Noršić Selo",
+  "hero_image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1920",
+  "footer": "© 2026 Hajdi House — Noršić Selo 52B (SEO red maknut)",
+  "lat": "45.783450"
 }
