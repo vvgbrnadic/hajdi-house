@@ -1,17 +1,1 @@
-backend:
-  name: git-gateway
-  branch: main
-publish_mode: editorial_workflow
-media_folder: "images"
-public_folder: "/images"
-collections:
-    - name: "settings"
-    label: "Hajdi House"
-    files:
-            - file: "public/js/config.json"
-        label: "Konfiguracija"
-        name: "config"
-        fields:
-                    - {label: "Hero naslov", name: "hero_title", widget: "string"}
-                    - {label: "Hero slika", name: "hero_image", widget: "image"}
-                    - {label: "Adresa", name: "address", widget: "string"}
+{backend: {name: git-gateway, branch: main}, publish_mode: editorial_workflow, media_folder: "images", public_folder: "/images", collections: [{name: "settings", label: "Postavke", files: [{file: "public/js/config.json", label: "Konfiguracija", name: "config", fields: [{label: "Hero naslov", name: "hero_title", widget: "string"}, {label: "Hero slika", name: "hero_image", widget: "image"}, {label: "Adresa", name: "address", widget: "string"}]}]}]}
