@@ -280,5 +280,32 @@
       "Završno čišćenje": "Končno čiščenje",
       "Minimalno 2 noći": "Minimalno 2 noči"
     }
-  }
+  },
+  "features": [
+    {
+      "id": "1",
+      "title": "Sve za sporiji dan.",
+      "desc": "Kuća je opremljena za boravak bez žurbe — knjige, društvene igre, deka za terasu.",
+      "icon": "books"
+    },
+    {
+      "id": "2",
+      "title": "Vatra cijelu noć",
+      "desc": "Peć na drva koja grije i daje atmosferu — drva su uključena u cijenu.",
+      "icon": "flame"
+    },
+    {
+      "id": "3",
+      "title": "Kava iz džezve",
+      "desc": "Kava aparat, džezva i pogled na šumu — jutarnji ritual koji ne preskačeš.",
+      "icon": "coffee"
+    },
+    {
+      "id": "4",
+      "title": "Šuma na 20 koraka",
+      "desc": "Iza kuće počinje šuma — staze za šetnju, gljive, mir i tišina.",
+      "icon": "trees"
+    }
+  ],
+  "customSections": []
 }
