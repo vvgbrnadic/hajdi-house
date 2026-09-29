@@ -1,10 +1,8 @@
 <!doctype html>
 <html lang="hr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hajdi House — Admin (Secure)</title>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hajdi House — FULL Admin Secure</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
 :root{--bg:#f2ece0;--gold:#b8952a;--dark:#2c2a24;--creamDark:#e8dfc8}
@@ -15,13 +13,11 @@ body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--dark)
 </head>
 <body>
 <div id="root"></div>
-
 <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-<script type="text/babel" data-type="module">
-// Mock lucide icons as simple components to avoid import issues
+<script type="text/babel" data-presets="react,typescript">
+// Mock icons
 const lucideMock = (emoji) => (props) => React.createElement('span', {...props, style:{...props.style, display:'inline-block'}}, emoji);
 const Mountain = lucideMock('⛰');
 const Flame = lucideMock('🔥');
@@ -904,7 +900,6 @@ export default function App() {
 }
 
 
-// Render
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(React.createElement(App));
 </script>
