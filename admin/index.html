@@ -373,7 +373,18 @@ function AdminApp(){
       if(saved){ try{ setConfig(JSON.parse(saved)); return; }catch{} }
       setConfig(DEFAULT_CONFIG);
     })();
-    const sg=localStorage.getItem("hajdi_git"); if(sg){ try{ setGit(JSON.parse(sg)); }catch{} }
+    const sg=localStorage.getItem("hajdi_git");
+    if(sg){
+      try{
+        const parsed = JSON.parse(sg);
+        setGit(prev=>({
+          ...prev,
+          ...parsed,
+          pathImages: parsed.pathImages || "public/images/gallery",
+          pathConfig: parsed.pathConfig || "public/js/config.json"
+        }));
+      }catch{}
+    }
   },[]);
 
   const saveLocal=()=>{ localStorage.setItem("hajdi_config", JSON.stringify(config)); setLog("✅ Lokalno spremljeno"); setTimeout(()=>setLog(""),2000); };
@@ -395,14 +406,15 @@ function AdminApp(){
   };
 
   const uploadImageToGitHub=async(file)=>{
-    if(!git.token){ setLog("❌ Prvo unesi GitHub token u GIT tab da upload radi na sajtu! Koristim base64 privremeno."); return null; }
-    setLog(`Uploadam ${file.name} na GitHub...`);
+    const imagesPath = git.pathImages || "public/images/gallery";
+    if(!git.token){ setLog("❌ Prvo unesi GitHub token u GIT tab da upload radi na sajtu! Koristim base64 privremeno. Path fallback: "+imagesPath); return null; }
+    setLog(`Uploadam ${file.name} na GitHub u ${imagesPath}/...`);
     try{
       const base64 = await new Promise((res,rej)=>{
         const r=new FileReader(); r.onload=()=>{ const s=r.result.split(",")[1]; res(s); }; r.onerror=rej; r.readAsDataURL(file);
       });
       const safeName = file.name.replace(/[^a-z0-9.-]/gi,"-").toLowerCase();
-      const path = `${git.pathImages}/${Date.now()}-${safeName}`;
+      const path = `${imagesPath}/${Date.now()}-${safeName}`;
       let sha=null;
       try{ const r=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${path}?ref=${git.branch}`, {headers:{Authorization:`token ${git.token}`}}); if(r.ok){ const j=await r.json(); sha=j.sha; } }catch{}
       const body={message:`upload image ${safeName}`, content: base64, branch:git.branch, ...(sha?{sha}:{})};
@@ -410,9 +422,9 @@ function AdminApp(){
       const j=await res.json();
       if(res.ok){
         const rawUrl = `https://raw.githubusercontent.com/${git.owner}/${git.repo}/${git.branch}/${path}`;
-        setLog(`✅ Slika uploadana na GitHub: ${rawUrl}`);
+        setLog(`✅ Slika uploadana na GitHub: ${rawUrl} — sad commitaš config da se vidi na sajtu`);
         return rawUrl;
-      } else { setLog("❌ Upload greška: "+JSON.stringify(j).slice(0,600)); return null; }
+      } else { setLog("❌ Upload greška: "+JSON.stringify(j).slice(0,600)+` — provjeri da folder ${imagesPath} postoji i token ima repo scope`); return null; }
     }catch(e){ setLog("❌ Upload greška: "+e.message); return null; }
   };
 
