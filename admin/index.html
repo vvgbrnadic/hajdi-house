@@ -1,9 +1,8 @@
 <!doctype html>
 <html lang="hr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hajdi House — Admin Lijepi</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hajdi House — FULL CMS Admin</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -12,12 +11,12 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);color:var(--dark
 .serif{font-family:"Instrument Serif",serif}
 .card{background:#fff;border-radius:20px;padding:20px;box-shadow:0 8px 30px rgba(44,42,36,.06);border:1px solid var(--creamDark)}
 .input{width:100%;height:44px;border-radius:12px;border:1px solid var(--creamDark);background:var(--cream);padding:0 14px;font-size:13px}
-.input:focus{outline:none;border-color:var(--gold)}
 .textarea{width:100%;min-height:90px;border-radius:12px;border:1px solid var(--creamDark);background:var(--cream);padding:12px 14px;font-size:13px;resize:vertical}
-.tab{height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--creamDark);background:#fff;font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;transition:.15s}
+.tab{height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--creamDark);background:#fff;font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px}
 .tab.active{background:var(--dark);color:#fff;border-color:var(--dark)}
-.upload-area{border:2px dashed var(--creamDark);border-radius:16px;padding:24px;text-align:center;background:var(--cream);cursor:pointer;transition:.2s}
+.upload-area{border:2px dashed var(--creamDark);border-radius:16px;padding:20px;text-align:center;background:var(--cream);cursor:pointer}
 .upload-area:hover{border-color:var(--gold);background:#fff}
+.badge{font-size:10px;letter-spacing:1px;text-transform:uppercase;opacity:.6;font-weight:700}
 </style>
 </head>
 <body>
@@ -28,7 +27,6 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);color:var(--dark
 <script type="text/babel" data-presets="react">
 const ADMIN_USER = "admin";
 const ADMIN_PASS = "Hajdi2026!";
-
 const DEFAULT_CONFIG = {
   "site": {
     "name": "Hajdi House",
@@ -311,32 +309,48 @@ const DEFAULT_CONFIG = {
       "Završno čišćenje": "Končno čiščenje",
       "Minimalno 2 noći": "Minimalno 2 noči"
     }
-  }
+  },
+  "features": [
+    {
+      "id": "1",
+      "title": "Sve za sporiji dan.",
+      "desc": "Kuća je opremljena za boravak bez žurbe — knjige, društvene igre, deka za terasu.",
+      "icon": "books"
+    },
+    {
+      "id": "2",
+      "title": "Vatra cijelu noć",
+      "desc": "Peć na drva koja grije i daje atmosferu — drva su uključena u cijenu.",
+      "icon": "flame"
+    },
+    {
+      "id": "3",
+      "title": "Kava iz džezve",
+      "desc": "Kava aparat, džezva i pogled na šumu — jutarnji ritual koji ne preskačeš.",
+      "icon": "coffee"
+    },
+    {
+      "id": "4",
+      "title": "Šuma na 20 koraka",
+      "desc": "Iza kuće počinje šuma — staze za šetnju, gljive, mir i tišina.",
+      "icon": "trees"
+    }
+  ],
+  "customSections": []
 };
 
 function Login({onLogin}){
-  const [u,setU]=React.useState("");
-  const [p,setP]=React.useState("");
-  const [err,setErr]=React.useState("");
-  const submit=(e)=>{
-    e.preventDefault();
-    if(u===ADMIN_USER && p===ADMIN_PASS){
-      localStorage.setItem("hajdi_admin_auth","1");
-      onLogin();
-    }else setErr("Krivi username ili lozinka — probaj admin / Hajdi2026!");
-  };
+  const [u,setU]=React.useState(""); const [p,setP]=React.useState(""); const [err,setErr]=React.useState("");
+  const submit=(e)=>{ e.preventDefault(); if(u===ADMIN_USER && p===ADMIN_PASS){ localStorage.setItem("hajdi_admin_auth","1"); onLogin(); } else setErr("Krivi login"); };
   return (
-    <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",padding:20,background:"#f2ece0"}}>
-      <form onSubmit={submit} className="card" style={{maxWidth:400,width:"100%",padding:36}}>
-        <div className="serif" style={{fontSize:32,lineHeight:1}}>Hajdi House</div>
-        <div style={{fontSize:12,opacity:.6,marginTop:6,marginBottom:28,letterSpacing:1,textTransform:"uppercase"}}>Admin — zaštićeno • full lijepi</div>
-        <label style={{fontSize:10,opacity:.6,fontWeight:700,letterSpacing:1,textTransform:"uppercase",display:"block",marginBottom:6}}>Username</label>
-        <input value={u} onChange={e=>setU(e.target.value)} placeholder="admin" className="input" style={{marginBottom:16}}/>
-        <label style={{fontSize:10,opacity:.6,fontWeight:700,letterSpacing:1,textTransform:"uppercase",display:"block",marginBottom:6}}>Password</label>
-        <input type="password" value={p} onChange={e=>setP(e.target.value)} placeholder="••••••••" className="input" style={{marginBottom:14}}/>
-        {err && <div style={{color:"#b91c1c",fontSize:11,marginBottom:14,background:"#fef2f2",padding:8,borderRadius:8}}>{err}</div>}
-        <button type="submit" style={{width:"100%",height:46,borderRadius:999,background:"#2c2a24",color:"#fff",fontSize:13,fontWeight:600,letterSpacing:.3}}>Uđi u admin</button>
-        <div style={{fontSize:10,opacity:.45,marginTop:16,lineHeight:1.5}}>Default login: admin / Hajdi2026!<br/>Promijeni u ovom fileu linija 27-28</div>
+    <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
+      <form onSubmit={submit} className="card" style={{maxWidth:380,width:"100%",padding:32}}>
+        <div className="serif" style={{fontSize:28}}>Hajdi House</div>
+        <div style={{fontSize:11,opacity:.6,marginBottom:24,letterSpacing:1,textTransform:"uppercase"}}>FULL CMS • login admin / Hajdi2026!</div>
+        <div className="badge">Username</div><input value={u} onChange={e=>setU(e.target.value)} className="input" style={{marginBottom:12}}/>
+        <div className="badge">Password</div><input type="password" value={p} onChange={e=>setP(e.target.value)} className="input" style={{marginBottom:12}}/>
+        {err && <div style={{color:"#b91c1c",fontSize:11,marginBottom:12}}>{err}</div>}
+        <button type="submit" style={{width:"100%",height:44,borderRadius:999,background:"#2c2a24",color:"#fff"}}>Uđi</button>
       </form>
     </div>
   );
@@ -344,186 +358,211 @@ function Login({onLogin}){
 
 function AdminApp(){
   const [config,setConfig]=React.useState(null);
-  const [tab,setTab]=React.useState("gallery");
+  const [tab,setTab]=React.useState("features");
   const [log,setLog]=React.useState("");
   const [saving,setSaving]=React.useState(false);
-  const [git,setGit]=React.useState({owner:"vvgbrnadic",repo:"hajdi-house",branch:"main",token:"",pathConfig:"public/js/config.json"});
-  const fileInputRef = React.useRef(null);
-  const heroFileRef = React.useRef(null);
+  const [git,setGit]=React.useState({owner:"vvgbrnadic",repo:"hajdi-house",branch:"main",token:"",pathConfig:"public/js/config.json", pathImages:"public/images/gallery"});
+  const fileRef=React.useRef(null);
+  const heroRef=React.useRef(null);
 
   React.useEffect(()=>{
-    const paths = ["../public/js/config.json","./public/js/config.json","/public/js/config.json","public/js/config.json"];
-    (async ()=>{
-      for(const p of paths){
-        try{
-          const r = await fetch(p);
-          if(r.ok){ const j=await r.json(); setConfig(j); return; }
-        }catch{}
-      }
-      const saved = localStorage.getItem("hajdi_config");
+    const paths=["../public/js/config.json","./public/js/config.json","/public/js/config.json","public/js/config.json"];
+    (async()=>{
+      for(const p of paths){ try{ const r=await fetch(p); if(r.ok){ const j=await r.json(); setConfig(j); return; } }catch{} }
+      const saved=localStorage.getItem("hajdi_config");
       if(saved){ try{ setConfig(JSON.parse(saved)); return; }catch{} }
       setConfig(DEFAULT_CONFIG);
     })();
-    const savedGit = localStorage.getItem("hajdi_git");
-    if(savedGit){ try{ setGit(JSON.parse(savedGit)); }catch{} }
+    const sg=localStorage.getItem("hajdi_git"); if(sg){ try{ setGit(JSON.parse(sg)); }catch{} }
   },[]);
 
-  const saveLocal=()=>{
-    localStorage.setItem("hajdi_config", JSON.stringify(config));
-    setLog("✅ Spremljeno lokalno");
-    setTimeout(()=>setLog(""),2500);
-  };
+  const saveLocal=()=>{ localStorage.setItem("hajdi_config", JSON.stringify(config)); setLog("✅ Lokalno spremljeno"); setTimeout(()=>setLog(""),2000); };
 
   const commitGit=async()=>{
-    if(!git.token){ setLog("❌ Unesi GitHub token ghp_... u GIT tab"); return; }
-    setSaving(true);
-    setLog("Commitam na GitHub...");
+    if(!git.token){ setLog("❌ Unesi GitHub token u GIT tab"); return; }
+    setSaving(true); setLog("Commitam config.json...");
     try{
-      const content = btoa(unescape(encodeURIComponent(JSON.stringify(config,null,2))));
+      const content=btoa(unescape(encodeURIComponent(JSON.stringify(config,null,2))));
       let sha=null;
-      try{
-        const res = await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${git.pathConfig}?ref=${git.branch}`, {headers:{Authorization:`token ${git.token}`}});
-        if(res.ok){ const j=await res.json(); sha=j.sha; }
-      }catch{}
-      const body = {message:`ADMIN lijepi update ${new Date().toISOString()}`, content, branch: git.branch, ...(sha?{sha}:{})};
-      const res2 = await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${git.pathConfig}`, {method:"PUT", headers:{Authorization:`token ${git.token}`, "Content-Type":"application/json"}, body: JSON.stringify(body)});
-      const j2 = await res2.json();
-      if(res2.ok){ setLog("✅ Commit uspješan! Netlify deploya za 60s. SHA: "+(j2.commit?.sha?.slice(0,7)||"ok")); localStorage.setItem("hajdi_git", JSON.stringify(git)); }
-      else setLog("❌ Greška: "+JSON.stringify(j2).slice(0,600));
+      try{ const r=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${git.pathConfig}?ref=${git.branch}`, {headers:{Authorization:`token ${git.token}`}}); if(r.ok){ const j=await r.json(); sha=j.sha; } }catch{}
+      const body={message:`ADMIN FULL CMS ${new Date().toISOString()}`, content, branch:git.branch, ...(sha?{sha}:{})};
+      const res=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${git.pathConfig}`, {method:"PUT", headers:{Authorization:`token ${git.token}`, "Content-Type":"application/json"}, body: JSON.stringify(body)});
+      const j=await res.json();
+      if(res.ok){ setLog(`✅ Commit uspješan! SHA ${j.commit?.sha?.slice(0,7)||""} — Netlify za 60s`); localStorage.setItem("hajdi_git", JSON.stringify(git)); }
+      else setLog("❌ "+JSON.stringify(j).slice(0,800));
     }catch(e){ setLog("❌ "+e.message); }
     setSaving(false);
   };
 
-  const handleGalleryUpload=(e)=>{
-    const files = e.target.files;
-    if(!files) return;
-    Array.from(files).forEach(file=>{
-      const reader = new FileReader();
-      reader.onload=(ev)=>{
-        const dataUrl = ev.target.result;
+  const uploadImageToGitHub=async(file)=>{
+    if(!git.token){ setLog("❌ Prvo unesi GitHub token u GIT tab da upload radi na sajtu! Koristim base64 privremeno."); return null; }
+    setLog(`Uploadam ${file.name} na GitHub...`);
+    try{
+      const base64 = await new Promise((res,rej)=>{
+        const r=new FileReader(); r.onload=()=>{ const s=r.result.split(",")[1]; res(s); }; r.onerror=rej; r.readAsDataURL(file);
+      });
+      const safeName = file.name.replace(/[^a-z0-9.-]/gi,"-").toLowerCase();
+      const path = `${git.pathImages}/${Date.now()}-${safeName}`;
+      let sha=null;
+      try{ const r=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${path}?ref=${git.branch}`, {headers:{Authorization:`token ${git.token}`}}); if(r.ok){ const j=await r.json(); sha=j.sha; } }catch{}
+      const body={message:`upload image ${safeName}`, content: base64, branch:git.branch, ...(sha?{sha}:{})};
+      const res=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${path}`, {method:"PUT", headers:{Authorization:`token ${git.token}`, "Content-Type":"application/json"}, body: JSON.stringify(body)});
+      const j=await res.json();
+      if(res.ok){
+        const rawUrl = `https://raw.githubusercontent.com/${git.owner}/${git.repo}/${git.branch}/${path}`;
+        setLog(`✅ Slika uploadana na GitHub: ${rawUrl}`);
+        return rawUrl;
+      } else { setLog("❌ Upload greška: "+JSON.stringify(j).slice(0,600)); return null; }
+    }catch(e){ setLog("❌ Upload greška: "+e.message); return null; }
+  };
+
+  const handleGalleryUpload=async(e)=>{
+    const files=e.target.files; if(!files) return;
+    for(const file of Array.from(files)){
+      const url = await uploadImageToGitHub(file);
+      if(url){
+        setConfig(prev=>({...prev, gallery:[...prev.gallery, url]}));
+      } else {
+        // fallback base64 preview
+        const dataUrl = await new Promise(res=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.readAsDataURL(file); });
         setConfig(prev=>({...prev, gallery:[...prev.gallery, dataUrl]}));
-        setLog(`✅ Dodana slika ${file.name} — spremi lokalno pa commitaj`);
-      };
-      reader.readAsDataURL(file);
-    });
+      }
+    }
   };
 
-  const handleHeroUpload=(e)=>{
-    const file = e.target.files?.[0];
-    if(!file) return;
-    const reader = new FileReader();
-    reader.onload=(ev)=>{
-      setConfig(prev=>({...prev, hero:{...prev.hero, image: ev.target.result}}));
-      setLog(`✅ Hero slika ${file.name} dodana`);
-    };
-    reader.readAsDataURL(file);
+  const handleHeroUpload=async(e)=>{
+    const file=e.target.files?.[0]; if(!file) return;
+    const url = await uploadImageToGitHub(file);
+    if(url){ setConfig(prev=>({...prev, hero:{...prev.hero, image:url}})); }
+    else {
+      const dataUrl=await new Promise(res=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.readAsDataURL(file); });
+      setConfig(prev=>({...prev, hero:{...prev.hero, image:dataUrl}}));
+    }
   };
 
-  if(!config) return <div style={{padding:40}} className="serif">Učitavam Hajdi House config — 100€ / 80€ / 30€...</div>;
+  if(!config) return <div style={{padding:40}} className="serif">Učitavam FULL CMS...</div>;
 
-  const tabs = [
-    {id:"hero", label:"🏠 Hero", desc:"Naslov, badge Žumberak"},
-    {id:"about", label:"📖 O kući", desc:"Tekstovi"},
-    {id:"stats", label:"📊 Stats", desc:"2 sobe, 1 kupaona..."},
-    {id:"amenities", label:"✨ Sadržaj", desc:"20 stavki"},
-    {id:"gallery", label:"🖼 Galerija", desc:"Upload sa kompa!"},
-    {id:"location", label:"📍 Lokacija", desc:"Noršić Selo"},
-    {id:"pricing", label:"💶 Cjenik", desc:"100€/80€/30€ min2"},
-    {id:"git", label:"🐙 GIT", desc:"Deploy"},
+  const tabs=[
+    {id:"features", label:"⭐ Highlights", desc:"Sporiji dan, Vatra..."},
+    {id:"hero", label:"🏠 Hero"},
+    {id:"about", label:"📖 O kući"},
+    {id:"stats", label:"📊 Stats"},
+    {id:"amenities", label:"✨ Sadržaj"},
+    {id:"gallery", label:"🖼 Galerija + Upload"},
+    {id:"location", label:"📍 Lokacija"},
+    {id:"pricing", label:"💶 Cjenik 100/80/30"},
+    {id:"custom", label:"➕ Nove sekcije"},
+    {id:"footer", label:"🔗 Footer"},
+    {id:"site", label:"⚙️ Site/Boje/Jezici"},
+    {id:"git", label:"🐙 GIT"},
   ];
 
   return (
     <div style={{minHeight:"100vh",background:"#f2ece0",display:"flex"}}>
-      {/* SIDEBAR */}
-      <div style={{width:260,background:"#fff",borderRight:"1px solid #e8dfc8",padding:20,position:"sticky",top:0,height:"100vh",overflow:"auto"}} className="hidden md:block">
-        <div className="serif" style={{fontSize:22,marginBottom:4}}>Hajdi House</div>
-        <div style={{fontSize:10,opacity:.5,letterSpacing:1,textTransform:"uppercase",marginBottom:24}}>Admin • Lijepi • Secure</div>
-        <div style={{display:"grid",gap:8}}>
-          {tabs.map(t=>(
-            <button key={t.id} onClick={()=>setTab(t.id)} className={`tab ${tab===t.id?"active":""}`} style={{justifyContent:"space-between",height:44}}>
-              <span>{t.label}</span><span style={{fontSize:10,opacity:.6}}>{t.desc}</span>
-            </button>
-          ))}
+      <div style={{width:270,background:"#fff",borderRight:"1px solid #e8dfc8",padding:18,position:"sticky",top:0,height:"100vh",overflow:"auto"}} className="hidden md:block">
+        <div className="serif" style={{fontSize:22}}>Hajdi CMS</div>
+        <div style={{fontSize:10,opacity:.5,letterSpacing:1,textTransform:"uppercase",marginBottom:18}}>FULL • sve se može mijenjati</div>
+        <div style={{display:"grid",gap:6}}>
+          {tabs.map(t=><button key={t.id} onClick={()=>setTab(t.id)} className={`tab ${tab===t.id?"active":""}`} style={{justifyContent:"space-between",height:42}}><span>{t.label}</span><span style={{fontSize:9,opacity:.6}}>{t.desc||""}</span></button>)}
         </div>
-        <div style={{marginTop:24,padding:12,background:"#fcfaf5",borderRadius:12,border:"1px solid #e8dfc8"}}>
-          <div style={{fontSize:11,fontWeight:600,marginBottom:6}}>💡 Upload sa kompa</div>
-          <div style={{fontSize:11,opacity:.7,lineHeight:1.4}}>U Galeriji klikni "Upload sa kompa" — odaberi slike sa diska. Pretvaraju se u base64 i spremaju u config. Za produkciju preporuka Cloudinary ili direkt URL.</div>
-        </div>
-        <button onClick={()=>{localStorage.removeItem("hajdi_admin_auth"); location.reload();}} style={{marginTop:16,width:"100%",height:36,borderRadius:999,background:"#f2ece0",border:"1px solid #e8dfc8",fontSize:11}}>Odjava</button>
+        <button onClick={()=>{localStorage.removeItem("hajdi_admin_auth"); location.reload();}} style={{marginTop:14,width:"100%",height:34,borderRadius:999,background:"#f2ece0",border:"1px solid #e8dfc8",fontSize:11}}>Odjava</button>
       </div>
 
-      {/* MAIN */}
       <div style={{flex:1,minWidth:0}}>
-        <div style={{background:"#fff",borderBottom:"1px solid #e8dfc8",padding:"12px 16px",display:"flex",gap:8,overflow:"auto"}} className="md:hidden">
-          {tabs.map(t=>(
-            <button key={t.id} onClick={()=>setTab(t.id)} className={`tab ${tab===t.id?"active":""}`} style={{whiteSpace:"nowrap"}}>{t.label}</button>
-          ))}
+        <div style={{background:"#fff",borderBottom:"1px solid #e8dfc8",padding:"10px 12px",display:"flex",gap:6,overflow:"auto"}} className="md:hidden">
+          {tabs.map(t=><button key={t.id} onClick={()=>setTab(t.id)} className={`tab ${tab===t.id?"active":""}`} style={{whiteSpace:"nowrap"}}>{t.label}</button>)}
         </div>
 
-        <div style={{maxWidth:900,margin:"0 auto",padding:20}}>
+        <div style={{maxWidth:950,margin:"0 auto",padding:20}}>
+
+          {tab==="features" && (
+            <div className="card">
+              <h2 className="serif" style={{fontSize:26,marginBottom:4}}>Highlights — ono što nisi našao</h2>
+              <div style={{fontSize:11,opacity:.6,marginBottom:16}}>Ovo su kartice "Sve za sporiji dan, Vatra cijelu noć, Kava iz džezve, Šuma na 20 koraka" — sad ih možeš mijenjati! Dodaj, makni, promijeni redoslijed.</div>
+              {config.features?.map((f,i)=>(
+                <div key={f.id} style={{background:"#fcfaf5",padding:14,borderRadius:14,border:"1px solid #e8dfc8",marginBottom:12,display:"grid",gap:8}}>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 120px 50px",gap:8}}>
+                    <input value={f.title} onChange={e=>{ const nf=[...config.features]; nf[i].title=e.target.value; setConfig({...config, features:nf}); }} className="input" placeholder="Sve za sporiji dan."/>
+                    <input value={f.icon} onChange={e=>{ const nf=[...config.features]; nf[i].icon=e.target.value; setConfig({...config, features:nf}); }} className="input" placeholder="icon: books/flame/coffee/trees"/>
+                    <button onClick={()=>{ const nf=config.features.filter((_,j)=>j!==i); setConfig({...config, features:nf}); }} style={{height:44,borderRadius:12,background:"#fff",border:"1px solid #e8dfc8"}}>X</button>
+                  </div>
+                  <textarea value={f.desc} onChange={e=>{ const nf=[...config.features]; nf[i].desc=e.target.value; setConfig({...config, features:nf}); }} className="textarea" placeholder="Opis kartice"/>
+                </div>
+              ))}
+              <button onClick={()=>setConfig({...config, features:[...config.features, {id:Date.now().toString(), title:"Nova kartica", desc:"Opis...", icon:"trees"}]})} style={{height:40,padding:"0 18px",borderRadius:999,background:"#2c2a24",color:"#fff",fontSize:12}}>+ Dodaj novu karticu</button>
+            </div>
+          )}
+
+          {tab==="custom" && (
+            <div className="card">
+              <h2 className="serif" style={{fontSize:26,marginBottom:4}}>Nove sekcije — builder</h2>
+              <div style={{fontSize:11,opacity:.6,marginBottom:16}}>Ovdje možeš dodati potpuno nove sekcije koje će se prikazati na sajtu ispod galerije — npr. "Pravila kuće", "Kako do nas", "Recenzije". Na glavnom sajtu treba dodati render za customSections (dam ti kod nakon).</div>
+              {config.customSections?.map((s,i)=>(
+                <div key={s.id} style={{background:"#fcfaf5",padding:14,borderRadius:14,border:"1px solid #e8dfc8",marginBottom:12,display:"grid",gap:8}}>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 50px",gap:8}}>
+                    <input value={s.title} onChange={e=>{ const ns=[...config.customSections]; ns[i].title=e.target.value; setConfig({...config, customSections:ns}); }} className="input" placeholder="Naslov sekcije"/>
+                    <input value={s.icon} onChange={e=>{ const ns=[...config.customSections]; ns[i].icon=e.target.value; setConfig({...config, customSections:ns}); }} className="input" placeholder="icon"/>
+                    <button onClick={()=>{ const ns=config.customSections.filter((_,j)=>j!==i); setConfig({...config, customSections:ns}); }} style={{height:44,borderRadius:12,background:"#fff",border:"1px solid #e8dfc8"}}>X</button>
+                  </div>
+                  <textarea value={s.content} onChange={e=>{ const ns=[...config.customSections]; ns[i].content=e.target.value; setConfig({...config, customSections:ns}); }} className="textarea" style={{minHeight:120}} placeholder="Sadržaj sekcije — može HTML"/>
+                  <input value={s.image||""} onChange={e=>{ const ns=[...config.customSections]; ns[i].image=e.target.value; setConfig({...config, customSections:ns}); }} className="input" placeholder="Slika URL (opcionalno)"/>
+                </div>
+              ))}
+              <button onClick={()=>setConfig({...config, customSections:[...(config.customSections||[]), {id:Date.now().toString(), title:"Nova sekcija", content:"Tekst...", icon:"trees", image:""}]})} style={{height:40,padding:"0 18px",borderRadius:999,background:"#b8952a",color:"#fff",fontSize:12}}>+ Dodaj novu sekciju</button>
+              <div style={{marginTop:16,background:"#2c2a24",color:"#f2ece0",padding:12,borderRadius:12,fontSize:11,lineHeight:1.5}}>
+                Za prikaz na glavnom sajtu dodaj u tvoj main site kod (React/Vue) ovo:<br/>
+                <code>{`{config.customSections?.map(s=><section><h2>{s.title}</h2><p>{s.content}</p>{s.image && <img src={s.image}/>}</section>)}`}</code>
+              </div>
+            </div>
+          )}
+
           {tab==="gallery" && (
             <div className="card">
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
                 <h2 className="serif" style={{fontSize:26}}>Galerija — {config.gallery.length} slika</h2>
                 <div style={{display:"flex",gap:8}}>
-                  <input ref={fileInputRef} type="file" accept="image/*" multiple style={{display:"none"}} onChange={handleGalleryUpload}/>
-                  <button onClick={()=>fileInputRef.current?.click()} style={{height:40,padding:"0 18px",borderRadius:999,background:"#b8952a",color:"#fff",fontSize:12,fontWeight:600}}>📤 Upload sa kompa</button>
+                  <input ref={fileRef} type="file" accept="image/*" multiple style={{display:"none"}} onChange={handleGalleryUpload}/>
+                  <button onClick={()=>fileRef.current?.click()} style={{height:40,padding:"0 18px",borderRadius:999,background:"#b8952a",color:"#fff",fontSize:12,fontWeight:600}}>📤 Upload sa kompa (na GitHub)</button>
                 </div>
               </div>
-
-              <div className="upload-area" onClick={()=>fileInputRef.current?.click()}>
-                <div style={{fontSize:28,marginBottom:8}}>🖼️</div>
-                <div style={{fontSize:13,fontWeight:600}}>Klikni za upload slika sa kompjutera</div>
-                <div style={{fontSize:11,opacity:.6,marginTop:4}}>Možeš odabrati više slika odjednom — pretvaraju se u base64 i spremaju u config.json</div>
+              <div className="upload-area" onClick={()=>fileRef.current?.click()}>
+                <div style={{fontSize:12,fontWeight:600}}>Upload sa kompjutera — sada sprema pravi file na GitHub u {git.pathImages}/, ne base64!</div>
+                <div style={{fontSize:10,opacity:.6,marginTop:4}}>Potreban GitHub token u GIT tabu. Ako nema tokena, koristi base64 fallback (privremeno).</div>
               </div>
-
-              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill, minmax(160px,1fr))",gap:12,marginTop:16}}>
+              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill, minmax(150px,1fr))",gap:10,marginTop:14}}>
                 {config.gallery.map((url,i)=>(
-                  <div key={i} style={{background:"#fcfaf5",borderRadius:12,overflow:"hidden",border:"1px solid #e8dfc8",position:"relative"}}>
-                    <img src={url} style={{width:"100%",height:120,objectFit:"cover"}}/>
-                    <div style={{padding:8,display:"flex",gap:6}}>
-                      <button onClick={()=>{ const ng=config.gallery.filter((_,j)=>j!==i); setConfig({...config, gallery:ng}); }} style={{flex:1,height:28,borderRadius:999,background:"#fff",border:"1px solid #e8dfc8",fontSize:11}}>🗑 Makni</button>
-                      <button onClick={()=>{ if(i===0) return; const ng=[...config.gallery]; [ng[i-1],ng[i]]=[ng[i],ng[i-1]]; setConfig({...config, gallery:ng}); }} style={{width:28,height:28,borderRadius:999,background:"#fff",border:"1px solid #e8dfc8"}}>↑</button>
-                      <button onClick={()=>{ if(i===config.gallery.length-1) return; const ng=[...config.gallery]; [ng[i+1],ng[i]]=[ng[i],ng[i+1]]; setConfig({...config, gallery:ng}); }} style={{width:28,height:28,borderRadius:999,background:"#fff",border:"1px solid #e8dfc8"}}>↓</button>
+                  <div key={i} style={{border:"1px solid #e8dfc8",borderRadius:12,overflow:"hidden",background:"#fcfaf5"}}>
+                    <img src={url} style={{width:"100%",height:110,objectFit:"cover"}}/>
+                    <div style={{padding:6,display:"flex",gap:4}}>
+                      <button onClick={()=>{ const ng=config.gallery.filter((_,j)=>j!==i); setConfig({...config, gallery:ng}); }} style={{flex:1,height:28,borderRadius:999,background:"#fff",border:"1px solid #e8dfc8",fontSize:10}}>Makni</button>
+                      <button onClick={()=>{ if(i>0){ const ng=[...config.gallery]; [ng[i-1],ng[i]]=[ng[i],ng[i-1]]; setConfig({...config, gallery:ng}); } }} style={{width:28,height:28,borderRadius:999,background:"#fff",border:"1px solid #e8dfc8"}}>↑</button>
+                      <button onClick={()=>{ if(i<config.gallery.length-1){ const ng=[...config.gallery]; [ng[i+1],ng[i]]=[ng[i],ng[i+1]]; setConfig({...config, gallery:ng}); } }} style={{width:28,height:28,borderRadius:999,background:"#fff",border:"1px solid #e8dfc8"}}>↓</button>
                     </div>
                   </div>
                 ))}
-              </div>
-
-              <div style={{marginTop:16}}>
-                <div style={{fontSize:11,fontWeight:600,opacity:.6,marginBottom:8,textTransform:"uppercase",letterSpacing:1}}>Ili dodaj URL ručno</div>
-                {config.gallery.map((url,i)=>(
-                  <div key={i} style={{display:"grid",gridTemplateColumns:"1fr 50px",gap:8,marginBottom:8}}>
-                    <input value={url} onChange={e=>{ const ng=[...config.gallery]; ng[i]=e.target.value; setConfig({...config, gallery:ng}); }} className="input" style={{height:36,fontSize:11}}/>
-                    <button onClick={()=>{ const ng=config.gallery.filter((_,j)=>j!==i); setConfig({...config, gallery:ng}); }} style={{height:36,borderRadius:8,background:"#fff",border:"1px solid #e8dfc8"}}>X</button>
-                  </div>
-                ))}
-                <button onClick={()=>setConfig({...config, gallery:[...config.gallery, "https://images.unsplash.com/photo-..."]})} style={{height:36,padding:"0 16px",borderRadius:999,background:"#2c2a24",color:"#fff",fontSize:12,marginTop:8}}>Dodaj prazan URL</button>
               </div>
             </div>
           )}
 
           {tab==="hero" && (
             <div className="card">
-              <h2 className="serif" style={{fontSize:26,marginBottom:16}}>Hero — Kuća na brdu</h2>
-              <div style={{display:"grid",gap:14}}>
-                <label><span style={{fontSize:11,opacity:.6}}>Title</span><input value={config.hero.title} onChange={e=>setConfig({...config, hero:{...config.hero, title:e.target.value}})} className="input"/></label>
-                <label><span style={{fontSize:11,opacity:.6}}>Subtitle</span><textarea value={config.hero.subtitle} onChange={e=>setConfig({...config, hero:{...config.hero, subtitle:e.target.value}})} className="textarea"/></label>
-                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
-                  <label><span style={{fontSize:11,opacity:.6}}>Badge (Žumberak 750m)</span><input value={config.hero.badge} onChange={e=>setConfig({...config, hero:{...config.hero, badge:e.target.value}})} className="input"/></label>
-                  <label><span style={{fontSize:11,opacity:.6}}>Blur</span><input type="number" value={config.hero.blur} onChange={e=>setConfig({...config, hero:{...config.hero, blur: parseInt(e.target.value)||0}})} className="input"/></label>
+              <h2 className="serif" style={{fontSize:26,marginBottom:12}}>Hero</h2>
+              <div style={{display:"grid",gap:12}}>
+                <input value={config.hero.title} onChange={e=>setConfig({...config, hero:{...config.hero, title:e.target.value}})} className="input" placeholder="Title"/>
+                <textarea value={config.hero.subtitle} onChange={e=>setConfig({...config, hero:{...config.hero, subtitle:e.target.value}})} className="textarea" placeholder="Subtitle"/>
+                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+                  <input value={config.hero.badge} onChange={e=>setConfig({...config, hero:{...config.hero, badge:e.target.value}})} className="input"/>
+                  <input value={config.hero.blur} type="number" onChange={e=>setConfig({...config, hero:{...config.hero, blur:parseInt(e.target.value)||0}})} className="input"/>
                 </div>
-                <label><span style={{fontSize:11,opacity:.6}}>Hero slika — URL ili upload</span>
-                  <div style={{display:"flex",gap:8}}>
-                    <input value={config.hero.image} onChange={e=>setConfig({...config, hero:{...config.hero, image:e.target.value}})} className="input" style={{flex:1}}/>
-                    <input ref={heroFileRef} type="file" accept="image/*" style={{display:"none"}} onChange={handleHeroUpload}/>
-                    <button onClick={()=>heroFileRef.current?.click()} style={{height:44,padding:"0 14px",borderRadius:12,background:"#f2ece0",border:"1px solid #e8dfc8",fontSize:11}}>Upload</button>
-                  </div>
-                </label>
-                {config.hero.image && <img src={config.hero.image} style={{width:"100%",height:200,objectFit:"cover",borderRadius:12,marginTop:8}}/>}
-                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
-                  <label><span style={{fontSize:11,opacity:.6}}>CTA1 Rezerviraj</span><input value={config.hero.cta1} onChange={e=>setConfig({...config, hero:{...config.hero, cta1:e.target.value}})} className="input"/></label>
-                  <label><span style={{fontSize:11,opacity:.6}}>CTA2 Pogledaj kuću</span><input value={config.hero.cta2} onChange={e=>setConfig({...config, hero:{...config.hero, cta2:e.target.value}})} className="input"/></label>
+                <div style={{display:"flex",gap:8}}>
+                  <input value={config.hero.image} onChange={e=>setConfig({...config, hero:{...config.hero, image:e.target.value}})} className="input" style={{flex:1}}/>
+                  <input ref={heroRef} type="file" accept="image/*" style={{display:"none"}} onChange={handleHeroUpload}/>
+                  <button onClick={()=>heroRef.current?.click()} style={{height:44,padding:"0 14px",borderRadius:12,background:"#f2ece0",border:"1px solid #e8dfc8",fontSize:11}}>Upload</button>
+                </div>
+                {config.hero.image && <img src={config.hero.image} style={{width:"100%",height:200,objectFit:"cover",borderRadius:12}}/>}
+                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+                  <input value={config.hero.cta1} onChange={e=>setConfig({...config, hero:{...config.hero, cta1:e.target.value}})} className="input"/>
+                  <input value={config.hero.cta2} onChange={e=>setConfig({...config, hero:{...config.hero, cta2:e.target.value}})} className="input"/>
                 </div>
               </div>
             </div>
@@ -531,116 +570,75 @@ function AdminApp(){
 
           {tab==="pricing" && (
             <div className="card">
-              <h2 className="serif" style={{fontSize:26,marginBottom:6}}>Cjenik — 100€ / 80€ / 30€ + min 2 noći</h2>
-              <div style={{fontSize:11,opacity:.6,marginBottom:16}}>Ovo je glavni cjenik koji se prikazuje na sajtu — minimalno 2 noći</div>
-              {config.pricing.map((item, idx)=>(
-                <div key={item.id} style={{background:"#fcfaf5",padding:14,borderRadius:14,marginBottom:12,display:"grid",gap:8,border:"1px solid #e8dfc8"}}>
-                  <div style={{display:"grid",gridTemplateColumns:"1fr 110px 90px",gap:8}}>
-                    <input value={item.naziv} onChange={e=>{ const nc=[...config.pricing]; nc[idx].naziv=e.target.value; setConfig({...config, pricing:nc}); }} className="input" placeholder="Naziv"/>
-                    <input value={item.cijena} onChange={e=>{ const nc=[...config.pricing]; nc[idx].cijena=e.target.value; setConfig({...config, pricing:nc}); }} className="input" placeholder="100€"/>
-                    <input value={item.jedinica} onChange={e=>{ const nc=[...config.pricing]; nc[idx].jedinica=e.target.value; setConfig({...config, pricing:nc}); }} className="input" placeholder="/ noć"/>
+              <h2 className="serif" style={{fontSize:26,marginBottom:6}}>Cjenik 100€ / 80€ / 30€ + min 2 noći</h2>
+              {config.pricing.map((item,i)=>(
+                <div key={item.id} style={{background:"#fcfaf5",padding:12,borderRadius:12,border:"1px solid #e8dfc8",marginBottom:10,display:"grid",gap:6}}>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 100px 80px",gap:6}}>
+                    <input value={item.naziv} onChange={e=>{ const np=[...config.pricing]; np[i].naziv=e.target.value; setConfig({...config, pricing:np}); }} className="input"/>
+                    <input value={item.cijena} onChange={e=>{ const np=[...config.pricing]; np[i].cijena=e.target.value; setConfig({...config, pricing:np}); }} className="input"/>
+                    <input value={item.jedinica} onChange={e=>{ const np=[...config.pricing]; np[i].jedinica=e.target.value; setConfig({...config, pricing:np}); }} className="input"/>
                   </div>
-                  <input value={item.opis} onChange={e=>{ const nc=[...config.pricing]; nc[idx].opis=e.target.value; setConfig({...config, pricing:nc}); }} className="input" placeholder="Opis — npr. Minimalno 2 noći" style={{height:36,fontSize:11}}/>
+                  <input value={item.opis} onChange={e=>{ const np=[...config.pricing]; np[i].opis=e.target.value; setConfig({...config, pricing:np}); }} className="input" style={{height:36,fontSize:11}}/>
                 </div>
               ))}
             </div>
           )}
 
-          {tab==="about" && (
+          {tab==="about" && (<div className="card"><h2 className="serif" style={{fontSize:26,marginBottom:12}}>O kući</h2><div style={{display:"grid",gap:10}}><input value={config.about.title} onChange={e=>setConfig({...config, about:{...config.about, title:e.target.value}})} className="input"/><textarea value={config.about.p1} onChange={e=>setConfig({...config, about:{...config.about, p1:e.target.value}})} className="textarea"/><textarea value={config.about.p2} onChange={e=>setConfig({...config, about:{...config.about, p2:e.target.value}})} className="textarea"/><input value={config.about.quote} onChange={e=>setConfig({...config, about:{...config.about, quote:e.target.value}})} className="input"/></div></div>)}
+          {tab==="stats" && (<div className="card"><h2 className="serif" style={{fontSize:26,marginBottom:12}}>Stats</h2>{config.stats.map((s,i)=><div key={i} style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:8,background:"#fcfaf5",padding:10,borderRadius:10,border:"1px solid #e8dfc8"}}><input value={s.value} onChange={e=>{ const ns=[...config.stats]; ns[i].value=e.target.value; setConfig({...config, stats:ns}); }} className="input"/><input value={s.label} onChange={e=>{ const ns=[...config.stats]; ns[i].label=e.target.value; setConfig({...config, stats:ns}); }} className="input"/></div>)}</div>)}
+          {tab==="amenities" && (<div className="card"><h2 className="serif" style={{fontSize:26,marginBottom:12}}>Sadržaj 20 stavki</h2>{config.amenities.map((a,i)=><div key={a.id} style={{display:"grid",gridTemplateColumns:"1fr 1fr 80px 40px",gap:6,marginBottom:6,background:"#fcfaf5",padding:8,borderRadius:10,border:"1px solid #e8dfc8"}}><input value={a.label} onChange={e=>{ const na=[...config.amenities]; na[i].label=e.target.value; setConfig({...config, amenities:na}); }} className="input" style={{height:34}}/><input value={a.category} onChange={e=>{ const na=[...config.amenities]; na[i].category=e.target.value; setConfig({...config, amenities:na}); }} className="input" style={{height:34}}/><input value={a.icon} onChange={e=>{ const na=[...config.amenities]; na[i].icon=e.target.value; setConfig({...config, amenities:na}); }} className="input" style={{height:34}}/><button onClick={()=>{ const na=config.amenities.filter((_,j)=>j!==i); setConfig({...config, amenities:na}); }} style={{height:34,borderRadius:8,background:"#fff",border:"1px solid #e8dfc8"}}>X</button></div>)}<button onClick={()=>setConfig({...config, amenities:[...config.amenities, {id:Date.now().toString(), label:"Novo", category:"Ostalo", icon:"trees"}]})} style={{height:36,padding:"0 14px",borderRadius:999,background:"#2c2a24",color:"#fff",fontSize:11,marginTop:8}}>+ Dodaj</button></div>)}
+          {tab==="location" && (<div className="card"><h2 className="serif" style={{fontSize:26,marginBottom:12}}>Lokacija</h2><div style={{display:"grid",gap:10}}><input value={config.location.address} onChange={e=>setConfig({...config, location:{...config.location, address:e.target.value}})} className="input"/><textarea value={config.location.desc} onChange={e=>setConfig({...config, location:{...config.location, desc:e.target.value}})} className="textarea"/><input value={config.location.googleMapsLink} onChange={e=>setConfig({...config, location:{...config.location, googleMapsLink:e.target.value}})} className="input"/><div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}><input value={config.location.lat} onChange={e=>setConfig({...config, location:{...config.location, lat:e.target.value}})} className="input"/><input value={config.location.lng} onChange={e=>setConfig({...config, location:{...config.location, lng:e.target.value}})} className="input"/></div></div></div>)}
+          {tab==="footer" && (<div className="card"><h2 className="serif" style={{fontSize:26,marginBottom:12}}>Footer</h2><input value={config.footer.text} onChange={e=>setConfig({...config, footer:{...config.footer, text:e.target.value}})} className="input" style={{marginBottom:10}}/><div style={{display:"grid",gap:8}}>{config.footer.links.map((l,i)=><div key={i} style={{display:"grid",gridTemplateColumns:"1fr 1fr 40px",gap:6}}><input value={l.label} onChange={e=>{ const nl=[...config.footer.links]; nl[i].label=e.target.value; setConfig({...config, footer:{...config.footer, links:nl}}); }} className="input" style={{height:36}}/><input value={l.url} onChange={e=>{ const nl=[...config.footer.links]; nl[i].url=e.target.value; setConfig({...config, footer:{...config.footer, links:nl}}); }} className="input" style={{height:36}}/><button onClick={()=>{ const nl=config.footer.links.filter((_,j)=>j!==i); setConfig({...config, footer:{...config.footer, links:nl}}); }} style={{height:36,borderRadius:8,background:"#fff",border:"1px solid #e8dfc8"}}>X</button></div>)}<button onClick={()=>setConfig({...config, footer:{...config.footer, links:[...config.footer.links, {label:"Novi", url:"#"}]}})} style={{height:36,padding:"0 14px",borderRadius:999,background:"#2c2a24",color:"#fff",fontSize:11}}>+ Link</button></div></div>)}
+          {tab==="site" && (
             <div className="card">
-              <h2 className="serif" style={{fontSize:26,marginBottom:16}}>O kući</h2>
-              <div style={{display:"grid",gap:12}}>
-                <label><span style={{fontSize:11,opacity:.6}}>Title</span><input value={config.about.title} onChange={e=>setConfig({...config, about:{...config.about, title:e.target.value}})} className="input"/></label>
-                <label><span style={{fontSize:11,opacity:.6}}>P1</span><textarea value={config.about.p1} onChange={e=>setConfig({...config, about:{...config.about, p1:e.target.value}})} className="textarea"/></label>
-                <label><span style={{fontSize:11,opacity:.6}}>P2</span><textarea value={config.about.p2} onChange={e=>setConfig({...config, about:{...config.about, p2:e.target.value}})} className="textarea"/></label>
-                <label><span style={{fontSize:11,opacity:.6}}>Quote — Dođi s knjigom...</span><input value={config.about.quote} onChange={e=>setConfig({...config, about:{...config.about, quote:e.target.value}})} className="input"/></label>
+              <h2 className="serif" style={{fontSize:26,marginBottom:12}}>Site, boje, jezici, prijevodi</h2>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:12}}>
+                <label><span className="badge">Site name</span><input value={config.site.name} onChange={e=>setConfig({...config, site:{...config.site, name:e.target.value}})} className="input"/></label>
+                <label><span className="badge">Domain</span><input value={config.site.domain} onChange={e=>setConfig({...config, site:{...config.site, domain:e.target.value}})} className="input"/></label>
               </div>
-            </div>
-          )}
-
-          {tab==="stats" && (
-            <div className="card">
-              <h2 className="serif" style={{fontSize:26,marginBottom:16}}>Statistike — 2 sobe, 1 kupaona, 32m², 4 gosta</h2>
-              {config.stats.map((s,i)=>(
-                <div key={i} style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:12,background:"#fcfaf5",padding:12,borderRadius:12,border:"1px solid #e8dfc8"}}>
-                  <input value={s.value} onChange={e=>{ const ns=[...config.stats]; ns[i].value=e.target.value; setConfig({...config, stats:ns}); }} className="input" placeholder="2"/>
-                  <input value={s.label} onChange={e=>{ const ns=[...config.stats]; ns[i].label=e.target.value; setConfig({...config, stats:ns}); }} className="input" placeholder="Spavaće sobe"/>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {tab==="amenities" && (
-            <div className="card">
-              <h2 className="serif" style={{fontSize:26,marginBottom:16}}>Sadržaj — 20 stavki</h2>
-              <div style={{display:"grid",gap:8}}>
-                {config.amenities.map((a,i)=>(
-                  <div key={a.id} style={{display:"grid",gridTemplateColumns:"1fr 1fr 90px 40px",gap:8,background:"#fcfaf5",padding:10,borderRadius:12,border:"1px solid #e8dfc8"}}>
-                    <input value={a.label} onChange={e=>{ const na=[...config.amenities]; na[i].label=e.target.value; setConfig({...config, amenities:na}); }} className="input" style={{height:36}} placeholder="Peć na drva"/>
-                    <input value={a.category} onChange={e=>{ const na=[...config.amenities]; na[i].category=e.target.value; setConfig({...config, amenities:na}); }} className="input" style={{height:36}} placeholder="Toplina"/>
-                    <input value={a.icon} onChange={e=>{ const na=[...config.amenities]; na[i].icon=e.target.value; setConfig({...config, amenities:na}); }} className="input" style={{height:36}} placeholder="flame"/>
-                    <button onClick={()=>{ const na=config.amenities.filter((_,j)=>j!==i); setConfig({...config, amenities:na}); }} style={{height:36,borderRadius:8,background:"#fff",border:"1px solid #e8dfc8"}}>X</button>
-                  </div>
-                ))}
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr 1fr",gap:8,marginBottom:12}}>
+                <label><span className="badge">Background</span><input value={config.colors.background} onChange={e=>setConfig({...config, colors:{...config.colors, background:e.target.value}})} className="input"/></label>
+                <label><span className="badge">Gold</span><input value={config.colors.gold} onChange={e=>setConfig({...config, colors:{...config.colors, gold:e.target.value}})} className="input"/></label>
+                <label><span className="badge">Dark</span><input value={config.colors.dark} onChange={e=>setConfig({...config, colors:{...config.colors, dark:e.target.value}})} className="input"/></label>
+                <label><span className="badge">CreamDark</span><input value={config.colors.creamDark} onChange={e=>setConfig({...config, colors:{...config.colors, creamDark:e.target.value}})} className="input"/></label>
               </div>
-            </div>
-          )}
-
-          {tab==="location" && (
-            <div className="card">
-              <h2 className="serif" style={{fontSize:26,marginBottom:16}}>Lokacija — Noršić Selo 52B</h2>
-              <div style={{display:"grid",gap:12}}>
-                <label><span style={{fontSize:11,opacity:.6}}>Address</span><input value={config.location.address} onChange={e=>setConfig({...config, location:{...config.location, address:e.target.value}})} className="input"/></label>
-                <label><span style={{fontSize:11,opacity:.6}}>Desc</span><textarea value={config.location.desc} onChange={e=>setConfig({...config, location:{...config.location, desc:e.target.value}})} className="textarea"/></label>
-                <label><span style={{fontSize:11,opacity:.6}}>Google Maps Link</span><input value={config.location.googleMapsLink} onChange={e=>setConfig({...config, location:{...config.location, googleMapsLink:e.target.value}})} className="input"/></label>
-                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
-                  <label><span style={{fontSize:11,opacity:.6}}>Lat</span><input value={config.location.lat} onChange={e=>setConfig({...config, location:{...config.location, lat:e.target.value}})} className="input"/></label>
-                  <label><span style={{fontSize:11,opacity:.6}}>Lng</span><input value={config.location.lng} onChange={e=>setConfig({...config, location:{...config.location, lng:e.target.value}})} className="input"/></label>
-                </div>
+              <div style={{marginBottom:12}}>
+                <div className="badge">Languages (HR,EN...)</div>
+                <input value={config.languages.join(",")} onChange={e=>setConfig({...config, languages:e.target.value.split(",").map(s=>s.trim()).filter(Boolean)})} className="input"/>
+              </div>
+              <div style={{background:"#fcfaf5",padding:12,borderRadius:12,border:"1px solid #e8dfc8"}}>
+                <div className="badge" style={{marginBottom:8}}>Translations JSON (EN,DE,IT,SL)</div>
+                <textarea value={JSON.stringify(config.translations,null,2)} onChange={e=>{ try{ const j=JSON.parse(e.target.value); setConfig({...config, translations:j}); }catch{} }} className="textarea" style={{minHeight:200,fontFamily:"monospace",fontSize:11}}/>
               </div>
             </div>
           )}
 
           {tab==="git" && (
             <div className="card">
-              <h2 className="serif" style={{fontSize:26,marginBottom:6}}>GIT Deploy — vvgbrnadic/hajdi-house</h2>
-              <div style={{fontSize:11,opacity:.6,marginBottom:16}}>Commita config.json direktno na GitHub — Netlify automatski deploya</div>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
-                <label><span style={{fontSize:11,opacity:.6}}>Owner</span><input value={git.owner} onChange={e=>setGit({...git,owner:e.target.value})} className="input"/></label>
-                <label><span style={{fontSize:11,opacity:.6}}>Repo</span><input value={git.repo} onChange={e=>setGit({...git,repo:e.target.value})} className="input"/></label>
-                <label><span style={{fontSize:11,opacity:.6}}>Branch</span><input value={git.branch} onChange={e=>setGit({...git,branch:e.target.value})} className="input"/></label>
-                <label><span style={{fontSize:11,opacity:.6}}>Token ghp_...</span><input type="password" value={git.token} onChange={e=>setGit({...git,token:e.target.value})} className="input"/></label>
-                <label style={{gridColumn:"1 / -1"}}><span style={{fontSize:11,opacity:.6}}>Path config.json</span><input value={git.pathConfig} onChange={e=>setGit({...git,pathConfig:e.target.value})} className="input"/></label>
+              <h2 className="serif" style={{fontSize:26}}>GIT Deploy</h2>
+              <div style={{fontSize:11,opacity:.6,marginBottom:12}}>Token treba repo scope. Slike se spremaju u {git.pathImages}/</div>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+                <label><span className="badge">Owner</span><input value={git.owner} onChange={e=>setGit({...git, owner:e.target.value})} className="input"/></label>
+                <label><span className="badge">Repo</span><input value={git.repo} onChange={e=>setGit({...git, repo:e.target.value})} className="input"/></label>
+                <label><span className="badge">Branch</span><input value={git.branch} onChange={e=>setGit({...git, branch:e.target.value})} className="input"/></label>
+                <label><span className="badge">Token ghp_</span><input type="password" value={git.token} onChange={e=>setGit({...git, token:e.target.value})} className="input"/></label>
+                <label><span className="badge">Path config</span><input value={git.pathConfig} onChange={e=>setGit({...git, pathConfig:e.target.value})} className="input"/></label>
+                <label><span className="badge">Path images</span><input value={git.pathImages} onChange={e=>setGit({...git, pathImages:e.target.value})} className="input"/></label>
               </div>
-              <div style={{display:"flex",gap:10,marginTop:16}}>
-                <button onClick={()=>{ localStorage.setItem("hajdi_config", JSON.stringify(config)); setLog("✅ Spremljeno lokalno"); }} style={{height:40,padding:"0 20px",borderRadius:999,background:"#f2ece0",border:"1px solid #e8dfc8",fontSize:12}}>Spremi lokalno</button>
-                <button onClick={async()=>{
-                  if(!git.token){ setLog("Unesi GitHub token"); return; }
-                  setSaving(true); setLog("Commitam...");
-                  try{
-                    const content = btoa(unescape(encodeURIComponent(JSON.stringify(config,null,2))));
-                    let sha=null;
-                    try{ const r=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${git.pathConfig}?ref=${git.branch}`, {headers:{Authorization:`token ${git.token}`}}); if(r.ok){ const j=await r.json(); sha=j.sha; } }catch{}
-                    const body={message:`ADMIN lijepi ${new Date().toISOString()}`, content, branch:git.branch, ...(sha?{sha}:{})};
-                    const res2=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${git.pathConfig}`, {method:"PUT", headers:{Authorization:`token ${git.token}`, "Content-Type":"application/json"}, body: JSON.stringify(body)});
-                    const j2=await res2.json();
-                    if(res2.ok){ setLog("✅ Commit uspješan! SHA: "+(j2.commit?.sha?.slice(0,7)||"ok")); localStorage.setItem("hajdi_git", JSON.stringify(git)); }
-                    else setLog("❌ "+JSON.stringify(j2).slice(0,600));
-                  }catch(e){ setLog("❌ "+e.message); }
-                  setSaving(false);
-                }} disabled={saving} style={{height:40,padding:"0 20px",borderRadius:999,background:"#2c2a24",color:"#fff",fontSize:12}}>{saving?"Commitam...":"Commitaj u GIT"}</button>
+              <div style={{display:"flex",gap:8,marginTop:12}}>
+                <button onClick={saveLocal} style={{height:40,padding:"0 18px",borderRadius:999,background:"#f2ece0",border:"1px solid #e8dfc8",fontSize:12}}>Spremi lokalno</button>
+                <button onClick={commitGit} disabled={saving} style={{height:40,padding:"0 18px",borderRadius:999,background:"#2c2a24",color:"#fff",fontSize:12}}>{saving?"Commitam...":"Commitaj config u GIT"}</button>
               </div>
-              {log && <div style={{marginTop:12,background:"#2c2a24",color:"#f2ece0",padding:12,borderRadius:12,fontSize:11,whiteSpace:"pre-wrap"}}>{log}</div>}
-              <pre style={{maxHeight:280,overflow:"auto",fontSize:10,background:"#fcfaf5",padding:12,borderRadius:12,border:"1px solid #e8dfc8",marginTop:16}}>{JSON.stringify(config,null,2).slice(0,8000)}</pre>
+              {log && <div style={{marginTop:10,background:"#2c2a24",color:"#f2ece0",padding:10,borderRadius:10,fontSize:11,whiteSpace:"pre-wrap"}}>{log}</div>}
+              <pre style={{maxHeight:240,overflow:"auto",fontSize:10,background:"#fcfaf5",padding:10,borderRadius:10,border:"1px solid #e8dfc8",marginTop:12}}>{JSON.stringify(config,null,2).slice(0,8000)}</pre>
             </div>
           )}
 
-          <div style={{marginTop:20,display:"flex",gap:10,flexWrap:"wrap"}}>
-            <button onClick={()=>{ localStorage.setItem("hajdi_config", JSON.stringify(config)); setLog("✅ Spremljeno lokalno"); setTimeout(()=>setLog(""),2000); }} style={{height:44,padding:"0 20px",borderRadius:999,background:"#fff",border:"1px solid #e8dfc8",fontSize:12}}>💾 Spremi lokalno</button>
-            <button onClick={commitGit} disabled={saving} style={{height:44,padding:"0 24px",borderRadius:999,background:"#2c2a24",color:"#fff",fontSize:12,fontWeight:600}}>{saving?"Commitam...":"🚀 Commitaj sve u GIT"}</button>
-            <span style={{fontSize:11,opacity:.6,alignSelf:"center"}}>Cjenik: 100€ / 80€ / 30€ + min 2 noći • Login: admin / Hajdi2026!</span>
+          <div style={{marginTop:16,display:"flex",gap:8,flexWrap:"wrap"}}>
+            <button onClick={saveLocal} style={{height:44,padding:"0 20px",borderRadius:999,background:"#fff",border:"1px solid #e8dfc8",fontSize:12}}>💾 Spremi lokalno</button>
+            <button onClick={commitGit} disabled={saving} style={{height:44,padding:"0 22px",borderRadius:999,background:"#2c2a24",color:"#fff",fontSize:12,fontWeight:600}}>{saving?"...":"🚀 Commitaj sve u GIT"}</button>
           </div>
-          {log && <div style={{marginTop:12,background:"#2c2a24",color:"#f2ece0",padding:12,borderRadius:12,fontSize:11}}>{log}</div>}
+          {log && <div style={{marginTop:10,background:"#2c2a24",color:"#f2ece0",padding:10,borderRadius:10,fontSize:11}}>{log}</div>}
         </div>
       </div>
     </div>
@@ -648,12 +646,11 @@ function AdminApp(){
 }
 
 function App(){
-  const [authed,setAuthed]=React.useState(()=>{ try{return localStorage.getItem("hajdi_admin_auth")==="1"}catch{return false} });
+  const [authed,setAuthed]=React.useState(()=>{ try{ return localStorage.getItem("hajdi_admin_auth")==="1"; }catch{return false; } });
   if(!authed) return <Login onLogin={()=>setAuthed(true)} />;
   return <AdminApp />;
 }
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root=ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
 </script>
 </body>
