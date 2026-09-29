@@ -1,11 +1,284 @@
 {
-  "hero_title": "Hajdi House - Kuća na brdu",
-  "hero_image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1920",
-  "hero_blur": 6,
-  "lat": "45.783450",
-  "lng": "15.568973",
-  "address": "Noršić Selo 52B, 10430 Samobor",
-  "background": "#f2ece0",
-  "gold": "#b8952a",
-  "footer": "© 2026 Hajdi House — Noršić Selo 52B (SEO red maknut)"
+  "site": {
+    "name": "Hajdi House",
+    "domain": "www.hajdihouse.hr"
+  },
+  "colors": {
+    "background": "#f2ece0",
+    "gold": "#b8952a",
+    "dark": "#2c2a24",
+    "creamDark": "#e8dfc8"
+  },
+  "hero": {
+    "title": "Hajdi House — Kuća na brdu",
+    "subtitle": "Drvena kuća za dušu, na rubu šume. Bez buke, bez žurbe. Samo vatra, knjiga i pogled koji ne staje.",
+    "badge": "Žumberak 750m",
+    "image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1920&q=80&auto=format&fit=crop",
+    "blur": 6,
+    "cta1": "Rezerviraj",
+    "cta2": "Pogledaj kuću"
+  },
+  "about": {
+    "title": "Hajdi House nije apartman.",
+    "p1": "To je mala drvena kuća na rubu šume, sagrađena da diše zajedno s brdom. Terasa od ariša gleda na Žumberak, a veliki prozori puštaju svjetlo da radi posao. Nema susjeda koji zaviruju. Nema prometa. Samo ti i tišina.",
+    "p2": "Unutra — peć na drva koja pucketa dok vani pada magla, kuhinja s pogledom gdje kava miriše drugačije, dva topla krevetna gnijezda za spore jutra, i polica knjiga koja te tjera da ostaneš duže. Sve je dirljivo jednostavno, a opet luksuzno u onom pravom smislu.",
+    "quote": "Dođi s knjigom. Otići ćeš s pričom.",
+    "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80&auto=format&fit=crop"
+  },
+  "stats": [
+    {
+      "value": "2",
+      "label": "Spavaće sobe"
+    },
+    {
+      "value": "1",
+      "label": "Kupaona"
+    },
+    {
+      "value": "32 m²",
+      "label": "Površina"
+    },
+    {
+      "value": "4",
+      "label": "Gosta"
+    }
+  ],
+  "amenities": [
+    {
+      "id": "1",
+      "label": "Peć na drva",
+      "category": "Toplina",
+      "icon": "flame"
+    },
+    {
+      "id": "2",
+      "label": "Kamin",
+      "category": "Toplina",
+      "icon": "fire"
+    },
+    {
+      "id": "3",
+      "label": "Sauna",
+      "category": "Toplina",
+      "icon": "sauna"
+    },
+    {
+      "id": "4",
+      "label": "Terasa od ariša",
+      "category": "Priroda",
+      "icon": "terasa"
+    },
+    {
+      "id": "5",
+      "label": "Veliki prozori",
+      "category": "Priroda",
+      "icon": "window"
+    },
+    {
+      "id": "6",
+      "label": "Bazen (ljetni)",
+      "category": "Priroda",
+      "icon": "bazen"
+    },
+    {
+      "id": "7",
+      "label": "Kuhinja s pogledom",
+      "category": "Kuhinja",
+      "icon": "kitchen"
+    },
+    {
+      "id": "8",
+      "label": "Roštilj",
+      "category": "Kuhinja",
+      "icon": "grill"
+    },
+    {
+      "id": "9",
+      "label": "Kava aparat",
+      "category": "Kuhinja",
+      "icon": "coffee"
+    },
+    {
+      "id": "10",
+      "label": "Puna kuhinja",
+      "category": "Kuhinja",
+      "icon": "utensils"
+    },
+    {
+      "id": "11",
+      "label": "Bračni krevet",
+      "category": "Spavanje",
+      "icon": "bed"
+    },
+    {
+      "id": "12",
+      "label": "Knjige",
+      "category": "Ostalo",
+      "icon": "books"
+    },
+    {
+      "id": "13",
+      "label": "WiFi Starlink",
+      "category": "Tehnologija",
+      "icon": "wifi"
+    },
+    {
+      "id": "14",
+      "label": "Parking",
+      "category": "Ostalo",
+      "icon": "parking"
+    },
+    {
+      "id": "15",
+      "label": "Bluetooth zvučnik",
+      "category": "Tehnologija",
+      "icon": "speaker"
+    },
+    {
+      "id": "16",
+      "label": "Šuma iza kuće",
+      "category": "Priroda",
+      "icon": "trees"
+    },
+    {
+      "id": "17",
+      "label": "Pješačke staze",
+      "category": "Aktivnosti",
+      "icon": "hike"
+    },
+    {
+      "id": "18",
+      "label": "Biciklizam",
+      "category": "Aktivnosti",
+      "icon": "bike"
+    },
+    {
+      "id": "19",
+      "label": "Psi dobrodošli",
+      "category": "Ostalo",
+      "icon": "dog"
+    },
+    {
+      "id": "20",
+      "label": "Zalazak sunca",
+      "category": "Priroda",
+      "icon": "sunset"
+    }
+  ],
+  "gallery": [
+    "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=800&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=800&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=800&q=80&auto=format&fit=crop"
+  ],
+  "location": {
+    "lat": "45.783450",
+    "lng": "15.568973",
+    "address": "Noršić Selo 52B, 10430 Samobor",
+    "desc": "Na rubu Parka prirode Žumberak, 40 minuta od Zagreba. Zadnja kuća prije šume, prva iznad magle. Put je makadam zadnjih 800m - dio doživljaja.",
+    "googleMapsLink": "https://maps.google.com/?q=45.783450,15.568973"
+  },
+  "footer": {
+    "text": "© 2026 Hajdi House — Noršić Selo 52B, Žumberak. Kuća na brdu.",
+    "seo_note": "SEO red maknut - final",
+    "links": [
+      {
+        "label": "Instagram",
+        "url": "#"
+      },
+      {
+        "label": "Airbnb",
+        "url": "#"
+      }
+    ]
+  },
+  "languages": [
+    "HR",
+    "EN",
+    "DE",
+    "IT",
+    "SL"
+  ],
+  "pricing": [
+    {
+      "id": "1",
+      "naziv": "Noćenje 2-3 noći",
+      "cijena": "100€",
+      "jedinica": "/ noć",
+      "opis": "Cijena po noćenju za boravak 2-3 noći, za cijelu kuću (do 4 gosta). Minimalno 2 noći.",
+      "aktivno": true
+    },
+    {
+      "id": "2",
+      "naziv": "Noćenje 4 i više noćenja",
+      "cijena": "80€",
+      "jedinica": "/ noć",
+      "opis": "Popust za duži boravak, 4 i više noćenja. Minimalno 2 noći.",
+      "aktivno": true
+    },
+    {
+      "id": "3",
+      "naziv": "Završno čišćenje",
+      "cijena": "30€",
+      "jedinica": "/ boravak",
+      "opis": "Jednokratno završno čišćenje kuće",
+      "aktivno": true
+    }
+  ],
+  "translations": {
+    "EN": {
+      "Hajdi House — Kuća na brdu": "Hajdi House — House on the Hill",
+      "Drvena kuća za dušu, na rubu šume. Bez buke, bez žurbe. Samo vatra, knjiga i pogled koji ne staje.": "A wooden house for the soul, at the forest edge. No noise, no rush. Just fire, a book and an endless view.",
+      "Hajdi House nije apartman.": "Hajdi House is not an apartment.",
+      "Dođi s knjigom. Otići ćeš s pričom.": "Come with a book. You'll leave with a story.",
+      "Sve za sporiji dan.": "Everything for a slower day.",
+      "Zadnja kuća prije šume.": "The last house before the forest.",
+      "O kući": "About",
+      "Kuća": "House",
+      "Sadržaj": "Amenities",
+      "Galerija": "Gallery",
+      "Lokacija": "Location",
+      "Rezerviraj": "Book now",
+      "Pogledaj kuću": "View the house",
+      "Cjenik": "Pricing",
+      "Cjenik usluga": "Service pricing",
+      "Noćenje 2-3 noći": "Stay 2-3 nights",
+      "Noćenje 4 i više noćenja": "Stay 4+ nights",
+      "Završno čišćenje": "Final cleaning",
+      "Minimalno 2 noći": "Minimum 2 nights",
+      "Usluge i cijene - sve na jednom mjestu, transparentno i bez skrivenih troškova.": "Services and prices - transparent, no hidden costs.",
+      "Preuzmi kao CSV": "Download as CSV"
+    },
+    "DE": {
+      "Hajdi House — Kuća na brdu": "Hajdi House — Haus auf dem Hügel",
+      "Cjenik": "Preise",
+      "Cjenik usluga": "Preisliste",
+      "Noćenje 2-3 noći": "Aufenthalt 2-3 Nächte",
+      "Noćenje 4 i više noćenja": "Aufenthalt 4+ Nächte",
+      "Završno čišćenje": "Endreinigung",
+      "Minimalno 2 noći": "Mindestens 2 Nächte"
+    },
+    "IT": {
+      "Hajdi House — Kuća na brdu": "Hajdi House — Casa sulla collina",
+      "Cjenik": "Prezzi",
+      "Cjenik usluga": "Listino prezzi",
+      "Noćenje 2-3 noći": "Soggiorno 2-3 notti",
+      "Noćenje 4 i više noćenja": "Soggiorno 4+ notti",
+      "Završno čišćenje": "Pulizia finale",
+      "Minimalno 2 noći": "Minimo 2 notti"
+    },
+    "SL": {
+      "Hajdi House — Kuća na brdu": "Hajdi House — Hiša na hribu",
+      "Cjenik": "Cenik",
+      "Cjenik usluga": "Cenik storitev",
+      "Noćenje 2-3 noći": "Bivanje 2-3 noči",
+      "Noćenje 4 i više noćenja": "Bivanje 4+ noči",
+      "Završno čišćenje": "Končno čiščenje",
+      "Minimalno 2 noći": "Minimalno 2 noči"
+    }
+  }
 }

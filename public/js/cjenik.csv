@@ -1,0 +1,4 @@
+naziv,cijena,jedinica,opis,aktivno
+"Noćenje 2-3 noći",100€,/ noć,"Cijena po noćenju za boravak 2-3 noći, za cijelu kuću (do 4 gosta). Minimalno 2 noći.",TRUE
+"Noćenje 4 i više noćenja",80€,/ noć,"Popust za duži boravak, 4 i više noćenja. Minimalno 2 noći.",TRUE
+"Završno čišćenje",30€,/ boravak,"Jednokratno završno čišćenje kuće",TRUE
