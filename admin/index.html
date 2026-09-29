@@ -16,7 +16,7 @@ body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--dark)
 <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script type="text/babel" data-presets="react,typescript">
+<script type="text/babel" data-presets="react">
 // Mock icons
 const lucideMock = (emoji) => (props) => React.createElement('span', {...props, style:{...props.style, display:'inline-block'}}, emoji);
 const Mountain = lucideMock('⛰');
@@ -64,54 +64,9 @@ const AlertCircle = lucideMock('⚠');
 const GripVertical = lucideMock('⋮');
 
 
-// import {{
-  Mountain,
-  Flame,
-  Waves,
-  AppWindow,
-  CookingPot,
-  Coffee,
-  UtensilsCrossed,
-  BedDouble,
-  BookOpen,
-  Wifi,
-  Car,
-  Speaker,
-  Trees,
-  Footprints,
-  Bike,
-  Dog,
-  Sunset,
-  Bath,
-  ChefHat,
-  Image as ImageIcon,
-  Trash2,
-  Plus,
-  Upload,
-  Download,
-  Save,
-  Github,
-  Globe,
-  MapPin,
-  Settings,
-  LayoutDashboard,
-  Home,
-  ListChecks,
-  Images,
-  FileText,
-  Languages,
-  Eye,
-  Link as LinkIcon,
-  X,
-  Check,
-  AlertCircle,
-  GripVertical
-// }} from lucide-react
+
 
 // --- TYPES ---
-type StatItem = { id: string; value: string; label: string };
-type Amenity = { id: string; label: string; category: string; icon: string };
-type PricingItem = { id: string; naziv: string; cijena: string; jedinica: string; opis: string; aktivno: boolean };
 
 const CATEGORIES = ["Toplina", "Priroda", "Kuhinja", "Spavanje", "Ostalo", "Tehnologija", "Aktivnosti"];
 const ICONS = ["flame","fire","sauna","terasa","window","bazen","kitchen","grill","coffee","utensils","bed","books","wifi","parking","speaker","trees","hike","bike","dog","sunset"];
@@ -133,7 +88,7 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
   const [user, setUser] = React.useState("");
   const [pass, setPass] = React.useState("");
   const [err, setErr] = React.useState("");
-  const handle = (e: React.FormEvent) => {
+  const handle = (e: Event) => {
     e.preventDefault();
     if (user === ADMIN_USER && pass === ADMIN_PASS) {
       localStorage.setItem("hajdi_admin_auth", "1");
@@ -159,7 +114,7 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
   );
 }
 
-const ICON_MAP: Record<string, any> = {
+const ICON_MAP: Object = {
   flame: Flame,
   fire: Flame,
   sauna: Bath,
@@ -206,7 +161,7 @@ const DEFAULT_CONFIG = {
     { id: "2", value: "80m²", label: "drvene kuće" },
     { id: "3", value: "750m", label: "nadmorske visine" },
     { id: "4", value: "100%", label: "mir i tišina" },
-  ] as StatItem[],
+  ],
   amenities: [
     { id: "1", label: "Peć na drva", category: "Toplina", icon: "flame" },
     { id: "2", label: "Vanjsko ložište", category: "Toplina", icon: "fire" },
@@ -228,7 +183,7 @@ const DEFAULT_CONFIG = {
     { id: "18", label: "Biciklističke rute", category: "Aktivnosti", icon: "bike" },
     { id: "19", label: "Pet-friendly", category: "Ostalo", icon: "dog" },
     { id: "20", label: "Zalazak sunca", category: "Priroda", icon: "sunset" },
-  ] as Amenity[],
+  ],
   gallery: [
     "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&q=80&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80&auto=format&fit=crop",
@@ -259,7 +214,7 @@ const DEFAULT_CONFIG = {
     { id: "1", naziv: "Noćenje 2-3 noći", cijena: "100€", jedinica: "/ noć", opis: "Cijena po noćenju za boravak 2-3 noći, za cijelu kuću (do 4 gosta). Minimalno 2 noći.", aktivno: true },
     { id: "2", naziv: "Noćenje 4 i više noćenja", cijena: "80€", jedinica: "/ noć", opis: "Popust za duži boravak, 4 i više noćenja. Minimalno 2 noći.", aktivno: true },
     { id: "3", naziv: "Završno čišćenje", cijena: "30€", jedinica: "/ boravak", opis: "Jednokratno završno čišćenje kuće", aktivno: true },
-  ] as PricingItem[],
+  ],
   pricingBadge: "Minimalno 2 noći",
   translations: {
     HR: { cjenik: "Cjenik", nocenje_2_3: "Noćenje 2-3 noći", nocenje_4_plus: "Noćenje 4 i više noćenja", ciscenje: "Završno čišćenje", min_noci: "Minimalno 2 noći", rezerviraj: "Rezerviraj", pogledaj_kucu: "Pogledaj kuću", o_kuci: "O kući" },
@@ -270,25 +225,24 @@ const DEFAULT_CONFIG = {
   } as Record<string, Record<string, string>>,
 };
 
-type TabId = "hero" | "about" | "stats" | "amenities" | "gallery" | "location" | "pricing" | "footer" | "languages" | "git";
 
 export default function App() {
   const [config, setConfig] = useState(DEFAULT_CONFIG);
   const { isAuthed, setIsAuthed } = useAuth();
-  const [activeTab, setActiveTab] = useState<TabId>("hero");
-  const [heroImgTab, setHeroImgTab] = useState<"comp" | "url">("url");
-  const [aboutImgTab, setAboutImgTab] = useState<"comp" | "url">("url");
+  const [activeTab, setActiveTab] = useState("hero");
+  const [heroImgTab, setHeroImgTab] = useState("url");
+  const [aboutImgTab, setAboutImgTab] = useState("url");
   const [gitConfig, setGitConfig] = useState({ owner: "", repo: "hajdihouse", branch: "main", token: "", pathConfig: "config.json", pathCsv: "cjenik.csv" });
-  const [gitLog, setGitLog] = useState<string>("");
+  const [gitLog, setGitLog] = useState("");
   const [gitLoading, setGitLoading] = useState(false);
   const [translating, setTranslating] = useState(false);
   const galleryInputRef = useRef<HTMLInputElement>(null);
   const [dragOver, setDragOver] = useState(false);
   if (!isAuthed) { return <LoginScreen onLogin={() => setIsAuthed(true)} />; }
-  const [toast, setToast] = useState<string>("");
+  const [toast, setToast] = useState("");
   const fallbackImg = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%23e8dfc8'/%3E%3Ctext x='400' y='300' text-anchor='middle' fill='%232c2a24' font-family='serif' font-size='24' opacity='0.5'%3EHajdi House%3C/text%3E%3C/svg%3E";
-  const showToast = (msg: string) => { setToast(msg); setTimeout(()=>setToast(""), 3000); };
-  const safeSrc = (src: string) => {
+  const showToast = (msg) => { setToast(msg); setTimeout(()=>setToast(""), 3000); };
+  const safeSrc = (src) => {
     if (!src) return fallbackImg;
     if (src.startsWith("data:")) return src;
     // Block external unsplash in offline validator to avoid net::ERR_NAME_NOT_RESOLVED
@@ -329,7 +283,7 @@ export default function App() {
 
   const handleGalleryFiles = async (files: FileList | File[]) => {
     const arr = Array.from(files);
-    const urls: string[] = [];
+    const urls[] = [];
     for (const f of arr) {
       if (f.type.startsWith("image/")) {
         urls.push(await fileToDataURL(f));
@@ -460,7 +414,7 @@ export default function App() {
 
       for (const file of filesToCommit) {
         // get sha if exists
-        let sha: string | undefined;
+        let sha | undefined;
         try {
           const getRes = await fetch(`https://api.github.com/repos/${gitConfig.owner}/${gitConfig.repo}/contents/${file.path}?ref=${gitConfig.branch}`, {
             headers: { Authorization: `token ${gitConfig.token}`, Accept: "application/vnd.github.v3+json" }
@@ -495,7 +449,7 @@ export default function App() {
     } finally { setGitLoading(false); }
   };
 
-  const tabs: { id: TabId; label: string; icon: any }[] = [
+  const tabs[] = [
     { id: "hero", label: "Hero", icon: Home },
     { id: "about", label: "O kući", icon: FileText },
     { id: "stats", label: "Statistika", icon: ListChecks },
@@ -898,7 +852,6 @@ export default function App() {
     </div>
   );
 }
-
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(React.createElement(App));
