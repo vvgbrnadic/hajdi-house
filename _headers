@@ -1,0 +1,5 @@
+/admin/*
+  Basic-Auth: admin:Hajdi2026!
+
+/admin
+  Basic-Auth: admin:Hajdi2026!

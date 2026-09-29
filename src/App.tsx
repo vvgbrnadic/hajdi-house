@@ -51,6 +51,49 @@ type PricingItem = { id: string; naziv: string; cijena: string; jedinica: string
 const CATEGORIES = ["Toplina", "Priroda", "Kuhinja", "Spavanje", "Ostalo", "Tehnologija", "Aktivnosti"];
 const ICONS = ["flame","fire","sauna","terasa","window","bazen","kitchen","grill","coffee","utensils","bed","books","wifi","parking","speaker","trees","hike","bike","dog","sunset"];
 
+
+// --- AUTH CONFIG - PROMIJENI OVDJE ---
+const ADMIN_USER = "admin";
+const ADMIN_PASS = "Hajdi2026!"; // PROMIJENI LOZINKU OVDJE
+// --------------------------------------
+
+function useAuth() {
+  const [isAuthed, setIsAuthed] = React.useState(() => {
+    try { return localStorage.getItem("hajdi_admin_auth") === "1"; } catch { return false; }
+  });
+  return { isAuthed, setIsAuthed };
+}
+
+function LoginScreen({ onLogin }: { onLogin: () => void }) {
+  const [user, setUser] = React.useState("");
+  const [pass, setPass] = React.useState("");
+  const [err, setErr] = React.useState("");
+  const handle = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (user === ADMIN_USER && pass === ADMIN_PASS) {
+      localStorage.setItem("hajdi_admin_auth", "1");
+      onLogin();
+    } else {
+      setErr("Krivi username ili lozinka");
+    }
+  };
+  return (
+    <div style={{minHeight:"100vh", display:"flex", alignItems:"center", justifyContent:"center", background:"#f2ece0", fontFamily:"Inter, sans-serif"}}>
+      <form onSubmit={handle} style={{background:"white", padding:"32px", borderRadius:"24px", width:"100%", maxWidth:"380px", boxShadow:"0 10px 40px rgba(0,0,0,0.08)"}}>
+        <div style={{fontFamily:"serif", fontSize:"28px", marginBottom:"6px"}}>Hajdi House</div>
+        <div style={{fontSize:"13px", opacity:0.6, marginBottom:"24px"}}>Admin prijava — zaštićeno</div>
+        <label style={{display:"block", fontSize:"11px", textTransform:"uppercase", letterSpacing:"1px", opacity:0.6, fontWeight:600, marginBottom:"6px"}}>Username</label>
+        <input value={user} onChange={e=>setUser(e.target.value)} placeholder="admin" style={{width:"100%", height:"44px", padding:"0 14px", borderRadius:"12px", border:"1px solid #e8dfc8", background:"#fcfaf5", marginBottom:"16px"}}/>
+        <label style={{display:"block", fontSize:"11px", textTransform:"uppercase", letterSpacing:"1px", opacity:0.6, fontWeight:600, marginBottom:"6px"}}>Password</label>
+        <input type="password" value={pass} onChange={e=>setPass(e.target.value)} placeholder="••••••••" style={{width:"100%", height:"44px", padding:"0 14px", borderRadius:"12px", border:"1px solid #e8dfc8", background:"#fcfaf5", marginBottom:"12px"}}/>
+        {err && <div style={{color:"#b91c1c", fontSize:"12px", marginBottom:"12px"}}>{err}</div>}
+        <button type="submit" style={{width:"100%", height:"44px", borderRadius:"999px", background:"#2c2a24", color:"white", fontSize:"13px", fontWeight:500, marginTop:"8px"}}>Uđi u admin</button>
+        <div style={{fontSize:"11px", opacity:0.5, marginTop:"16px", lineHeight:1.4}}>Default: admin / Hajdi2026! — promijeni u src/App.tsx (ADMIN_USER / ADMIN_PASS) pa ponovno deployaj.</div>
+      </form>
+    </div>
+  );
+}
+
 const ICON_MAP: Record<string, any> = {
   flame: Flame,
   fire: Flame,
@@ -166,6 +209,7 @@ type TabId = "hero" | "about" | "stats" | "amenities" | "gallery" | "location" |
 
 export default function App() {
   const [config, setConfig] = useState(DEFAULT_CONFIG);
+  const { isAuthed, setIsAuthed } = useAuth();
   const [activeTab, setActiveTab] = useState<TabId>("hero");
   const [heroImgTab, setHeroImgTab] = useState<"comp" | "url">("url");
   const [aboutImgTab, setAboutImgTab] = useState<"comp" | "url">("url");
@@ -175,6 +219,7 @@ export default function App() {
   const [translating, setTranslating] = useState(false);
   const galleryInputRef = useRef<HTMLInputElement>(null);
   const [dragOver, setDragOver] = useState(false);
+  if (!isAuthed) { return <LoginScreen onLogin={() => setIsAuthed(true)} />; }
   const [toast, setToast] = useState<string>("");
   const fallbackImg = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%23e8dfc8'/%3E%3Ctext x='400' y='300' text-anchor='middle' fill='%232c2a24' font-family='serif' font-size='24' opacity='0.5'%3EHajdi House%3C/text%3E%3C/svg%3E";
   const showToast = (msg: string) => { setToast(msg); setTimeout(()=>setToast(""), 3000); };

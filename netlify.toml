@@ -1,6 +1,6 @@
 [build]
   publish = "."
-  command = "echo 'static site - FINAL A + Cjenik + Full Admin'"
+  command = "echo 'static site - FINAL SECURE ADMIN - cjenik 100/80/30'"
 
 [[redirects]]
   from = "/admin/*"
@@ -11,6 +11,12 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    Cache-Control = "no-cache"
+    X-Frame-Options = "DENY"
 
 [[headers]]
   for = "/public/js/*"
