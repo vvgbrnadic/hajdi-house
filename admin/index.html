@@ -2,668 +2,89 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hajdi House — FULL CMS Admin</title>
+<title>Hajdi House — FIXED</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <style>
-:root{--bg:#f2ece0;--gold:#b8952a;--dark:#2c2a24;--creamDark:#e8dfc8;--cream:#fcfaf5}
-body{margin:0;font-family:Inter,sans-serif;background:var(--bg);color:var(--dark)}
-.serif{font-family:"Instrument Serif",serif}
-.card{background:#fff;border-radius:20px;padding:20px;box-shadow:0 8px 30px rgba(44,42,36,.06);border:1px solid var(--creamDark)}
-.input{width:100%;height:44px;border-radius:12px;border:1px solid var(--creamDark);background:var(--cream);padding:0 14px;font-size:13px}
-.textarea{width:100%;min-height:90px;border-radius:12px;border:1px solid var(--creamDark);background:var(--cream);padding:12px 14px;font-size:13px;resize:vertical}
-.tab{height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--creamDark);background:#fff;font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px}
-.tab.active{background:var(--dark);color:#fff;border-color:var(--dark)}
-.upload-area{border:2px dashed var(--creamDark);border-radius:16px;padding:20px;text-align:center;background:var(--cream);cursor:pointer}
-.upload-area:hover{border-color:var(--gold);background:#fff}
-.badge{font-size:10px;letter-spacing:1px;text-transform:uppercase;opacity:.6;font-weight:700}
+:root{--bg:#f2ece0;--dark:#2c2a24;--creamDark:#e8dfc8;--cream:#fcfaf5}
+body{margin:0;font-family:sans-serif;background:var(--bg);color:var(--dark)}
+.card{background:#fff;border-radius:16px;padding:20px;margin:12px 0;box-shadow:0 8px 30px rgba(0,0,0,.06)}
+.input{width:100%;height:40px;border-radius:8px;border:1px solid #e8dfc8;padding:0 12px;margin:6px 0}
+.tab{height:36px;padding:0 14px;border-radius:999px;border:1px solid #e8dfc8;background:#fff;cursor:pointer}
+.tab.active{background:#2c2a24;color:#fff}
 </style>
 </head>
-<body>
-<div id="root"></div>
-<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script type="text/babel" data-presets="react">
-const ADMIN_USER = "admin";
-const ADMIN_PASS = "Hajdi2026!";
-const DEFAULT_CONFIG = {
-  "site": {
-    "name": "Hajdi House",
-    "domain": "www.hajdihouse.hr"
-  },
-  "colors": {
-    "background": "#f2ece0",
-    "gold": "#b8952a",
-    "dark": "#2c2a24",
-    "creamDark": "#e8dfc8"
-  },
-  "hero": {
-    "title": "Hajdi House — Kuća na brdu",
-    "subtitle": "Drvena kuća za dušu, na rubu šume. Bez buke, bez žurbe. Samo vatra, knjiga i pogled koji ne staje.",
-    "badge": "Žumberak 750m",
-    "image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1920&q=80&auto=format&fit=crop",
-    "blur": 6,
-    "cta1": "Rezerviraj",
-    "cta2": "Pogledaj kuću"
-  },
-  "about": {
-    "title": "Hajdi House nije apartman.",
-    "p1": "To je mala drvena kuća na rubu šume, sagrađena da diše zajedno s brdom. Terasa od ariša gleda na Žumberak, a veliki prozori puštaju svjetlo da radi posao. Nema susjeda koji zaviruju. Nema prometa. Samo ti i tišina.",
-    "p2": "Unutra — peć na drva koja pucketa dok vani pada magla, kuhinja s pogledom gdje kava miriše drugačije, dva topla krevetna gnijezda za spore jutra, i polica knjiga koja te tjera da ostaneš duže. Sve je dirljivo jednostavno, a opet luksuzno u onom pravom smislu.",
-    "quote": "Dođi s knjigom. Otići ćeš s pričom.",
-    "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80&auto=format&fit=crop"
-  },
-  "stats": [
-    {
-      "value": "2",
-      "label": "Spavaće sobe"
-    },
-    {
-      "value": "1",
-      "label": "Kupaona"
-    },
-    {
-      "value": "32 m²",
-      "label": "Površina"
-    },
-    {
-      "value": "4",
-      "label": "Gosta"
-    }
-  ],
-  "amenities": [
-    {
-      "id": "1",
-      "label": "Peć na drva",
-      "category": "Toplina",
-      "icon": "flame"
-    },
-    {
-      "id": "2",
-      "label": "Kamin",
-      "category": "Toplina",
-      "icon": "fire"
-    },
-    {
-      "id": "3",
-      "label": "Sauna",
-      "category": "Toplina",
-      "icon": "sauna"
-    },
-    {
-      "id": "4",
-      "label": "Terasa od ariša",
-      "category": "Priroda",
-      "icon": "terasa"
-    },
-    {
-      "id": "5",
-      "label": "Veliki prozori",
-      "category": "Priroda",
-      "icon": "window"
-    },
-    {
-      "id": "6",
-      "label": "Bazen (ljetni)",
-      "category": "Priroda",
-      "icon": "bazen"
-    },
-    {
-      "id": "7",
-      "label": "Kuhinja s pogledom",
-      "category": "Kuhinja",
-      "icon": "kitchen"
-    },
-    {
-      "id": "8",
-      "label": "Roštilj",
-      "category": "Kuhinja",
-      "icon": "grill"
-    },
-    {
-      "id": "9",
-      "label": "Kava aparat",
-      "category": "Kuhinja",
-      "icon": "coffee"
-    },
-    {
-      "id": "10",
-      "label": "Puna kuhinja",
-      "category": "Kuhinja",
-      "icon": "utensils"
-    },
-    {
-      "id": "11",
-      "label": "Bračni krevet",
-      "category": "Spavanje",
-      "icon": "bed"
-    },
-    {
-      "id": "12",
-      "label": "Knjige",
-      "category": "Ostalo",
-      "icon": "books"
-    },
-    {
-      "id": "13",
-      "label": "WiFi Starlink",
-      "category": "Tehnologija",
-      "icon": "wifi"
-    },
-    {
-      "id": "14",
-      "label": "Parking",
-      "category": "Ostalo",
-      "icon": "parking"
-    },
-    {
-      "id": "15",
-      "label": "Bluetooth zvučnik",
-      "category": "Tehnologija",
-      "icon": "speaker"
-    },
-    {
-      "id": "16",
-      "label": "Šuma iza kuće",
-      "category": "Priroda",
-      "icon": "trees"
-    },
-    {
-      "id": "17",
-      "label": "Pješačke staze",
-      "category": "Aktivnosti",
-      "icon": "hike"
-    },
-    {
-      "id": "18",
-      "label": "Biciklizam",
-      "category": "Aktivnosti",
-      "icon": "bike"
-    },
-    {
-      "id": "19",
-      "label": "Psi dobrodošli",
-      "category": "Ostalo",
-      "icon": "dog"
-    },
-    {
-      "id": "20",
-      "label": "Zalazak sunca",
-      "category": "Priroda",
-      "icon": "sunset"
-    }
-  ],
-  "gallery": [
-    "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=800&q=80&auto=format&fit=crop"
-  ],
-  "location": {
-    "lat": "45.783450",
-    "lng": "15.568973",
-    "address": "Noršić Selo 52B, 10430 Samobor",
-    "desc": "Na rubu Parka prirode Žumberak, 40 minuta od Zagreba. Zadnja kuća prije šume, prva iznad magle. Put je makadam zadnjih 800m - dio doživljaja.",
-    "googleMapsLink": "https://maps.google.com/?q=45.783450,15.568973"
-  },
-  "footer": {
-    "text": "© 2026 Hajdi House — Noršić Selo 52B, Žumberak. Kuća na brdu.",
-    "seo_note": "SEO red maknut - final",
-    "links": [
-      {
-        "label": "Instagram",
-        "url": "#"
-      },
-      {
-        "label": "Airbnb",
-        "url": "#"
-      }
-    ]
-  },
-  "languages": [
-    "HR",
-    "EN",
-    "DE",
-    "IT",
-    "SL"
-  ],
-  "pricing": [
-    {
-      "id": "1",
-      "naziv": "Noćenje 2-3 noći",
-      "cijena": "100€",
-      "jedinica": "/ noć",
-      "opis": "Cijena po noćenju za boravak 2-3 noći, za cijelu kuću (do 4 gosta). Minimalno 2 noći.",
-      "aktivno": true
-    },
-    {
-      "id": "2",
-      "naziv": "Noćenje 4 i više noćenja",
-      "cijena": "80€",
-      "jedinica": "/ noć",
-      "opis": "Popust za duži boravak, 4 i više noćenja. Minimalno 2 noći.",
-      "aktivno": true
-    },
-    {
-      "id": "3",
-      "naziv": "Završno čišćenje",
-      "cijena": "30€",
-      "jedinica": "/ boravak",
-      "opis": "Jednokratno završno čišćenje kuće",
-      "aktivno": true
-    }
-  ],
-  "translations": {
-    "EN": {
-      "Hajdi House — Kuća na brdu": "Hajdi House — House on the Hill",
-      "Drvena kuća za dušu, na rubu šume. Bez buke, bez žurbe. Samo vatra, knjiga i pogled koji ne staje.": "A wooden house for the soul, at the forest edge. No noise, no rush. Just fire, a book and an endless view.",
-      "Hajdi House nije apartman.": "Hajdi House is not an apartment.",
-      "Dođi s knjigom. Otići ćeš s pričom.": "Come with a book. You'll leave with a story.",
-      "Sve za sporiji dan.": "Everything for a slower day.",
-      "Zadnja kuća prije šume.": "The last house before the forest.",
-      "O kući": "About",
-      "Kuća": "House",
-      "Sadržaj": "Amenities",
-      "Galerija": "Gallery",
-      "Lokacija": "Location",
-      "Rezerviraj": "Book now",
-      "Pogledaj kuću": "View the house",
-      "Cjenik": "Pricing",
-      "Cjenik usluga": "Service pricing",
-      "Noćenje 2-3 noći": "Stay 2-3 nights",
-      "Noćenje 4 i više noćenja": "Stay 4+ nights",
-      "Završno čišćenje": "Final cleaning",
-      "Minimalno 2 noći": "Minimum 2 nights",
-      "Usluge i cijene - sve na jednom mjestu, transparentno i bez skrivenih troškova.": "Services and prices - transparent, no hidden costs.",
-      "Preuzmi kao CSV": "Download as CSV"
-    },
-    "DE": {
-      "Hajdi House — Kuća na brdu": "Hajdi House — Haus auf dem Hügel",
-      "Cjenik": "Preise",
-      "Cjenik usluga": "Preisliste",
-      "Noćenje 2-3 noći": "Aufenthalt 2-3 Nächte",
-      "Noćenje 4 i više noćenja": "Aufenthalt 4+ Nächte",
-      "Završno čišćenje": "Endreinigung",
-      "Minimalno 2 noći": "Mindestens 2 Nächte"
-    },
-    "IT": {
-      "Hajdi House — Kuća na brdu": "Hajdi House — Casa sulla collina",
-      "Cjenik": "Prezzi",
-      "Cjenik usluga": "Listino prezzi",
-      "Noćenje 2-3 noći": "Soggiorno 2-3 notti",
-      "Noćenje 4 i više noćenja": "Soggiorno 4+ notti",
-      "Završno čišćenje": "Pulizia finale",
-      "Minimalno 2 noći": "Minimo 2 notti"
-    },
-    "SL": {
-      "Hajdi House — Kuća na brdu": "Hajdi House — Hiša na hribu",
-      "Cjenik": "Cenik",
-      "Cjenik usluga": "Cenik storitev",
-      "Noćenje 2-3 noći": "Bivanje 2-3 noči",
-      "Noćenje 4 i više noćenja": "Bivanje 4+ noči",
-      "Završno čišćenje": "Končno čiščenje",
-      "Minimalno 2 noći": "Minimalno 2 noči"
-    }
-  },
-  "features": [
-    {
-      "id": "1",
-      "title": "Sve za sporiji dan.",
-      "desc": "Kuća je opremljena za boravak bez žurbe — knjige, društvene igre, deka za terasu.",
-      "icon": "books"
-    },
-    {
-      "id": "2",
-      "title": "Vatra cijelu noć",
-      "desc": "Peć na drva koja grije i daje atmosferu — drva su uključena u cijenu.",
-      "icon": "flame"
-    },
-    {
-      "id": "3",
-      "title": "Kava iz džezve",
-      "desc": "Kava aparat, džezva i pogled na šumu — jutarnji ritual koji ne preskačeš.",
-      "icon": "coffee"
-    },
-    {
-      "id": "4",
-      "title": "Šuma na 20 koraka",
-      "desc": "Iza kuće počinje šuma — staze za šetnju, gljive, mir i tišina.",
-      "icon": "trees"
-    }
-  ],
-  "customSections": []
-};
-
-function Login({onLogin}){
-  const [u,setU]=React.useState(""); const [p,setP]=React.useState(""); const [err,setErr]=React.useState("");
-  const submit=(e)=>{ e.preventDefault(); if(u===ADMIN_USER && p===ADMIN_PASS){ localStorage.setItem("hajdi_admin_auth","1"); onLogin(); } else setErr("Krivi login"); };
-  return (
-    <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
-      <form onSubmit={submit} className="card" style={{maxWidth:380,width:"100%",padding:32}}>
-        <div className="serif" style={{fontSize:28}}>Hajdi House</div>
-        <div style={{fontSize:11,opacity:.6,marginBottom:24,letterSpacing:1,textTransform:"uppercase"}}>FULL CMS • login admin / Hajdi2026!</div>
-        <div className="badge">Username</div><input value={u} onChange={e=>setU(e.target.value)} className="input" style={{marginBottom:12}}/>
-        <div className="badge">Password</div><input type="password" value={p} onChange={e=>setP(e.target.value)} className="input" style={{marginBottom:12}}/>
-        {err && <div style={{color:"#b91c1c",fontSize:11,marginBottom:12}}>{err}</div>}
-        <button type="submit" style={{width:"100%",height:44,borderRadius:999,background:"#2c2a24",color:"#fff"}}>Uđi</button>
-      </form>
-    </div>
-  );
-}
-
-function AdminApp(){
-  const [config,setConfig]=React.useState(null);
-  const [tab,setTab]=React.useState("features");
-  const [log,setLog]=React.useState("");
-  const [saving,setSaving]=React.useState(false);
-  const [git,setGit]=React.useState({owner:"vvgbrnadic",repo:"hajdi-house",branch:"main",token:"",pathConfig:"public/js/config.json", pathImages:"public/images/gallery"});
-  const fileRef=React.useRef(null);
-  const heroRef=React.useRef(null);
-
-  React.useEffect(()=>{
-    const paths=["../public/js/config.json","./public/js/config.json","/public/js/config.json","public/js/config.json"];
-    (async()=>{
-      for(const p of paths){ try{ const r=await fetch(p); if(r.ok){ const j=await r.json(); setConfig(j); return; } }catch{} }
-      const saved=localStorage.getItem("hajdi_config");
-      if(saved){ try{ setConfig(JSON.parse(saved)); return; }catch{} }
-      setConfig(DEFAULT_CONFIG);
-    })();
-    const sg=localStorage.getItem("hajdi_git");
-    if(sg){
-      try{
-        const parsed = JSON.parse(sg);
-        setGit(prev=>({
-          ...prev,
-          ...parsed,
-          pathImages: parsed.pathImages || "public/images/gallery",
-          pathConfig: parsed.pathConfig || "public/js/config.json"
-        }));
-      }catch{}
-    }
-  },[]);
-
-  const saveLocal=()=>{ localStorage.setItem("hajdi_config", JSON.stringify(config)); setLog("✅ Lokalno spremljeno"); setTimeout(()=>setLog(""),2000); };
-
-  const commitGit=async()=>{
-    if(!git.token){ setLog("❌ Unesi GitHub token u GIT tab"); return; }
-    setSaving(true); setLog("Commitam config.json...");
-    try{
-      const content=btoa(unescape(encodeURIComponent(JSON.stringify(config,null,2))));
-      let sha=null;
-      try{ const r=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${git.pathConfig}?ref=${git.branch}`, {headers:{Authorization:`token ${git.token}`}}); if(r.ok){ const j=await r.json(); sha=j.sha; } }catch{}
-      const body={message:`ADMIN FULL CMS ${new Date().toISOString()}`, content, branch:git.branch, ...(sha?{sha}:{})};
-      const res=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${git.pathConfig}`, {method:"PUT", headers:{Authorization:`token ${git.token}`, "Content-Type":"application/json"}, body: JSON.stringify(body)});
-      const j=await res.json();
-      if(res.ok){ setLog(`✅ Commit uspješan! SHA ${j.commit?.sha?.slice(0,7)||""} — Netlify za 60s`); localStorage.setItem("hajdi_git", JSON.stringify(git)); }
-      else setLog("❌ "+JSON.stringify(j).slice(0,800));
-    }catch(e){ setLog("❌ "+e.message); }
-    setSaving(false);
-  };
-
-  const uploadImageToGitHub=async(file)=>{
-    const imagesPath = git.pathImages || "public/images/gallery";
-    if(!git.token){ setLog("❌ Prvo unesi GitHub token u GIT tab da upload radi na sajtu! Koristim base64 privremeno. Path fallback: "+imagesPath); return null; }
-    setLog(`Uploadam ${file.name} na GitHub u ${imagesPath}/...`);
-    try{
-      const base64 = await new Promise((res,rej)=>{
-        const r=new FileReader(); r.onload=()=>{ const s=r.result.split(",")[1]; res(s); }; r.onerror=rej; r.readAsDataURL(file);
-      });
-      const safeName = file.name.replace(/[^a-z0-9.-]/gi,"-").toLowerCase();
-      const path = `${imagesPath}/${Date.now()}-${safeName}`;
-      let sha=null;
-      try{ const r=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${path}?ref=${git.branch}`, {headers:{Authorization:`token ${git.token}`}}); if(r.ok){ const j=await r.json(); sha=j.sha; } }catch{}
-      const body={message:`upload image ${safeName}`, content: base64, branch:git.branch, ...(sha?{sha}:{})};
-      const res=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${path}`, {method:"PUT", headers:{Authorization:`token ${git.token}`, "Content-Type":"application/json"}, body: JSON.stringify(body)});
-      const j=await res.json();
-      if(res.ok){
-        const rawUrl = `https://raw.githubusercontent.com/${git.owner}/${git.repo}/${git.branch}/${path}`;
-        setLog(`✅ Slika uploadana na GitHub: ${rawUrl} — sad commitaš config da se vidi na sajtu`);
-        return rawUrl;
-      } else { setLog("❌ Upload greška: "+JSON.stringify(j).slice(0,600)+` — provjeri da folder ${imagesPath} postoji i token ima repo scope`); return null; }
-    }catch(e){ setLog("❌ Upload greška: "+e.message); return null; }
-  };
-
-  const handleGalleryUpload=async(e)=>{
-    const files=e.target.files; if(!files) return;
-    for(const file of Array.from(files)){
-      const url = await uploadImageToGitHub(file);
-      if(url){
-        setConfig(prev=>({...prev, gallery:[...prev.gallery, url]}));
-      } else {
-        // fallback base64 preview
-        const dataUrl = await new Promise(res=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.readAsDataURL(file); });
-        setConfig(prev=>({...prev, gallery:[...prev.gallery, dataUrl]}));
-      }
-    }
-  };
-
-  const handleHeroUpload=async(e)=>{
-    const file=e.target.files?.[0]; if(!file) return;
-    const url = await uploadImageToGitHub(file);
-    if(url){ setConfig(prev=>({...prev, hero:{...prev.hero, image:url}})); }
-    else {
-      const dataUrl=await new Promise(res=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.readAsDataURL(file); });
-      setConfig(prev=>({...prev, hero:{...prev.hero, image:dataUrl}}));
-    }
-  };
-
-  if(!config) return <div style={{padding:40}} className="serif">Učitavam FULL CMS...</div>;
-
-  const tabs=[
-    {id:"features", label:"⭐ Highlights", desc:"Sporiji dan, Vatra..."},
-    {id:"hero", label:"🏠 Hero"},
-    {id:"about", label:"📖 O kući"},
-    {id:"stats", label:"📊 Stats"},
-    {id:"amenities", label:"✨ Sadržaj"},
-    {id:"gallery", label:"🖼 Galerija + Upload"},
-    {id:"location", label:"📍 Lokacija"},
-    {id:"pricing", label:"💶 Cjenik 100/80/30"},
-    {id:"custom", label:"➕ Nove sekcije"},
-    {id:"footer", label:"🔗 Footer"},
-    {id:"site", label:"⚙️ Site/Boje/Jezici"},
-    {id:"git", label:"🐙 GIT"},
-  ];
-
-  return (
-    <div style={{minHeight:"100vh",background:"#f2ece0",display:"flex"}}>
-      <div style={{width:270,background:"#fff",borderRight:"1px solid #e8dfc8",padding:18,position:"sticky",top:0,height:"100vh",overflow:"auto"}} className="hidden md:block">
-        <div className="serif" style={{fontSize:22}}>Hajdi CMS</div>
-        <div style={{fontSize:10,opacity:.5,letterSpacing:1,textTransform:"uppercase",marginBottom:18}}>FULL • sve se može mijenjati</div>
-        <div style={{display:"grid",gap:6}}>
-          {tabs.map(t=><button key={t.id} onClick={()=>setTab(t.id)} className={`tab ${tab===t.id?"active":""}`} style={{justifyContent:"space-between",height:42}}><span>{t.label}</span><span style={{fontSize:9,opacity:.6}}>{t.desc||""}</span></button>)}
-        </div>
-        <button onClick={()=>{localStorage.removeItem("hajdi_admin_auth"); location.reload();}} style={{marginTop:14,width:"100%",height:34,borderRadius:999,background:"#f2ece0",border:"1px solid #e8dfc8",fontSize:11}}>Odjava</button>
-      </div>
-
-      <div style={{flex:1,minWidth:0}}>
-        <div style={{background:"#fff",borderBottom:"1px solid #e8dfc8",padding:"10px 12px",display:"flex",gap:6,overflow:"auto"}} className="md:hidden">
-          {tabs.map(t=><button key={t.id} onClick={()=>setTab(t.id)} className={`tab ${tab===t.id?"active":""}`} style={{whiteSpace:"nowrap"}}>{t.label}</button>)}
-        </div>
-
-        <div style={{maxWidth:950,margin:"0 auto",padding:20}}>
-
-          {tab==="features" && (
-            <div className="card">
-              <h2 className="serif" style={{fontSize:26,marginBottom:4}}>Highlights — ono što nisi našao</h2>
-              <div style={{fontSize:11,opacity:.6,marginBottom:16}}>Ovo su kartice "Sve za sporiji dan, Vatra cijelu noć, Kava iz džezve, Šuma na 20 koraka" — sad ih možeš mijenjati! Dodaj, makni, promijeni redoslijed.</div>
-              {config.features?.map((f,i)=>(
-                <div key={f.id} style={{background:"#fcfaf5",padding:14,borderRadius:14,border:"1px solid #e8dfc8",marginBottom:12,display:"grid",gap:8}}>
-                  <div style={{display:"grid",gridTemplateColumns:"1fr 120px 50px",gap:8}}>
-                    <input value={f.title} onChange={e=>{ const nf=[...config.features]; nf[i].title=e.target.value; setConfig({...config, features:nf}); }} className="input" placeholder="Sve za sporiji dan."/>
-                    <input value={f.icon} onChange={e=>{ const nf=[...config.features]; nf[i].icon=e.target.value; setConfig({...config, features:nf}); }} className="input" placeholder="icon: books/flame/coffee/trees"/>
-                    <button onClick={()=>{ const nf=config.features.filter((_,j)=>j!==i); setConfig({...config, features:nf}); }} style={{height:44,borderRadius:12,background:"#fff",border:"1px solid #e8dfc8"}}>X</button>
-                  </div>
-                  <textarea value={f.desc} onChange={e=>{ const nf=[...config.features]; nf[i].desc=e.target.value; setConfig({...config, features:nf}); }} className="textarea" placeholder="Opis kartice"/>
-                </div>
-              ))}
-              <button onClick={()=>setConfig({...config, features:[...config.features, {id:Date.now().toString(), title:"Nova kartica", desc:"Opis...", icon:"trees"}]})} style={{height:40,padding:"0 18px",borderRadius:999,background:"#2c2a24",color:"#fff",fontSize:12}}>+ Dodaj novu karticu</button>
-            </div>
-          )}
-
-          {tab==="custom" && (
-            <div className="card">
-              <h2 className="serif" style={{fontSize:26,marginBottom:4}}>Nove sekcije — builder</h2>
-              <div style={{fontSize:11,opacity:.6,marginBottom:16}}>Ovdje možeš dodati potpuno nove sekcije koje će se prikazati na sajtu ispod galerije — npr. "Pravila kuće", "Kako do nas", "Recenzije". Na glavnom sajtu treba dodati render za customSections (dam ti kod nakon).</div>
-              {config.customSections?.map((s,i)=>(
-                <div key={s.id} style={{background:"#fcfaf5",padding:14,borderRadius:14,border:"1px solid #e8dfc8",marginBottom:12,display:"grid",gap:8}}>
-                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 50px",gap:8}}>
-                    <input value={s.title} onChange={e=>{ const ns=[...config.customSections]; ns[i].title=e.target.value; setConfig({...config, customSections:ns}); }} className="input" placeholder="Naslov sekcije"/>
-                    <input value={s.icon} onChange={e=>{ const ns=[...config.customSections]; ns[i].icon=e.target.value; setConfig({...config, customSections:ns}); }} className="input" placeholder="icon"/>
-                    <button onClick={()=>{ const ns=config.customSections.filter((_,j)=>j!==i); setConfig({...config, customSections:ns}); }} style={{height:44,borderRadius:12,background:"#fff",border:"1px solid #e8dfc8"}}>X</button>
-                  </div>
-                  <textarea value={s.content} onChange={e=>{ const ns=[...config.customSections]; ns[i].content=e.target.value; setConfig({...config, customSections:ns}); }} className="textarea" style={{minHeight:120}} placeholder="Sadržaj sekcije — može HTML"/>
-                  <input value={s.image||""} onChange={e=>{ const ns=[...config.customSections]; ns[i].image=e.target.value; setConfig({...config, customSections:ns}); }} className="input" placeholder="Slika URL (opcionalno)"/>
-                </div>
-              ))}
-              <button onClick={()=>setConfig({...config, customSections:[...(config.customSections||[]), {id:Date.now().toString(), title:"Nova sekcija", content:"Tekst...", icon:"trees", image:""}]})} style={{height:40,padding:"0 18px",borderRadius:999,background:"#b8952a",color:"#fff",fontSize:12}}>+ Dodaj novu sekciju</button>
-              <div style={{marginTop:16,background:"#2c2a24",color:"#f2ece0",padding:12,borderRadius:12,fontSize:11,lineHeight:1.5}}>
-                Za prikaz na glavnom sajtu dodaj u tvoj main site kod (React/Vue) ovo:<br/>
-                <code>{`{config.customSections?.map(s=><section><h2>{s.title}</h2><p>{s.content}</p>{s.image && <img src={s.image}/>}</section>)}`}</code>
-              </div>
-            </div>
-          )}
-
-          {tab==="gallery" && (
-            <div className="card">
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
-                <h2 className="serif" style={{fontSize:26}}>Galerija — {config.gallery.length} slika</h2>
-                <div style={{display:"flex",gap:8}}>
-                  <input ref={fileRef} type="file" accept="image/*" multiple style={{display:"none"}} onChange={handleGalleryUpload}/>
-                  <button onClick={()=>fileRef.current?.click()} style={{height:40,padding:"0 18px",borderRadius:999,background:"#b8952a",color:"#fff",fontSize:12,fontWeight:600}}>📤 Upload sa kompa (na GitHub)</button>
-                </div>
-              </div>
-              <div className="upload-area" onClick={()=>fileRef.current?.click()}>
-                <div style={{fontSize:12,fontWeight:600}}>Upload sa kompjutera — sada sprema pravi file na GitHub u {git.pathImages}/, ne base64!</div>
-                <div style={{fontSize:10,opacity:.6,marginTop:4}}>Potreban GitHub token u GIT tabu. Ako nema tokena, koristi base64 fallback (privremeno).</div>
-              </div>
-              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill, minmax(150px,1fr))",gap:10,marginTop:14}}>
-                {config.gallery.map((url,i)=>(
-                  <div key={i} style={{border:"1px solid #e8dfc8",borderRadius:12,overflow:"hidden",background:"#fcfaf5"}}>
-                    <img src={url} style={{width:"100%",height:110,objectFit:"cover"}}/>
-                    <div style={{padding:6,display:"flex",gap:4}}>
-                      <button onClick={()=>{ const ng=config.gallery.filter((_,j)=>j!==i); setConfig({...config, gallery:ng}); }} style={{flex:1,height:28,borderRadius:999,background:"#fff",border:"1px solid #e8dfc8",fontSize:10}}>Makni</button>
-                      <button onClick={()=>{ if(i>0){ const ng=[...config.gallery]; [ng[i-1],ng[i]]=[ng[i],ng[i-1]]; setConfig({...config, gallery:ng}); } }} style={{width:28,height:28,borderRadius:999,background:"#fff",border:"1px solid #e8dfc8"}}>↑</button>
-                      <button onClick={()=>{ if(i<config.gallery.length-1){ const ng=[...config.gallery]; [ng[i+1],ng[i]]=[ng[i],ng[i+1]]; setConfig({...config, gallery:ng}); } }} style={{width:28,height:28,borderRadius:999,background:"#fff",border:"1px solid #e8dfc8"}}>↓</button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {tab==="hero" && (
-            <div className="card">
-              <h2 className="serif" style={{fontSize:26,marginBottom:12}}>Hero</h2>
-              <div style={{display:"grid",gap:12}}>
-                <input value={config.hero.title} onChange={e=>setConfig({...config, hero:{...config.hero, title:e.target.value}})} className="input" placeholder="Title"/>
-                <textarea value={config.hero.subtitle} onChange={e=>setConfig({...config, hero:{...config.hero, subtitle:e.target.value}})} className="textarea" placeholder="Subtitle"/>
-                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
-                  <input value={config.hero.badge} onChange={e=>setConfig({...config, hero:{...config.hero, badge:e.target.value}})} className="input"/>
-                  <input value={config.hero.blur} type="number" onChange={e=>setConfig({...config, hero:{...config.hero, blur:parseInt(e.target.value)||0}})} className="input"/>
-                </div>
-                <div style={{display:"flex",gap:8}}>
-                  <input value={config.hero.image} onChange={e=>setConfig({...config, hero:{...config.hero, image:e.target.value}})} className="input" style={{flex:1}}/>
-                  <input ref={heroRef} type="file" accept="image/*" style={{display:"none"}} onChange={handleHeroUpload}/>
-                  <button onClick={()=>heroRef.current?.click()} style={{height:44,padding:"0 14px",borderRadius:12,background:"#f2ece0",border:"1px solid #e8dfc8",fontSize:11}}>Upload</button>
-                </div>
-                {config.hero.image && <img src={config.hero.image} style={{width:"100%",height:200,objectFit:"cover",borderRadius:12}}/>}
-                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
-                  <input value={config.hero.cta1} onChange={e=>setConfig({...config, hero:{...config.hero, cta1:e.target.value}})} className="input"/>
-                  <input value={config.hero.cta2} onChange={e=>setConfig({...config, hero:{...config.hero, cta2:e.target.value}})} className="input"/>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {tab==="pricing" && (
-            <div className="card">
-              <h2 className="serif" style={{fontSize:26,marginBottom:6}}>Cjenik 100€ / 80€ / 30€ + min 2 noći</h2>
-              {config.pricing.map((item,i)=>(
-                <div key={item.id} style={{background:"#fcfaf5",padding:12,borderRadius:12,border:"1px solid #e8dfc8",marginBottom:10,display:"grid",gap:6}}>
-                  <div style={{display:"grid",gridTemplateColumns:"1fr 100px 80px",gap:6}}>
-                    <input value={item.naziv} onChange={e=>{ const np=[...config.pricing]; np[i].naziv=e.target.value; setConfig({...config, pricing:np}); }} className="input"/>
-                    <input value={item.cijena} onChange={e=>{ const np=[...config.pricing]; np[i].cijena=e.target.value; setConfig({...config, pricing:np}); }} className="input"/>
-                    <input value={item.jedinica} onChange={e=>{ const np=[...config.pricing]; np[i].jedinica=e.target.value; setConfig({...config, pricing:np}); }} className="input"/>
-                  </div>
-                  <input value={item.opis} onChange={e=>{ const np=[...config.pricing]; np[i].opis=e.target.value; setConfig({...config, pricing:np}); }} className="input" style={{height:36,fontSize:11}}/>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {tab==="about" && (<div className="card"><h2 className="serif" style={{fontSize:26,marginBottom:12}}>O kući</h2><div style={{display:"grid",gap:10}}><input value={config.about.title} onChange={e=>setConfig({...config, about:{...config.about, title:e.target.value}})} className="input"/><textarea value={config.about.p1} onChange={e=>setConfig({...config, about:{...config.about, p1:e.target.value}})} className="textarea"/><textarea value={config.about.p2} onChange={e=>setConfig({...config, about:{...config.about, p2:e.target.value}})} className="textarea"/><input value={config.about.quote} onChange={e=>setConfig({...config, about:{...config.about, quote:e.target.value}})} className="input"/></div></div>)}
-          {tab==="stats" && (<div className="card"><h2 className="serif" style={{fontSize:26,marginBottom:12}}>Stats</h2>{config.stats.map((s,i)=><div key={i} style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:8,background:"#fcfaf5",padding:10,borderRadius:10,border:"1px solid #e8dfc8"}}><input value={s.value} onChange={e=>{ const ns=[...config.stats]; ns[i].value=e.target.value; setConfig({...config, stats:ns}); }} className="input"/><input value={s.label} onChange={e=>{ const ns=[...config.stats]; ns[i].label=e.target.value; setConfig({...config, stats:ns}); }} className="input"/></div>)}</div>)}
-          {tab==="amenities" && (<div className="card"><h2 className="serif" style={{fontSize:26,marginBottom:12}}>Sadržaj 20 stavki</h2>{config.amenities.map((a,i)=><div key={a.id} style={{display:"grid",gridTemplateColumns:"1fr 1fr 80px 40px",gap:6,marginBottom:6,background:"#fcfaf5",padding:8,borderRadius:10,border:"1px solid #e8dfc8"}}><input value={a.label} onChange={e=>{ const na=[...config.amenities]; na[i].label=e.target.value; setConfig({...config, amenities:na}); }} className="input" style={{height:34}}/><input value={a.category} onChange={e=>{ const na=[...config.amenities]; na[i].category=e.target.value; setConfig({...config, amenities:na}); }} className="input" style={{height:34}}/><input value={a.icon} onChange={e=>{ const na=[...config.amenities]; na[i].icon=e.target.value; setConfig({...config, amenities:na}); }} className="input" style={{height:34}}/><button onClick={()=>{ const na=config.amenities.filter((_,j)=>j!==i); setConfig({...config, amenities:na}); }} style={{height:34,borderRadius:8,background:"#fff",border:"1px solid #e8dfc8"}}>X</button></div>)}<button onClick={()=>setConfig({...config, amenities:[...config.amenities, {id:Date.now().toString(), label:"Novo", category:"Ostalo", icon:"trees"}]})} style={{height:36,padding:"0 14px",borderRadius:999,background:"#2c2a24",color:"#fff",fontSize:11,marginTop:8}}>+ Dodaj</button></div>)}
-          {tab==="location" && (<div className="card"><h2 className="serif" style={{fontSize:26,marginBottom:12}}>Lokacija</h2><div style={{display:"grid",gap:10}}><input value={config.location.address} onChange={e=>setConfig({...config, location:{...config.location, address:e.target.value}})} className="input"/><textarea value={config.location.desc} onChange={e=>setConfig({...config, location:{...config.location, desc:e.target.value}})} className="textarea"/><input value={config.location.googleMapsLink} onChange={e=>setConfig({...config, location:{...config.location, googleMapsLink:e.target.value}})} className="input"/><div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}><input value={config.location.lat} onChange={e=>setConfig({...config, location:{...config.location, lat:e.target.value}})} className="input"/><input value={config.location.lng} onChange={e=>setConfig({...config, location:{...config.location, lng:e.target.value}})} className="input"/></div></div></div>)}
-          {tab==="footer" && (<div className="card"><h2 className="serif" style={{fontSize:26,marginBottom:12}}>Footer</h2><input value={config.footer.text} onChange={e=>setConfig({...config, footer:{...config.footer, text:e.target.value}})} className="input" style={{marginBottom:10}}/><div style={{display:"grid",gap:8}}>{config.footer.links.map((l,i)=><div key={i} style={{display:"grid",gridTemplateColumns:"1fr 1fr 40px",gap:6}}><input value={l.label} onChange={e=>{ const nl=[...config.footer.links]; nl[i].label=e.target.value; setConfig({...config, footer:{...config.footer, links:nl}}); }} className="input" style={{height:36}}/><input value={l.url} onChange={e=>{ const nl=[...config.footer.links]; nl[i].url=e.target.value; setConfig({...config, footer:{...config.footer, links:nl}}); }} className="input" style={{height:36}}/><button onClick={()=>{ const nl=config.footer.links.filter((_,j)=>j!==i); setConfig({...config, footer:{...config.footer, links:nl}}); }} style={{height:36,borderRadius:8,background:"#fff",border:"1px solid #e8dfc8"}}>X</button></div>)}<button onClick={()=>setConfig({...config, footer:{...config.footer, links:[...config.footer.links, {label:"Novi", url:"#"}]}})} style={{height:36,padding:"0 14px",borderRadius:999,background:"#2c2a24",color:"#fff",fontSize:11}}>+ Link</button></div></div>)}
-          {tab==="site" && (
-            <div className="card">
-              <h2 className="serif" style={{fontSize:26,marginBottom:12}}>Site, boje, jezici, prijevodi</h2>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:12}}>
-                <label><span className="badge">Site name</span><input value={config.site.name} onChange={e=>setConfig({...config, site:{...config.site, name:e.target.value}})} className="input"/></label>
-                <label><span className="badge">Domain</span><input value={config.site.domain} onChange={e=>setConfig({...config, site:{...config.site, domain:e.target.value}})} className="input"/></label>
-              </div>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr 1fr",gap:8,marginBottom:12}}>
-                <label><span className="badge">Background</span><input value={config.colors.background} onChange={e=>setConfig({...config, colors:{...config.colors, background:e.target.value}})} className="input"/></label>
-                <label><span className="badge">Gold</span><input value={config.colors.gold} onChange={e=>setConfig({...config, colors:{...config.colors, gold:e.target.value}})} className="input"/></label>
-                <label><span className="badge">Dark</span><input value={config.colors.dark} onChange={e=>setConfig({...config, colors:{...config.colors, dark:e.target.value}})} className="input"/></label>
-                <label><span className="badge">CreamDark</span><input value={config.colors.creamDark} onChange={e=>setConfig({...config, colors:{...config.colors, creamDark:e.target.value}})} className="input"/></label>
-              </div>
-              <div style={{marginBottom:12}}>
-                <div className="badge">Languages (HR,EN...)</div>
-                <input value={config.languages.join(",")} onChange={e=>setConfig({...config, languages:e.target.value.split(",").map(s=>s.trim()).filter(Boolean)})} className="input"/>
-              </div>
-              <div style={{background:"#fcfaf5",padding:12,borderRadius:12,border:"1px solid #e8dfc8"}}>
-                <div className="badge" style={{marginBottom:8}}>Translations JSON (EN,DE,IT,SL)</div>
-                <textarea value={JSON.stringify(config.translations,null,2)} onChange={e=>{ try{ const j=JSON.parse(e.target.value); setConfig({...config, translations:j}); }catch{} }} className="textarea" style={{minHeight:200,fontFamily:"monospace",fontSize:11}}/>
-              </div>
-            </div>
-          )}
-
-          {tab==="git" && (
-            <div className="card">
-              <h2 className="serif" style={{fontSize:26}}>GIT Deploy</h2>
-              <div style={{fontSize:11,opacity:.6,marginBottom:12}}>Token treba repo scope. Slike se spremaju u {git.pathImages}/</div>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
-                <label><span className="badge">Owner</span><input value={git.owner} onChange={e=>setGit({...git, owner:e.target.value})} className="input"/></label>
-                <label><span className="badge">Repo</span><input value={git.repo} onChange={e=>setGit({...git, repo:e.target.value})} className="input"/></label>
-                <label><span className="badge">Branch</span><input value={git.branch} onChange={e=>setGit({...git, branch:e.target.value})} className="input"/></label>
-                <label><span className="badge">Token ghp_</span><input type="password" value={git.token} onChange={e=>setGit({...git, token:e.target.value})} className="input"/></label>
-                <label><span className="badge">Path config</span><input value={git.pathConfig} onChange={e=>setGit({...git, pathConfig:e.target.value})} className="input"/></label>
-                <label><span className="badge">Path images</span><input value={git.pathImages} onChange={e=>setGit({...git, pathImages:e.target.value})} className="input"/></label>
-              </div>
-              <div style={{display:"flex",gap:8,marginTop:12}}>
-                <button onClick={saveLocal} style={{height:40,padding:"0 18px",borderRadius:999,background:"#f2ece0",border:"1px solid #e8dfc8",fontSize:12}}>Spremi lokalno</button>
-                <button onClick={commitGit} disabled={saving} style={{height:40,padding:"0 18px",borderRadius:999,background:"#2c2a24",color:"#fff",fontSize:12}}>{saving?"Commitam...":"Commitaj config u GIT"}</button>
-              </div>
-              {log && <div style={{marginTop:10,background:"#2c2a24",color:"#f2ece0",padding:10,borderRadius:10,fontSize:11,whiteSpace:"pre-wrap"}}>{log}</div>}
-              <pre style={{maxHeight:240,overflow:"auto",fontSize:10,background:"#fcfaf5",padding:10,borderRadius:10,border:"1px solid #e8dfc8",marginTop:12}}>{JSON.stringify(config,null,2).slice(0,8000)}</pre>
-            </div>
-          )}
-
-          <div style={{marginTop:16,display:"flex",gap:8,flexWrap:"wrap"}}>
-            <button onClick={saveLocal} style={{height:44,padding:"0 20px",borderRadius:999,background:"#fff",border:"1px solid #e8dfc8",fontSize:12}}>💾 Spremi lokalno</button>
-            <button onClick={commitGit} disabled={saving} style={{height:44,padding:"0 22px",borderRadius:999,background:"#2c2a24",color:"#fff",fontSize:12,fontWeight:600}}>{saving?"...":"🚀 Commitaj sve u GIT"}</button>
-          </div>
-          {log && <div style={{marginTop:10,background:"#2c2a24",color:"#f2ece0",padding:10,borderRadius:10,fontSize:11}}>{log}</div>}
-        </div>
-      </div>
-    </div>
-  );
-}
-
+<body><div id="root"></div>
+<script>
+const ADMIN_USER="admin", ADMIN_PASS="Hajdi2026!";
+const DEFAULT_GIT={owner:"vvgbrnadic",repo:"hajdi-house",branch:"main",token:"",pathConfig:"public/js/config.json",pathImages:"public/images/gallery"};
 function App(){
-  const [authed,setAuthed]=React.useState(()=>{ try{ return localStorage.getItem("hajdi_admin_auth")==="1"; }catch{return false; } });
-  if(!authed) return <Login onLogin={()=>setAuthed(true)} />;
-  return <AdminApp />;
+ const [authed,setAuthed]=React.useState(()=>localStorage.getItem("hajdi_admin_auth")==="1");
+ const [u,setU]=React.useState(""),[p,setP]=React.useState(""),[config,setConfig]=React.useState(null),[git,setGit]=React.useState(DEFAULT_GIT),[log,setLog]=React.useState(""),[saving,setSaving]=React.useState(false);
+ React.useEffect(()=>{
+  if(!authed) return;
+  (async()=>{
+   for(const path of ["../public/js/config.json","public/js/config.json"]){ try{ const r=await fetch(path); if(r.ok){ setConfig(await r.json()); return; } }catch{} }
+   try{ const r=await fetch("https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/js/config.json"); if(r.ok) setConfig(await r.json()); else setConfig({hero:{}});}catch{ setConfig({hero:{}}); }
+  })();
+  try{ const sg=localStorage.getItem("hajdi_git"); if(sg){ const pr=JSON.parse(sg); setGit(o=>({...o,...pr,pathImages:pr.pathImages||DEFAULT_GIT.pathImages})); } }catch{}
+ },[authed]);
+ const saveLocal=()=>{ localStorage.setItem("hajdi_config",JSON.stringify(config)); setLog("✅ Lokalno spremljeno"); };
+ const commitGit=async()=>{
+  if(!git.token){ setLog("❌ Unesi token"); return; } setSaving(true); setLog("Commitam...");
+  try{
+   const content=btoa(unescape(encodeURIComponent(JSON.stringify(config,null,2)))); let sha=null;
+   try{ const r=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${git.pathConfig}?ref=${git.branch}`,{headers:{Authorization:`token ${git.token}`}}); if(r.ok){ const j=await r.json(); sha=j.sha; } }catch{}
+   const body={message:`ADMIN FIX ${new Date().toISOString()}`,content,branch:git.branch,...(sha?{sha}:{})};
+   const res=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${git.pathConfig}`,{method:"PUT",headers:{Authorization:`token ${git.token}`,"Content-Type":"application/json"},body:JSON.stringify(body)});
+   const j=await res.json(); if(res.ok){ setLog("✅ Commit OK "+(j.commit?.sha||"").slice(0,7)); localStorage.setItem("hajdi_git",JSON.stringify(git)); } else setLog("❌ "+JSON.stringify(j).slice(0,500));
+  }catch(e){ setLog("❌ "+e.message); } setSaving(false);
+ };
+ const uploadImage=async(file)=>{
+  const imagesPath=git.pathImages||DEFAULT_GIT.pathImages; if(!git.token){ setLog("❌ Unesi token"); return null; } setLog("Uploadam "+file.name);
+  try{
+   const base64=await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result.split(",")[1]); r.onerror=rej; r.readAsDataURL(file); });
+   const safe=file.name.replace(/[^a-z0-9.-]/gi,"-").toLowerCase(); const path=`${imagesPath}/${Date.now()}-${safe}`;
+   const body={message:`upload ${safe}`,content:base64,branch:git.branch};
+   const res=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${path}`,{method:"PUT",headers:{Authorization:`token ${git.token}`,"Content-Type":"application/json"},body:JSON.stringify(body)});
+   const j=await res.json(); if(res.ok){ const raw=`https://raw.githubusercontent.com/${git.owner}/${git.repo}/${git.branch}/${path}`; setLog("✅ "+raw); return raw; } else { setLog("❌ "+JSON.stringify(j).slice(0,400)); return null; }
+  }catch(e){ setLog("❌ "+e.message); return null; }
+ };
+ if(!authed) return React.createElement("div",{style:{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center"}},
+  React.createElement("form",{onSubmit:e=>{ e.preventDefault(); if(u===ADMIN_USER&&p===ADMIN_PASS){ localStorage.setItem("hajdi_admin_auth","1"); setAuthed(true);} else alert("krivi"); },className:"card",style:{width:360}},
+   React.createElement("h2",null,"Hajdi CMS FIXED — bez Babel buga"),React.createElement("div",{style:{fontSize:11,opacity:.6,marginBottom:10}},"admin / Hajdi2026!"),
+   React.createElement("input",{placeholder:"user",value:u,onChange:e=>setU(e.target.value),className:"input"}),
+   React.createElement("input",{placeholder:"pass",type:"password",value:p,onChange:e=>setP(e.target.value),className:"input"}),
+   React.createElement("button",{type:"submit",style:{width:"100%",height:44,background:"#2c2a24",color:"#fff",borderRadius:999,marginTop:8}},"Uđi")
+  )
+ );
+ if(!config) return React.createElement("div",{style:{padding:20}},"Učitavam...");
+ const hero=config.hero||{};
+ return React.createElement("div",{style:{padding:20,maxWidth:800,margin:"0 auto"}},
+  React.createElement("h1",null,"Hajdi House — FIXED CMS"),React.createElement("div",{style:{fontSize:11,opacity:.6}},"Radi na python http.server — nema babel.min.js"),
+  React.createElement("div",{style:{display:"flex",gap:8,margin:"12px 0"}},
+   React.createElement("button",{onClick:saveLocal,className:"tab"},"💾 Spremi"),
+   React.createElement("button",{onClick:commitGit,disabled:saving,className:"tab active"},saving?"...":"🚀 Commitaj"),
+   React.createElement("button",{onClick:()=>{ localStorage.removeItem("hajdi_git"); setGit(DEFAULT_GIT); setLog("Očišćen cache"); },className:"tab"},"🧹 Očisti cache")
+  ),
+  log&&React.createElement("div",{style:{background:"#2c2a24",color:"#f2ece0",padding:10,borderRadius:8,fontSize:11,whiteSpace:"pre-wrap"}},log),
+  React.createElement("div",{className:"card"},
+   React.createElement("div",null,"Hero image URL"),
+   React.createElement("input",{value:hero.image||"",onChange:e=>setConfig({...config,hero:{...hero,image:e.target.value}}),className:"input"}),
+   React.createElement("div",null,"Blur: "+(hero.blur||0)),
+   React.createElement("input",{type:"range",min:0,max:20,value:hero.blur||6,onChange:e=>setConfig({...config,hero:{...hero,blur:parseInt(e.target.value)}}),style:{width:"100%"}}),
+   React.createElement("input",{type:"file",accept:"image/*",onChange:async e=>{ const f=e.target.files?.[0]; if(!f) return; const url=await uploadImage(f); if(url) setConfig(c=>({...c,hero:{...c.hero,image:url}})); },style:{marginTop:8}}),
+   hero.image&&React.createElement("img",{src:hero.image,style:{width:"100%",maxHeight:300,objectFit:"cover",borderRadius:12,marginTop:12,filter:`blur(${hero.blur||0}px)`}})
+  ),
+  React.createElement("div",{className:"card"},
+   React.createElement("div",null,"GIT"),
+   React.createElement("input",{placeholder:"owner",value:git.owner,onChange:e=>setGit({...git,owner:e.target.value}),className:"input"}),
+   React.createElement("input",{placeholder:"repo",value:git.repo,onChange:e=>setGit({...git,repo:e.target.value}),className:"input"}),
+   React.createElement("input",{placeholder:"token ghp_",type:"password",value:git.token,onChange:e=>setGit({...git,token:e.target.value}),className:"input"}),
+   React.createElement("input",{placeholder:"pathImages",value:git.pathImages,onChange:e=>setGit({...git,pathImages:e.target.value}),className:"input"})
+  )
+ );
 }
-const root=ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
-</script>
-</body>
-</html>
+ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+</script></body></html>

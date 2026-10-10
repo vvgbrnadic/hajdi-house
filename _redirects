@@ -1,2 +1,5 @@
 /admin/* /admin/index.html 200
+/js/* /js/:splat 200
+/public/js/* /public/js/:splat 200
+/public/images/* /public/images/:splat 200
 /* /index.html 200
