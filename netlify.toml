@@ -1,6 +1,16 @@
 [build]
   publish = "."
-  command = "echo 'static site - FINAL SECURE ADMIN - cjenik 100/80/30'"
+  command = "echo 'static site - FINAL ALL FIX - 2026-10-11'"
+
+[[redirects]]
+  from = "/public/*"
+  to = "/public/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/js/*"
+  to = "/js/:splat"
+  status = 200
 
 [[redirects]]
   from = "/admin/*"
@@ -21,4 +31,5 @@
 [[headers]]
   for = "/public/js/*"
   [headers.values]
-    Cache-Control = "no-cache"
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
