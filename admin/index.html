@@ -81,8 +81,56 @@ function addSec(){const v=document.getElementById('newSec').value.trim(); if(!v)
 function reloadPreview(){const frame=document.getElementById('previewFrame'); if(!frame) return; const c=config; const html=`<!doctype html><html><head><meta charset="utf-8"><script src="https://cdn.tailwindcss.com"><\/script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"><\/script></head><body style="background:${c.colors.background};color:${c.colors.dark};font-family:system-ui"><div style="padding:12px 20px;display:flex;justify-content:space-between;background:white;border-bottom:1px solid ${c.colors.creamDark}"><div style="font-weight:700">${c.header.logoText}</div><div style="display:flex;gap:8px;font-size:11px">${c.header.nav.map(n=>'<span>'+n+'</span>').join('')}</div></div><div style="position:relative;height:280px"><img src="${c.hero.image}" style="width:100%;height:100%;object-fit:cover;filter:blur(${c.hero.blur}px)"><div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,.4), transparent);padding:20px;color:white"><div style="background:white;color:black;display:inline-block;padding:2px 10px;border-radius:999px;font-size:10px">${c.hero.badge}</div><div style="font-family:serif;font-size:26px;margin-top:12px;max-width:400px">${c.hero.title}</div><div style="font-size:12px;opacity:.9;margin-top:8px;max-width:360px">${c.hero.subtitle}</div></div></div><div style="padding:16px;max-width:800px;margin:0 auto"><h2 style="font-family:serif;font-size:20px">${c.about.title}</h2><p style="font-size:12px;opacity:.8;margin-top:8px">${c.about.p1.slice(0,180)}...</p><div style="margin-top:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px">${c.stats.map(s=>'<div style="background:white;border:1px solid #e8dfc8;border-radius:12px;padding:8px;text-align:center"><div style="font-weight:700">'+s.value+'</div><div style="font-size:10px;opacity:.6">'+s.label+'</div></div>').join('')}</div><div style="margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px">${c.amenities.slice(0,9).map(a=>'<div style="background:white;border:1px solid #e8dfc8;border-radius:10px;padding:8px;display:flex;gap:6px;align-items:center;font-size:11px"><i data-lucide="'+a.icon+'" style="width:14px;height:14px"></i> '+a.label+'</div>').join('')}</div><div style="margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px">${c.pricing.map(p=>'<div style="background:white;border-radius:12px;padding:10px;border:1px solid #e8dfc8"><div style="font-size:10px;opacity:.5">'+p.naziv+'</div><div style="font-weight:700;color:${c.colors.gold}">'+p.cijena+'</div></div>').join('')}</div></div><script>try{lucide.createIcons()}catch{}<\/script></body></html>`; frame.srcdoc=html;}
 function downloadCfg(){const blob=new Blob([JSON.stringify(config,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='config.json'; a.click(); log('Download config.json');}
 function downloadCSV(){let csv='naziv,cijena,jedinica,opis,aktivno\n'; config.pricing.forEach(p=>{csv+=`"${p.naziv}","${p.cijena}","${p.jedinica}","${p.opis.replace(/"/g,'""')}",${p.aktivno}\n`;}); const blob=new Blob([csv],{type:'text/csv'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='cjenik.csv'; a.click();}
-function uploadHero(e){const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{config.hero.image=ev.target.result; saveCfg(config); render();}; r.readAsDataURL(f);}
-function uploadAbout(e){const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{config.about.image=ev.target.result; saveCfg(config); render();}; r.readAsDataURL(f);}
+function uploadHero(e){
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=async ev=>{
+    const dataUrl = ev.target.result;
+    config.hero.image = dataUrl;
+    saveCfg(config); render(); log('📸 Lokalno: '+f.name+' ('+Math.round(f.size/1024)+'KB) - preview');
+    if(gitCfg.token){
+      try{
+        const fname = 'hero-' + Date.now() + '-' + f.name.replace(/[^a-zA-Z0-9.\-]/g,'_');
+        const path = 'public/images/hero/' + fname;
+        const content = dataUrl.split(',')[1];
+        const body={message:'Hajdi: upload hero '+fname, content, branch:gitCfg.branch};
+        const putR=await fetch('https://api.github.com/repos/'+gitCfg.owner+'/'+gitCfg.repo+'/contents/'+path,{method:'PUT',headers:{Authorization:'Bearer '+gitCfg.token,'Content-Type':'application/json'},body:JSON.stringify(body)});
+        if(putR.ok){
+          const rawUrl = 'https://raw.githubusercontent.com/'+gitCfg.owner+'/'+gitCfg.repo+'/'+gitCfg.branch+'/'+path;
+          config.hero.image = rawUrl; saveCfg(config); render();
+          log('✅ Uploadano na GitHub: '+rawUrl);
+          if(document.getElementById('autoCommit')?.checked){ await commitCfg(); }
+        }
+      }catch(err){ log('Upload error '+err.message); }
+    }
+  };
+  r.readAsDataURL(f);
+}
+function uploadAbout(e){
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=async ev=>{
+    const dataUrl = ev.target.result;
+    config.about.image = dataUrl;
+    saveCfg(config); render(); log('📸 About lokalno: '+f.name);
+    if(gitCfg.token){
+      try{
+        const fname = 'about-' + Date.now() + '-' + f.name.replace(/[^a-zA-Z0-9.\-]/g,'_');
+        const path = 'public/images/about/' + fname;
+        const content = dataUrl.split(',')[1];
+        const body={message:'Hajdi: upload about '+fname, content, branch:gitCfg.branch};
+        const putR=await fetch('https://api.github.com/repos/'+gitCfg.owner+'/'+gitCfg.repo+'/contents/'+path,{method:'PUT',headers:{Authorization:'Bearer '+gitCfg.token,'Content-Type':'application/json'},body:JSON.stringify(body)});
+        if(putR.ok){
+          const rawUrl = 'https://raw.githubusercontent.com/'+gitCfg.owner+'/'+gitCfg.repo+'/'+gitCfg.branch+'/'+path;
+          config.about.image = rawUrl; saveCfg(config); render();
+          log('✅ About uploadano: '+rawUrl);
+          if(document.getElementById('autoCommit')?.checked){ await commitCfg(); }
+        }
+      }catch(err){ log('Error '+err.message); }
+    }
+  };
+  r.readAsDataURL(f);
+}
 async function testGit(){if(!gitCfg.token){log('Nema tokena'); return;} try{const r=await fetch('https://api.github.com/repos/'+gitCfg.owner+'/'+gitCfg.repo,{headers:{Authorization:'Bearer '+gitCfg.token}}); const j=await r.json(); log('Repo: '+j.full_name+' status '+r.status);}catch(e){log('Error '+e.message);}}
 async function commitCfg(){if(!gitCfg.token){log('Postavi token'); return;} log('Commit start...'); try{const getUrl='https://api.github.com/repos/'+gitCfg.owner+'/'+gitCfg.repo+'/contents/'+gitCfg.pathConfig+'?ref='+gitCfg.branch; let sha=null; try{const r=await fetch(getUrl,{headers:{Authorization:'Bearer '+gitCfg.token}}); if(r.ok){const j=await r.json(); sha=j.sha; log('SHA '+sha.slice(0,7));}}catch{} const content=btoa(unescape(encodeURIComponent(JSON.stringify(config,null,2)))); const body={message:'Hajdi CMS update '+new Date().toISOString(),content,branch:gitCfg.branch,...(sha?{sha}:{})}; const putR=await fetch('https://api.github.com/repos/'+gitCfg.owner+'/'+gitCfg.repo+'/contents/'+gitCfg.pathConfig,{method:'PUT',headers:{Authorization:'Bearer '+gitCfg.token,'Content-Type':'application/json'},body:JSON.stringify(body)}); const putJ=await putR.json(); if(putR.ok){log('✅ Commit OK '+putJ.commit.sha.slice(0,7)); document.getElementById('gitLog').innerText='✅ OK\n'+JSON.stringify(putJ,null,2).slice(0,3000);} else log('❌ Fail '+putR.status+' '+JSON.stringify(putJ).slice(0,1000));}catch(e){log('Error '+e.message);}}
 async function commitCSV(){if(!gitCfg.token){log('Postavi token'); return;} let csv='naziv,cijena,jedinica,opis,aktivno\n'; config.pricing.forEach(p=>{csv+=`"${p.naziv}","${p.cijena}","${p.jedinica}","${p.opis.replace(/"/g,'""')}",${p.aktivno}\n`;}); try{const getUrl='https://api.github.com/repos/'+gitCfg.owner+'/'+gitCfg.repo+'/contents/'+gitCfg.pathCsv+'?ref='+gitCfg.branch; let sha=null; try{const r=await fetch(getUrl,{headers:{Authorization:'Bearer '+gitCfg.token}}); if(r.ok){const j=await r.json(); sha=j.sha;}}catch{} const content=btoa(unescape(encodeURIComponent(csv))); const body={message:'Hajdi CMS cjenik '+new Date().toISOString(),content,branch:gitCfg.branch,...(sha?{sha}:{})}; const putR=await fetch('https://api.github.com/repos/'+gitCfg.owner+'/'+gitCfg.repo+'/contents/'+gitCfg.pathCsv,{method:'PUT',headers:{Authorization:'Bearer '+gitCfg.token,'Content-Type':'application/json'},body:JSON.stringify(body)}); const putJ=await putR.json(); if(putR.ok) log('✅ CSV OK '+putJ.commit.sha.slice(0,7)); else log('❌ CSV fail');}catch(e){log('Error '+e.message);}}
@@ -92,3 +140,4 @@ render();
 </script>
 </body>
 </html>
+
