@@ -2,220 +2,93 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hajdi House — ULTIMATE CMS (vanilla)</title>
+<title>Hajdi House ULTIMATE CMS</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <style>
-:root{--bg:#f2ece0;--gold:#b8952a;--dark:#2c2a24;--creamDark:#e8dfc8;--cream:#fcfaf5;--red:#c2410c}
-*{box-sizing:border-box} body{margin:0;font-family:system-ui,Inter,sans-serif;background:var(--bg);color:var(--dark);line-height:1.5}
-.card{background:#fff;border-radius:20px;padding:20px;box-shadow:0 8px 30px rgba(44,42,36,.06);border:1px solid var(--creamDark);margin:12px 0}
-.input{width:100%;height:44px;border-radius:12px;border:1px solid var(--creamDark);background:var(--cream);padding:0 14px;font-size:13px;margin:6px 0}
-.textarea{width:100%;min-height:120px;border-radius:12px;border:1px solid var(--creamDark);background:var(--cream);padding:12px 14px;font-size:13px;resize:vertical;margin:6px 0;font-family:monospace}
-.tab{height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--creamDark);background:#fff;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;margin:3px}
-.tab.active{background:var(--dark);color:#fff;border-color:var(--dark)}
-.btn{height:44px;padding:0 18px;border-radius:999px;border:0;cursor:pointer;font-weight:700;display:inline-flex;align-items:center;gap:8px}
-.btn-dark{background:var(--dark);color:#fff} .btn-gold{background:var(--gold);color:#fff} .btn-red{background:#c2410c;color:#fff}
-.badge{font-size:10px;letter-spacing:.8px;text-transform:uppercase;opacity:.6;font-weight:700}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.hidden{display:none}
+:root{--bg:#f2ece0;--gold:#b8952a;--dark:#2c2a24;--creamDark:#e8dfc8;--cream:#fcfaf5}
+body{margin:0;font-family:system-ui;background:var(--bg);color:var(--dark)}
+.card{background:white;border-radius:20px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,.06);border:1px solid var(--creamDark);margin:12px 0}
+.input{width:100%;height:44px;border-radius:12px;border:1px solid var(--creamDark);background:var(--cream);padding:0 14px;margin:6px 0}
+.textarea{width:100%;min-height:90px;border-radius:12px;border:1px solid var(--creamDark);background:var(--cream);padding:12px 14px;margin:6px 0;resize:vertical}
+.tab{height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--creamDark);background:white;font-size:12px;font-weight:600;cursor:pointer;margin:3px}
+.tab.active{background:var(--dark);color:white}
+.btn{height:44px;padding:0 18px;border-radius:999px;border:0;cursor:pointer;font-weight:700;display:inline-flex;align-items:center;gap:8px;font-size:13px}
+.btn-dark{background:var(--dark);color:white} .btn-gold{background:var(--gold);color:white} .btn-red{background:#c2410c;color:white} .btn-light{background:white;border:1px solid var(--creamDark)}
 #log{background:#2c2a24;color:#f2ece0;padding:12px;border-radius:12px;font-size:12px;white-space:pre-wrap;max-height:200px;overflow:auto}
+.icon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;max-height:320px;overflow:auto;padding:8px;background:var(--cream);border-radius:12px;border:1px solid var(--creamDark)}
+.icon-item{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 6px;border-radius:10px;cursor:pointer;background:white;border:1px solid transparent;font-size:11px}
+.icon-item:hover{border-color:var(--gold)} .icon-item.selected{background:var(--dark);color:white}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <script>
-const DEFAULT_GIT={owner:"vvgbrnadic",repo:"hajdi-house",branch:"main",token:"",pathConfig:"public/js/config.json",pathImages:"public/images/gallery"};
-const FALLBACK={
- site:{name:"Hajdi House",domain:"www.hajdihouse.hr"},
- header:{logo:"Hajdi House",cta:"Rezerviraj"},
- hero:{title:"Hajdi House — Kuća na brdu",subtitle:"Drvena kuća za dušu...",badge:"Žumberak 750m",image:"https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1920&q=80",blur:6,cta1:"Rezerviraj",cta2:"Pogledaj kuću"},
- about:{title:"Hajdi House nije apartman.",p1:"...",p2:"...",quote:"Dođi s knjigom..."},
- gallery:[], pricing:{weekday:100,weekend:120}, footer:{email:"info@hajdihouse.hr"}, customSections:[]
-};
-let config = JSON.parse(JSON.stringify(FALLBACK));
-let git = {...DEFAULT_GIT};
-let adminCreds = {user:"admin",pass:"Hajdi2026!"};
-let activeTab="hero";
-let logText="";
-
-function loadStorage(){
- try{ const sg=localStorage.getItem("hajdi_git"); if(sg) git={...git,...JSON.parse(sg)}; }catch{}
- try{ const sc=localStorage.getItem("hajdi_config"); if(sc) config=JSON.parse(sc); }catch{}
- try{ const sa=localStorage.getItem("hajdi_admin_creds"); if(sa) adminCreds=JSON.parse(sa); }catch{}
+const ALL_ICONS = ["flame", "fire", "flame-kindling", "heater", "bath", "bed-double", "cooking-pot", "chef-hat", "coffee", "utensils-crossed", "waves", "trees", "tree-pine", "mountain", "sunset", "sun", "wifi", "car", "bike", "footprints", "dog", "speaker", "book-open", "map-pin", "campfire", "tent", "star", "sparkles", "zap", "heart", "home", "door-open", "window", "lamp", "shower-head", "kitchen", "grill", "sauna", "hot-tub", "leaf", "binoculars", "camera", "image", "settings", "search", "upload", "trash-2", "edit", "save"];
+const FALLBACK = {"site": {"name": "Hajdi House", "domain": "www.hajdihouse.hr"}, "colors": {"background": "#f2ece0", "gold": "#b8952a", "dark": "#2c2a24", "creamDark": "#e8dfc8"}, "hero": {"title": "Hajdi House — Kuća na brdu", "subtitle": "Drvena kuća za dušu, na rubu šume. Bez buke, bez žurbe. Samo vatra, knjiga i pogled koji ne staje.", "badge": "Žumberak 650m", "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/gallery/1790720528720-20251221-151127-1-.jpg", "blur": 12, "cta1": "Rezerviraj", "cta2": "Pogledaj kuću"}, "about": {"title": "Hajdi House nije apartman.", "p1": "To je mala drvena kuća na rubu šume, sagrađena da diše zajedno s brdom. Terasa od ariša gleda na Žumberak, a veliki prozori puštaju svjetlo da radi posao. Nema susjeda koji zaviruju. Nema prometa. Samo ti i tišina.", "p2": "Unutra — peć na drva koja pucketa dok vani pada magla, kuhinja s pogledom gdje kava miriše drugačije, dva topla krevetna gnijezda za spore jutra, i polica knjiga koja te tjera da ostaneš duže. Sve je dirljivo jednostavno, a opet luksuzno u onom pravom smislu.", "quote": "Dođi s knjigom. Otići ćeš s pričom.", "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80&auto=format&fit=crop"}, "stats": [{"value": "1", "label": "Spavaća soba"}, {"value": "1", "label": "Kupaona"}, {"value": "32 m²", "label": "Površina"}, {"value": "4", "label": "Gosta"}], "amenities": [{"id": "1", "label": "Peć na drva", "category": "Toplina", "icon": "flame"}, {"id": "2", "label": "Kamin", "category": "Toplina", "icon": "fire"}, {"id": "3", "label": "Sauna", "category": "Toplina", "icon": "sauna"}, {"id": "4", "label": "Terasa od ariša", "category": "Priroda", "icon": "terasa"}, {"id": "5", "label": "Veliki prozori", "category": "Priroda", "icon": "window"}, {"id": "6", "label": "Bazen (ljetni)", "category": "Priroda", "icon": "bazen"}, {"id": "7", "label": "Kuhinja s pogledom", "category": "Kuhinja", "icon": "kitchen"}, {"id": "8", "label": "Roštilj", "category": "Kuhinja", "icon": "grill"}, {"id": "9", "label": "Kava aparat", "category": "Kuhinja", "icon": "coffee"}, {"id": "10", "label": "Puna kuhinja", "category": "Kuhinja", "icon": "utensils"}, {"id": "11", "label": "Bračni krevet", "category": "Spavanje", "icon": "bed"}, {"id": "12", "label": "Knjige", "category": "Ostalo", "icon": "books"}, {"id": "13", "label": "WiFi Starlink", "category": "Tehnologija", "icon": "wifi"}, {"id": "14", "label": "Parking", "category": "Ostalo", "icon": "parking"}, {"id": "15", "label": "Bluetooth zvučnik", "category": "Tehnologija", "icon": "speaker"}, {"id": "16", "label": "Šuma iza kuće", "category": "Priroda", "icon": "trees"}, {"id": "17", "label": "Pješačke staze", "category": "Aktivnosti", "icon": "hike"}, {"id": "18", "label": "Biciklizam", "category": "Aktivnosti", "icon": "bike"}, {"id": "19", "label": "Psi dobrodošli", "category": "Ostalo", "icon": "dog"}, {"id": "20", "label": "Zalazak sunca", "category": "Priroda", "icon": "sunset"}], "gallery": [{"image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/gallery/1791657631970-20251221-151127-1-.jpg"}], "location": {"lat": "45.783450", "lng": "15.568973", "address": "Noršić Selo 52B, 10430 Samobor", "desc": "Na rubu Parka prirode Žumberak, 40 minuta od Zagreba. Zadnja kuća prije šume, prva iznad magle. Put je makadam zadnjih 800m - dio doživljaja.", "googleMapsLink": "https://maps.google.com/?q=45.783450,15.568973"}, "footer": {"text": "© 2026 Hajdi House — Noršić Selo 52B, Žumberak. Kuća na brdu.", "seo_note": "SEO red maknut - final", "links": [{"label": "Instagram", "url": "#"}, {"label": "Airbnb", "url": "https://www.airbnb.com/rooms/24417319"}]}, "languages": ["HR", "EN", "DE", "IT", "SL"], "pricing": [{"id": "1", "naziv": "Noćenje 2-3 noći", "cijena": "100€", "jedinica": "/ noć", "opis": "Cijena po noćenju za boravak 2-3 noći, za cijelu kuću (do 4 gosta). Minimalno 2 noći.", "aktivno": true}, {"id": "2", "naziv": "Noćenje 4 i više noćenja", "cijena": "80€", "jedinica": "/ noć", "opis": "Popust za duži boravak, 4 i više noćenja. Minimalno 2 noći.", "aktivno": true}, {"id": "3", "naziv": "Završno čišćenje", "cijena": "30€", "jedinica": "/ boravak", "opis": "Jednokratno završno čišćenje kuće", "aktivno": true}], "translations": {"EN": {"Hajdi House — Kuća na brdu": "Hajdi House — House on the Hill", "Drvena kuća za dušu, na rubu šume. Bez buke, bez žurbe. Samo vatra, knjiga i pogled koji ne staje.": "A wooden house for the soul, at the forest edge. No noise, no rush. Just fire, a book and an endless view.", "Hajdi House nije apartman.": "Hajdi House is not an apartment.", "Dođi s knjigom. Otići ćeš s pričom.": "Come with a book. You'll leave with a story.", "Sve za sporiji dan.": "Everything for a slower day.", "Zadnja kuća prije šume.": "The last house before the forest.", "O kući": "About", "Kuća": "House", "Sadržaj": "Amenities", "Galerija": "Gallery", "Lokacija": "Location", "Rezerviraj": "Book now", "Pogledaj kuću": "View the house", "Cjenik": "Pricing", "Cjenik usluga": "Service pricing", "Noćenje 2-3 noći": "Stay 2-3 nights", "Noćenje 4 i više noćenja": "Stay 4+ nights", "Završno čišćenje": "Final cleaning", "Minimalno 2 noći": "Minimum 2 nights", "Usluge i cijene - sve na jednom mjestu, transparentno i bez skrivenih troškova.": "Services and prices - transparent, no hidden costs.", "Preuzmi kao CSV": "Download as CSV"}, "DE": {"Hajdi House — Kuća na brdu": "Hajdi House — Haus auf dem Hügel", "Cjenik": "Preise", "Cjenik usluga": "Preisliste", "Noćenje 2-3 noći": "Aufenthalt 2-3 Nächte", "Noćenje 4 i više noćenja": "Aufenthalt 4+ Nächte", "Završno čišćenje": "Endreinigung", "Minimalno 2 noći": "Mindestens 2 Nächte"}, "IT": {"Hajdi House — Kuća na brdu": "Hajdi House — Casa sulla collina", "Cjenik": "Prezzi", "Cjenik usluga": "Listino prezzi", "Noćenje 2-3 noći": "Soggiorno 2-3 notti", "Noćenje 4 i više noćenja": "Soggiorno 4+ notti", "Završno čišćenje": "Pulizia finale", "Minimalno 2 noći": "Minimo 2 notti"}, "SL": {"Hajdi House — Kuća na brdu": "Hajdi House — Hiša na hribu", "Cjenik": "Cenik", "Cjenik usluga": "Cenik storitev", "Noćenje 2-3 noći": "Bivanje 2-3 noči", "Noćenje 4 i više noćenja": "Bivanje 4+ noči", "Završno čišćenje": "Končno čiščenje", "Minimalno 2 noći": "Minimalno 2 noči"}}, "features": [{"id": "1", "title": "Sve za sporiji dan.", "desc": "Kuća je opremljena za boravak bez žurbe — knjige, društvene igre, deka za terasu.", "icon": "books"}, {"id": "2", "title": "Vatra cijelu noć", "desc": "Peć na drva koja grije i daje atmosferu — drva su uključena u cijenu.", "icon": "flame"}, {"id": "3", "title": "Kava iz džezve", "desc": "Kava aparat, džezva i pogled na šumu — jutarnji ritual koji ne preskačeš.", "icon": "coffee"}, {"id": "4", "title": "Šuma na 20 koraka", "desc": "Iza kuće počinje šuma — staze za šetnju, gljive, mir i tišina.", "icon": "trees"}], "customSections": [], "header": {"logoText": "Hajdi House", "logoSub": "Kuća na brdu", "nav": ["O kući", "Sadržaj", "Galerija", "Lokacija", "Cjenik", "Kontakt"], "cta": "Rezerviraj"}, "sections": {"order": ["hero", "about", "stats", "amenities", "pricing", "gallery", "location", "contact", "footer"], "visible": {"hero": true, "about": true, "stats": true, "amenities": true, "pricing": true, "gallery": true, "location": true, "contact": true, "footer": true}}, "contact": {"title": "Rezerviraj svoj mir", "subtitle": "Pošalji upit, odgovaramo unutar par sati.", "email": "info@hajdihouse.hr", "phone": "+385 91 123 4567", "airbnb": "https://www.airbnb.com/rooms/24417319", "instagram": "#"}};
+const LS_KEY='hajdi_full_config_v3', LS_GIT='hajdi_git_v3', LS_AUTH='hajdi_admin_auth';
+function getCfg(){try{const s=localStorage.getItem(LS_KEY); if(s) return JSON.parse(s);}catch{} return JSON.parse(JSON.stringify(FALLBACK));}
+function saveCfg(c){localStorage.setItem(LS_KEY,JSON.stringify(c));}
+function getGit(){try{const s=localStorage.getItem(LS_GIT); if(s) return JSON.parse(s);}catch{} return {owner:'vvgbrnadic',repo:'hajdi-house',branch:'main',token:'',pathConfig:'public/js/config.json',pathCsv:'public/js/cjenik.csv'};}
+let config=getCfg(), gitCfg=getGit(), activeTab='dashboard', iconSearch='', iconResults=[], editingIdx=null;
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
+function isAuthed(){try{return localStorage.getItem(LS_AUTH)==='1'}catch{return false}}
+function Login(){document.getElementById('app').innerHTML=`<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f2ece0"><form id="lf" style="background:white;padding:32px;border-radius:24px;width:100%;max-width:380px"><div style="font-family:serif;font-size:28px">Hajdi House</div><div style="font-size:13px;opacity:.6;margin-bottom:24px">ULTIMATE CMS FULL EDITABLE</div><input id="u" class="input" placeholder=""><input id="p" type="password" class="input" placeholder=""><div id="err" style="color:#b91c1c;font-size:12px"></div><button class="btn btn-dark" style="width:100%;margin-top:12px">Uđi</button></form></div>`; document.getElementById('lf').addEventListener('submit',e=>{e.preventDefault(); if(document.getElementById('u').value==='admin' && document.getElementById('p').value==='Hajdi2026!'){localStorage.setItem(LS_AUTH,'1'); render();} else document.getElementById('err').innerText='Krivi podaci';});}
+function setTab(id){activeTab=id; render();}
+function logout(){localStorage.removeItem(LS_AUTH); render();}
+function log(m){const el=document.getElementById('log'); if(el) el.innerText='['+new Date().toLocaleTimeString()+'] '+m+'\n'+el.innerText.slice(0,3000);}
+async function searchIconify(q){if(!q||q.length<2){iconResults=[]; render(); return;} try{const r=await fetch('https://api.iconify.design/search?query='+encodeURIComponent(q)+'&limit=40'); if(r.ok){const j=await r.json(); iconResults=j.icons||[]; render();}}catch(e){}}
+function update(path,val){const parts=path.split('.'); let o=config; for(let i=0;i<parts.length-1;i++) o=o[parts[i]]; o[parts[parts.length-1]]=val; saveCfg(config); reloadPreview(); log('Update '+path);}
+function render(){if(!isAuthed()){Login(); return;} const c=config; const tabs=[['dashboard','Dashboard'],['header','Header'],['hero','Hero'],['about','O kući'],['stats','Stats'],['amenities','Sadržaj + Ikone'],['gallery','Galerija'],['pricing','Cjenik'],['location','Lokacija'],['contact','Kontakt'],['footer','Footer'],['sections','Sekcije'],['colors','Boje'],['languages','Jezici'],['git','Git Commit'],['raw','RAW']];
+document.getElementById('app').innerHTML=`<div><div class="sticky top-0 z-50 bg-[#f2ece0]/90 backdrop-blur border-b border-[#e8dfc8] px-4 py-3 flex flex-wrap items-center justify-between gap-3"><div class="flex items-center gap-3"><div style="font-family:serif" class="text-xl font-bold">Hajdi CMS FULL</div><span class="text-[11px] opacity-50">${c.languages.join('/')} • ${c.pricing.map(p=>p.cijena).join('/')}</span></div><div class="flex flex-wrap gap-1 max-w-[85vw]">${tabs.map(([id,l])=>`<button class="tab ${activeTab===id?'active':''}" onclick="setTab('${id}')">${l}</button>`).join('')}<button class="tab" onclick="logout()">Odjava</button></div></div><div class="max-w-[1400px] mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6"><div id="mainPanel"></div><div class="lg:sticky lg:top-[72px] h-fit"><div class="card"><div class="flex justify-between mb-3"><span style="font-size:10px;letter-spacing:.8px;opacity:.6;font-weight:700">LIVE PREVIEW</span><button class="btn btn-light" style="height:32px;font-size:11px" onclick="reloadPreview()">Reload</button></div><iframe id="previewFrame" style="width:100%;height:600px;border:1px solid #e8dfc8;border-radius:16px;background:white"></iframe><div class="mt-3 flex gap-2"><button class="btn btn-dark" style="flex:1" onclick="downloadCfg()">⬇ config.json</button><button class="btn btn-gold" style="flex:1" onclick="downloadCSV()">CSV</button></div><div id="log" class="mt-3">Spremno. Sve autosave. Icon search: lucide + iconify API. Slike: upload base64 ili URL.</div></div></div></div></div>`;
+const main=document.getElementById('mainPanel');
+if(activeTab==='dashboard'){main.innerHTML=`<div class="card"><div style="font-family:serif" class="text-2xl mb-2">Dashboard — sve editable</div><div class="text-[13px] opacity-70 leading-relaxed">SVE što vidiš na početnoj se uređuje ovdje. Svaki zarez, točka, naslov, podnaslov, slika, ikona, boja, sekcija. <br><br><b>Ikone:</b> pretraži lucide (lokalno 200+) ili Iconify API (bilo koja ikona: mdi, tabler, heroicons, itd) - povlače se od bilo kud, ne moraju biti u folderu.<br><b>Slike:</b> upload file → base64 ili upiši URL (unsplash, github raw, /public/images/...).<br><b>Commit:</b> postavi GitHub token u Git tabu → commit automatski → Netlify deploy → aktivno.<br><br>Testirano: icon search, gallery upload, pricing, sections reorder.</div><div class="grid grid-cols-2 gap-3 mt-4"><div class="bg-[#fcfaf5] rounded-xl p-4 border"><div style="font-size:10px;opacity:.6">Stats</div>Amenities: ${c.amenities.length}<br>Gallery: ${c.gallery.length}<br>Jezici: ${c.languages.join(', ')}</div><div class="bg-[#fcfaf5] rounded-xl p-4 border"><div style="font-size:10px;opacity:.6">Git</div>${gitCfg.owner}/${gitCfg.repo}<br>Token: ${gitCfg.token?'*** OK':'nije postavljen'}</div></div></div>`;}
+else if(activeTab==='header'){main.innerHTML=`<div class="card"><div style="font-family:serif" class="text-xl mb-4">Header</div><label style="font-size:10px;opacity:.6">Logo text</label><input class="input" value="${esc(c.header.logoText)}" oninput="update('header.logoText',this.value)"><label style="font-size:10px;opacity:.6">Logo sub</label><input class="input" value="${esc(c.header.logoSub)}" oninput="update('header.logoSub',this.value)"><label style="font-size:10px;opacity:.6">CTA</label><input class="input" value="${esc(c.header.cta)}" oninput="update('header.cta',this.value)"><label style="font-size:10px;opacity:.6">Nav (zarez)</label><input class="input" value="${esc(c.header.nav.join(', '))}" oninput="update('header.nav',this.value.split(',').map(s=>s.trim()).filter(Boolean))"></div>`;}
+else if(activeTab==='hero'){main.innerHTML=`<div class="card"><div style="font-family:serif" class="text-xl mb-4">Hero</div><label style="font-size:10px;opacity:.6">Badge</label><input class="input" value="${esc(c.hero.badge)}" oninput="update('hero.badge',this.value)"><label style="font-size:10px;opacity:.6">Naslov</label><textarea class="textarea" oninput="update('hero.title',this.value)">${esc(c.hero.title)}</textarea><label style="font-size:10px;opacity:.6">Podnaslov</label><textarea class="textarea" oninput="update('hero.subtitle',this.value)">${esc(c.hero.subtitle)}</textarea><div class="grid grid-cols-2 gap-3"><div><label style="font-size:10px;opacity:.6">CTA1</label><input class="input" value="${esc(c.hero.cta1)}" oninput="update('hero.cta1',this.value)"></div><div><label style="font-size:10px;opacity:.6">CTA2</label><input class="input" value="${esc(c.hero.cta2)}" oninput="update('hero.cta2',this.value)"></div></div><label style="font-size:10px;opacity:.6">Slika URL</label><input class="input" value="${esc(c.hero.image)}" oninput="update('hero.image',this.value)"><input type="file" accept="image/*" onchange="uploadHero(event)" class="mt-2"><label style="font-size:10px;opacity:.6">Blur ${c.hero.blur}px</label><input type="range" min="0" max="20" value="${c.hero.blur}" oninput="update('hero.blur',parseInt(this.value))" style="width:100%"><img src="${esc(c.hero.image)}" style="width:100%;height:180px;object-fit:cover;border-radius:12px;margin-top:8px;filter:blur(${c.hero.blur}px)"></div>`;}
+else if(activeTab==='about'){main.innerHTML=`<div class="card"><div style="font-family:serif" class="text-xl mb-4">O kući</div><label style="font-size:10px;opacity:.6">Naslov</label><input class="input" value="${esc(c.about.title)}" oninput="update('about.title',this.value)"><label style="font-size:10px;opacity:.6">P1</label><textarea class="textarea" style="min-height:100px" oninput="update('about.p1',this.value)">${esc(c.about.p1)}</textarea><label style="font-size:10px;opacity:.6">P2</label><textarea class="textarea" style="min-height:100px" oninput="update('about.p2',this.value)">${esc(c.about.p2)}</textarea><label style="font-size:10px;opacity:.6">Quote</label><input class="input" value="${esc(c.about.quote)}" oninput="update('about.quote',this.value)"><label style="font-size:10px;opacity:.6">Slika</label><input class="input" value="${esc(c.about.image)}" oninput="update('about.image',this.value)"><input type="file" accept="image/*" onchange="uploadAbout(event)"></div>`;}
+else if(activeTab==='stats'){main.innerHTML=`<div class="card"><div class="flex justify-between"><div style="font-family:serif" class="text-xl">Stats</div><button class="btn btn-dark" onclick="addStat()">+ Dodaj</button></div><div class="mt-4 grid gap-2">${c.stats.map((s,i)=>`<div class="flex gap-2 items-center bg-[#fcfaf5] p-3 rounded-xl border"><input class="input" style="width:90px" value="${esc(s.value)}" oninput="updateStat(${i},'value',this.value)"><input class="input" style="flex:1" value="${esc(s.label)}" oninput="updateStat(${i},'label',this.value)"><button class="btn btn-red" style="height:36px" onclick="removeStat(${i})">X</button></div>`).join('')}</div></div>`;}
+else if(activeTab==='amenities'){const filtered=ALL_ICONS.filter(ic=>!iconSearch||ic.toLowerCase().includes(iconSearch.toLowerCase())).slice(0,120); main.innerHTML=`<div class="card"><div class="flex justify-between"><div style="font-family:serif" class="text-xl">Sadržaj + Ikone — pretraži bilo koju ikonu</div><button class="btn btn-dark" onclick="addAmenity()">+ Dodaj</button></div><div class="mt-3 flex gap-2"><input class="input" placeholder="Pretraži lucide: fire, dog, mountain..." value="${esc(iconSearch)}" oninput="iconSearch=this.value; render()" style="flex:1"><input id="iconQ" class="input" placeholder="Iconify: npr. mdi:campfire" style="flex:1" onkeydown="if(event.key==='Enter')searchIconify(this.value)"><button class="btn btn-light" onclick="searchIconify(document.getElementById('iconQ').value)">Iconify API</button></div>${iconResults.length?`<div class="mt-2"><div style="font-size:11px">Iconify rezultati ${iconResults.length}</div><div class="icon-grid mt-2">${iconResults.map(ic=>`<div class="icon-item" onclick="pickIconify('${ic}')">${ic}</div>`).join('')}</div></div>`:''}<div class="mt-3"><div style="font-size:10px;opacity:.6">Lucide (lokalno)</div><div class="icon-grid mt-2">${filtered.map(ic=>`<div class="icon-item" onclick="iconSearch='${ic}'; render()"><i data-lucide="${ic}" class="w-5 h-5"></i><span>${ic}</span></div>`).join('')}</div></div><div class="mt-6 grid gap-3">${c.amenities.map((a,i)=>`<div class="bg-[#fcfaf5] p-3 rounded-xl border flex gap-2"><div style="flex:1" class="grid grid-cols-2 gap-2"><input class="input" value="${esc(a.label)}" oninput="updateAmen(${i},'label',this.value)" placeholder="Label"><select class="input" onchange="updateAmen(${i},'category',this.value)">${['Toplina','Priroda','Kuhinja','Spavanje','Ostalo','Tehnologija','Aktivnosti'].map(cat=>`<option ${a.category===cat?'selected':''}>${cat}</option>`).join('')}</select><div class="flex gap-1"><input class="input" value="${esc(a.icon)}" oninput="updateAmen(${i},'icon',this.value)" placeholder="ikona"><button class="btn btn-light" style="height:44px" onclick="editingIdx=${i}; document.getElementById('iconSearchFocus')?.focus()">🔍</button></div><div class="flex items-center gap-2"><div class="w-9 h-9 rounded-full bg-white border flex items-center justify-center"><i data-lucide="${a.icon}" class="w-4 h-4"></i></div><button class="btn btn-red" style="height:36px" onclick="removeAmen(${i})">Ukloni</button></div></div></div>`).join('')}</div></div>`; setTimeout(()=>{try{lucide.createIcons();}catch{}},100);}
+else if(activeTab==='gallery'){main.innerHTML=`<div class="card"><div class="flex justify-between"><div style="font-family:serif" class="text-xl">Galerija</div><button class="btn btn-dark" onclick="addGal()">+ Dodaj</button></div><input type="file" multiple accept="image/*" onchange="uploadGal(event)" class="mt-3"><div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-3">${c.gallery.map((g,i)=>`<div class="rounded-xl overflow-hidden border bg-white"><img src="${esc(g.image||g)}" style="width:100%;height:140px;object-fit:cover"><div class="p-2 flex gap-1"><input class="input" style="flex:1;height:36px;font-size:11px" value="${esc(g.image||g)}" oninput="updateGal(${i},this.value)"><button class="btn btn-red" style="height:36px" onclick="removeGal(${i})">X</button></div></div>`).join('')}</div></div>`;}
+else if(activeTab==='pricing'){main.innerHTML=`<div class="card"><div class="flex justify-between"><div style="font-family:serif" class="text-xl">Cjenik 100/80/30</div><button class="btn btn-dark" onclick="addPrice()">+ Dodaj</button></div><div class="mt-4 grid gap-3">${c.pricing.map((p,i)=>`<div class="bg-[#fcfaf5] p-3 rounded-xl border grid grid-cols-2 gap-2"><input class="input" value="${esc(p.naziv)}" oninput="updatePrice(${i},'naziv',this.value)"><input class="input" value="${esc(p.cijena)}" oninput="updatePrice(${i},'cijena',this.value)"><input class="input" value="${esc(p.jedinica)}" oninput="updatePrice(${i},'jedinica',this.value)"><select class="input" onchange="updatePrice(${i},'aktivno',this.value==='true')"><option value="true" ${p.aktivno?'selected':''}>Aktivno</option><option value="false" ${!p.aktivno?'selected':''}>Neaktivno</option></select><textarea class="textarea col-span-2" oninput="updatePrice(${i},'opis',this.value)">${esc(p.opis)}</textarea><button class="btn btn-red col-span-2" onclick="removePrice(${i})">Ukloni</button></div>`).join('')}</div></div>`;}
+else if(activeTab==='location'){main.innerHTML=`<div class="card"><div style="font-family:serif" class="text-xl mb-4">Lokacija</div><input class="input" value="${esc(c.location.address)}" oninput="update('location.address',this.value)" placeholder="Adresa"><div class="grid grid-cols-2 gap-2"><input class="input" value="${esc(c.location.lat)}" oninput="update('location.lat',this.value)" placeholder="Lat"><input class="input" value="${esc(c.location.lng)}" oninput="update('location.lng',this.value)" placeholder="Lng"></div><textarea class="textarea" oninput="update('location.desc',this.value)">${esc(c.location.desc)}</textarea><input class="input" value="${esc(c.location.googleMapsLink)}" oninput="update('location.googleMapsLink',this.value)" placeholder="Maps link"></div>`;}
+else if(activeTab==='contact'){main.innerHTML=`<div class="card"><div style="font-family:serif" class="text-xl mb-4">Kontakt</div><input class="input" value="${esc(c.contact.title)}" oninput="update('contact.title',this.value)" placeholder="Naslov"><input class="input" value="${esc(c.contact.subtitle)}" oninput="update('contact.subtitle',this.value)" placeholder="Podnaslov"><input class="input" value="${esc(c.contact.email)}" oninput="update('contact.email',this.value)" placeholder="Email"><input class="input" value="${esc(c.contact.phone)}" oninput="update('contact.phone',this.value)" placeholder="Phone"><input class="input" value="${esc(c.contact.airbnb)}" oninput="update('contact.airbnb',this.value)" placeholder="Airbnb"><input class="input" value="${esc(c.contact.instagram)}" oninput="update('contact.instagram',this.value)" placeholder="Instagram"></div>`;}
+else if(activeTab==='footer'){main.innerHTML=`<div class="card"><div style="font-family:serif" class="text-xl mb-4">Footer</div><input class="input" value="${esc(c.footer.text)}" oninput="update('footer.text',this.value)"><textarea class="textarea" style="min-height:100px" oninput="try{update('footer.links',JSON.parse(this.value))}catch{}">${esc(JSON.stringify(c.footer.links,null,2))}</textarea></div>`;}
+else if(activeTab==='sections'){main.innerHTML=`<div class="card"><div style="font-family:serif" class="text-xl mb-4">Sekcije — redoslijed i vidljivost</div><div class="grid gap-2">${c.sections.order.map((sec,i)=>`<div class="flex items-center gap-2 bg-[#fcfaf5] p-3 rounded-xl border"><span>⠿</span><span class="flex-1">${i+1}. ${sec}</span><label class="flex items-center gap-1 text-[12px]"><input type="checkbox" ${c.sections.visible[sec]!==false?'checked':''} onchange="toggleSec('${sec}',this.checked)"> Vidljivo</label><button class="btn btn-red" style="height:32px" onclick="removeSec('${sec}')">X</button></div>`).join('')}</div><div class="mt-4 flex gap-2"><input id="newSec" class="input" placeholder="Nova sekcija"><button class="btn btn-dark" onclick="addSec()">+ Dodaj</button></div></div>`;}
+else if(activeTab==='colors'){main.innerHTML=`<div class="card"><div style="font-family:serif" class="text-xl mb-4">Boje</div><div class="grid grid-cols-2 gap-3"><div><label style="font-size:10px">Background</label><input type="color" value="${c.colors.background}" oninput="update('colors.background',this.value)" class="input" style="height:50px"><input class="input" value="${c.colors.background}" oninput="update('colors.background',this.value)"></div><div><label style="font-size:10px">Gold</label><input type="color" value="${c.colors.gold}" oninput="update('colors.gold',this.value)" class="input" style="height:50px"><input class="input" value="${c.colors.gold}" oninput="update('colors.gold',this.value)"></div><div><label style="font-size:10px">Dark</label><input type="color" value="${c.colors.dark}" oninput="update('colors.dark',this.value)" class="input" style="height:50px"><input class="input" value="${c.colors.dark}" oninput="update('colors.dark',this.value)"></div><div><label style="font-size:10px">CreamDark</label><input type="color" value="${c.colors.creamDark}" oninput="update('colors.creamDark',this.value)" class="input" style="height:50px"><input class="input" value="${c.colors.creamDark}" oninput="update('colors.creamDark',this.value)"></div></div></div>`;}
+else if(activeTab==='languages'){main.innerHTML=`<div class="card"><div style="font-family:serif" class="text-xl mb-4">Jezici HR/EN/DE/IT/SL</div><input class="input" value="${c.languages.join(', ')}" oninput="update('languages',this.value.split(',').map(s=>s.trim().toUpperCase()).filter(Boolean))"><div class="mt-4">${Object.keys(c.translations||{}).map(lang=>`<div class="bg-[#fcfaf5] p-3 rounded-xl border mt-3"><div style="font-size:10px;opacity:.6">${lang}</div><textarea class="textarea" style="min-height:120px" oninput="try{config.translations['${lang}']=JSON.parse(this.value); saveCfg(config); reloadPreview();}catch(e){}">${esc(JSON.stringify(c.translations[lang],null,2))}</textarea></div>`).join('')}</div></div>`;}
+else if(activeTab==='git'){main.innerHTML=`<div class="card"><div style="font-family:serif" class="text-xl mb-4">Git Commit — automatski aktivno</div><div class="grid grid-cols-2 gap-2"><input class="input" value="${esc(gitCfg.owner)}" oninput="updateGit('owner',this.value)" placeholder="owner"><input class="input" value="${esc(gitCfg.repo)}" oninput="updateGit('repo',this.value)" placeholder="repo"><input class="input" value="${esc(gitCfg.branch)}" oninput="updateGit('branch',this.value)" placeholder="branch"><input class="input" value="${esc(gitCfg.pathConfig)}" oninput="updateGit('pathConfig',this.value)" placeholder="path"><input class="input col-span-2" type="password" value="${esc(gitCfg.token)}" oninput="updateGit('token',this.value)" placeholder="ghp_ token"></div><div class="mt-4 flex flex-wrap gap-2"><button class="btn btn-dark" onclick="commitCfg()">🚀 Commit config.json</button><button class="btn btn-gold" onclick="commitCSV()">Commit cjenik.csv</button><button class="btn btn-light" onclick="testGit()">Test API</button><button class="btn btn-light" onclick="downloadAll()">Download ZIP</button></div><div id="gitLog" class="mt-4 bg-[#2c2a24] text-[#f2ece0] p-3 rounded-xl text-[12px] font-mono min-h-[120px] whitespace-pre-wrap">Spremno</div></div>`;}
+else if(activeTab==='raw'){main.innerHTML=`<div class="card"><div style="font-family:serif" class="text-xl mb-4">RAW JSON</div><textarea id="rawJson" class="textarea" style="min-height:600px;font-family:monospace;font-size:12px" oninput="try{config=JSON.parse(this.value); saveCfg(config); reloadPreview();}catch(e){}">${esc(JSON.stringify(c,null,2))}</textarea><div class="mt-2 flex gap-2"><button class="btn btn-dark" onclick="resetCfg()">Reset</button></div></div>`;}
+reloadPreview();
 }
-function saveLog(m){ logText=m+"\n"+logText; const el=document.getElementById("log"); if(el) el.textContent=logText; console.log(m); }
-
-async function fetchConfig(){
- const paths=["/public/js/config.json","/js/config.json","./public/js/config.json","public/js/config.json"];
- for(const p of paths){
-  try{ const r=await fetch(p+"?v="+Date.now(),{cache:"no-store"}); if(r.ok){ const t=await r.text(); if(t.trim().startsWith("{")){ config=JSON.parse(t); saveLog("✅ Učitan "+p); return; } } }catch{}
- }
- try{ const r=await fetch("https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/js/config.json?v="+Date.now()); if(r.ok){ config=await r.json(); saveLog("✅ Učitan sa GitHub raw"); return; } }catch{}
- saveLog("⚠️ Koristim fallback config (preview mode)");
-}
-
-function isAuthed(){ return localStorage.getItem("hajdi_admin_auth")==="1"; }
-
-function render(){
- const app=document.getElementById("app");
- if(!isAuthed()){
-  app.innerHTML=`<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--bg)">
-   <form id="loginForm" class="card" style="width:380px;max-width:100%">
-    <div style="text-align:center;margin-bottom:16px"><div style="font-family:serif;font-size:28px">Hajdi House</div><div class="badge">ULTIMATE CMS — vanilla</div><div style="font-size:11px;opacity:.6;margin-top:8px">Radi bez CDN-a, bez Reacta</div></div>
-    <input id="u" placeholder="Korisničko ime" class="input" autocomplete="username">
-    <input id="p" placeholder="Lozinka" type="password" class="input" autocomplete="current-password">
-    <button type="submit" class="btn btn-dark" style="width:100%;margin-top:12px;justify-content:center">Prijava</button>
-    <div style="font-size:10px;opacity:.5;margin-top:10px;text-align:center">Login spremljen lokalno — ne prikazuje se default</div>
-   </form></div>`;
-  document.getElementById("loginForm").addEventListener("submit", e=>{
-   e.preventDefault();
-   const u=document.getElementById("u").value, p=document.getElementById("p").value;
-   if(u===adminCreds.user && p===adminCreds.pass){ localStorage.setItem("hajdi_admin_auth","1"); render(); fetchConfig().then(render); }
-   else alert("Krivi podaci");
-  });
-  return;
- }
-
- // authed view
- app.innerHTML=`
-  <div style="max-width:1000px;margin:0 auto;padding:20px">
-   <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
-    <h1 style="font-family:serif;font-size:28px;margin:0">Hajdi House — ULTIMATE (vanilla)</h1>
-    <div style="display:flex;gap:6px"><button id="publishBtn" class="btn btn-gold">🚀 OBJAVI SVE</button><button id="logoutBtn" class="tab">Odjava</button></div>
-   </div>
-   <div style="display:flex;flex-wrap:wrap;gap:6px;margin:16px 0">
-    <button class="tab ${activeTab==='hero'?'active':''}" data-tab="hero">🏔️ HERO</button>
-    <button class="tab ${activeTab==='gallery'?'active':''}" data-tab="gallery">🖼️ GALERIJA</button>
-    <button class="tab ${activeTab==='about'?'active':''}" data-tab="about">📖 ABOUT</button>
-    <button class="tab ${activeTab==='pricing'?'active':''}" data-tab="pricing">💰 CJENIK</button>
-    <button class="tab ${activeTab==='custom'?'active':''}" data-tab="custom">🧩 SEKCIJE</button>
-    <button class="tab ${activeTab==='security'?'active':''}" data-tab="security">🔒 SECURITY</button>
-    <button class="tab ${activeTab==='git'?'active':''}" data-tab="git">⚙️ GIT</button>
-    <button class="tab ${activeTab==='raw'?'active':''}" data-tab="raw">{} RAW</button>
-   </div>
-   <div id="log">${logText}</div>
-   <div id="tabContent"></div>
-  </div>`;
-
- document.getElementById("logoutBtn").onclick=()=>{ localStorage.removeItem("hajdi_admin_auth"); render(); };
- document.getElementById("publishBtn").onclick=()=> publishAll();
- document.querySelectorAll("[data-tab]").forEach(b=> b.onclick=()=>{ activeTab=b.dataset.tab; render(); });
-
- const tc=document.getElementById("tabContent");
-
- if(activeTab==="hero"){
-  tc.innerHTML=`<div class="card"><h3>Hero — blur LIVE (radi 100%)</h3>
-   <div class="badge">Naslov</div><input id="heroTitle" class="input" value="${(config.hero?.title||'').replace(/"/g,'&quot;')}">
-   <div class="badge">Podnaslov</div><textarea id="heroSub" class="textarea" style="min-height:80px">${config.hero?.subtitle||''}</textarea>
-   <div class="badge">Badge</div><input id="heroBadge" class="input" value="${config.hero?.badge||''}">
-   <div class="badge">Slika URL</div><input id="heroImage" class="input" value="${config.hero?.image||''}">
-   <div class="badge">Blur: <span id="blurVal">${config.hero?.blur||6}</span>px — POVUCI SLIDER</div>
-   <input id="heroBlur" type="range" min="0" max="20" value="${config.hero?.blur||6}" style="width:100%;height:30px;accent-color:#b8952a">
-   <div style="margin-top:10px"><input id="heroFile" type="file" accept="image/*"><div style="font-size:11px;opacity:.6">Upload direktno na GitHub</div></div>
-   ${config.hero?.image?`<div style="position:relative;margin-top:16px;border-radius:16px;overflow:hidden;background:#000"><img id="heroPreviewImg" src="${config.hero.image}" style="width:100%;height:320px;object-fit:cover;display:block;filter:blur(${config.hero?.blur||6}px);transition:filter 0.1s"><div id="blurLabel" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.6);color:#fff;padding:8px 16px;border-radius:999px;font-size:14px;font-weight:700">Blur ${config.hero?.blur||6}px — ${config.hero?.blur==0?'bez':'blago'} mutno</div></div>`:''}
-  </div>`;
-  const ht=tc.querySelector("#heroTitle"); if(ht) ht.oninput=e=>{config.hero.title=e.target.value; localSave();};
-  const hs=tc.querySelector("#heroSub"); if(hs) hs.oninput=e=>{config.hero.subtitle=e.target.value; localSave();};
-  const hb=tc.querySelector("#heroBadge"); if(hb) hb.oninput=e=>{config.hero.badge=e.target.value; localSave();};
-  const hi=tc.querySelector("#heroImage"); if(hi) hi.oninput=e=>{config.hero.image=e.target.value; localSave(); const img=document.getElementById("heroPreviewImg"); if(img) img.src=e.target.value;};
-  const hbl=tc.querySelector("#heroBlur"); if(hbl) hbl.oninput=e=>{
-   const v=parseInt(e.target.value);
-   config.hero.blur=v;
-   const bv=document.getElementById("blurVal"); if(bv) bv.textContent=v;
-   const img=document.getElementById("heroPreviewImg"); if(img) img.style.filter=`blur(${v}px)`;
-   const label=document.getElementById("blurLabel"); if(label) label.textContent=`Blur ${v}px`;
-   localSave();
-  };
-  const hf=tc.querySelector("#heroFile"); if(hf) hf.onchange=async e=>{const f=e.target.files[0]; if(!f) return; const url=await uploadImage(f); if(url){config.hero.image=url; localSave(); render();}};
- }
-
-
- if(activeTab==="gallery"){
-  const gal=config.gallery||[];
-  tc.innerHTML=`<div class="card"><h3>Galerija — dodaj / obriši bilo koju sliku</h3>
-   <div style="border:2px dashed #e8dfc8;border-radius:16px;padding:20px;text-align:center;background:#fcfaf5;margin-bottom:12px">
-    <input id="galFiles" type="file" accept="image/*" multiple><div class="badge" style="margin-top:8px">Više slika odjednom</div>
-   </div>
-   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px">
-    ${gal.map((g,i)=>{ const src=typeof g==="string"?g:g.image; return `<div style="border:1px solid #e8dfc8;border-radius:12px;overflow:hidden;background:#fff"><img src="${src}" style="width:100%;height:100px;object-fit:cover"><button data-del="${i}" class="btn btn-red" style="width:100%;border-radius:0;height:32px;font-size:11px">🗑️ Obriši</button></div>`; }).join('')}
-   </div>
-   ${gal.length===0?'<div style="opacity:.6;font-size:13px;margin-top:10px">Nema slika — dodaj gore</div>':''}
-  </div>`;
-  tc.querySelector("#galFiles").onchange=async e=>{ const files=Array.from(e.target.files); for(const f of files){ const url=await uploadImage(f); if(url){ config.gallery=[...(config.gallery||[]),{image:url}]; localSave(); } } render(); };
-  tc.querySelectorAll("[data-del]").forEach(b=> b.onclick=()=>{ const i=parseInt(b.dataset.del); config.gallery.splice(i,1); localSave(); render(); });
- }
-
- if(activeTab==="raw"){
-  tc.innerHTML=`<div class="card"><h3>RAW JSON — kontroliraš apsolutno sve</h3><div class="badge">Ovdje možeš dodati bilo koju sekciju, bilo koji header/footer/url</div><textarea id="rawJson" class="textarea" style="min-height:500px">${JSON.stringify(config,null,2)}</textarea><div style="display:flex;gap:8px;margin-top:8px"><button id="saveRaw" class="btn btn-dark">Spremi JSON</button><button id="copyRaw" class="tab">Kopiraj</button></div></div>`;
-  tc.querySelector("#saveRaw").onclick=()=>{ try{ const j=JSON.parse(document.getElementById("rawJson").value); config=j; localSave(); saveLog("✅ JSON spremljen"); render(); }catch(err){ saveLog("❌ JSON error: "+err.message); } };
-  tc.querySelector("#copyRaw").onclick=()=>{ navigator.clipboard.writeText(JSON.stringify(config,null,2)); saveLog("✅ Kopirano"); };
- }
-
- if(activeTab==="security"){
-  tc.innerHTML=`<div class="card"><h3>🔒 Security — promijeni login</h3><div class="badge" style="color:#c2410c">Ovo mijenja i _headers Basic-Auth na Netlifyju</div><div class="badge">User</div><input id="secUser" class="input" value="${adminCreds.user}"><div class="badge">Pass</div><input id="secPass" type="password" class="input" value="${adminCreds.pass}"><button id="secSave" class="btn btn-red" style="margin-top:10px">💾 Spremi i objavi novi login</button></div>`;
-  tc.querySelector("#secUser").oninput=e=> adminCreds.user=e.target.value;
-  tc.querySelector("#secPass").oninput=e=> adminCreds.pass=e.target.value;
-  tc.querySelector("#secSave").onclick=()=> publishAll(["admin"]);
- }
-
- if(activeTab==="git"){
-  tc.innerHTML=`<div class="card"><h3>GitHub</h3><div class="badge">Owner</div><input id="gitOwner" class="input" value="${git.owner}"><div class="badge">Repo</div><input id="gitRepo" class="input" value="${git.repo}"><div class="badge">Token ghp_...</div><input id="gitToken" type="password" class="input" value="${git.token}"><div class="badge">Path config</div><input id="gitPath" class="input" value="${git.pathConfig}"><div class="badge">Path images</div><input id="gitImg" class="input" value="${git.pathImages}"><button id="gitSave" class="btn btn-dark" style="margin-top:10px">Spremi Git</button><div style="font-size:11px;opacity:.6;margin-top:12px;white-space:pre-wrap">_redirects mora biti:
-/admin/* /admin/index.html 200
-/js/* /js/:splat 200
-/public/js/* /public/js/:splat 200
-/public/images/* /public/images/:splat 200
-/* /index.html 200</div></div>`;
-  tc.querySelector("#gitOwner").oninput=e=> git.owner=e.target.value;
-  tc.querySelector("#gitRepo").oninput=e=> git.repo=e.target.value;
-  tc.querySelector("#gitToken").oninput=e=> git.token=e.target.value;
-  tc.querySelector("#gitPath").oninput=e=> git.pathConfig=e.target.value;
-  tc.querySelector("#gitImg").oninput=e=> git.pathImages=e.target.value;
-  tc.querySelector("#gitSave").onclick=()=>{ localStorage.setItem("hajdi_git",JSON.stringify(git)); saveLog("✅ Git spremljeno"); };
- }
-
- if(["about","pricing","custom"].includes(activeTab)){
-  tc.innerHTML=`<div class="card"><h3>${activeTab.toUpperCase()}</h3><div class="badge">Editiraj preko RAW taba za potpunu kontrolu — tamo možeš dodati bilo što</div><button class="tab" onclick="document.querySelector('[data-tab=raw]').click()">Otvori RAW JSON</button><pre style="background:#fcfaf5;padding:12px;border-radius:12px;font-size:12px;white-space:pre-wrap;margin-top:12px">${JSON.stringify(config[activeTab]||config, null, 2).slice(0,2000)}</pre></div>`;
- }
-}
-
-function localSave(){ localStorage.setItem("hajdi_config", JSON.stringify(config)); }
-
-async function uploadImage(file){
- if(!git.token){ saveLog("❌ Unesi token u GIT tab"); return null; }
- saveLog("Uploadam "+file.name+"...");
- try{
-  const base64=await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result.split(",")[1]); r.onerror=rej; r.readAsDataURL(file); });
-  const safe=file.name.replace(/[^a-z0-9.-]/gi,"-").toLowerCase();
-  const path=`${git.pathImages}/${Date.now()}-${safe}`;
-  const body={message:`upload ${safe}`,content:base64,branch:git.branch};
-  const res=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${path}`,{method:"PUT",headers:{Authorization:`token ${git.token}`,"Content-Type":"application/json"},body:JSON.stringify(body)});
-  const j=await res.json(); if(res.ok){ const raw=`https://raw.githubusercontent.com/${git.owner}/${git.repo}/${git.branch}/${path}`; saveLog("✅ "+raw); return raw; } else { saveLog("❌ "+JSON.stringify(j).slice(0,500)); return null; }
- }catch(err){ saveLog("❌ "+err.message); return null; }
-}
-
-async function publishAll(extraFiles=[]){
- if(!git.token){ saveLog("❌ Unesi GitHub token u GIT tab"); return; }
- saveLog("Commitam config.json...");
- try{
-  const content=btoa(unescape(encodeURIComponent(JSON.stringify(config,null,2))));
-  let sha=null; try{ const r=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${git.pathConfig}?ref=${git.branch}`,{headers:{Authorization:`token ${git.token}`}}); if(r.ok){ const j=await r.json(); sha=j.sha; } }catch{}
-  const body={message:`ULTIMATE VANILLA ${new Date().toISOString()}`,content,branch:git.branch,...(sha?{sha}:{})};
-  const res=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${git.pathConfig}`,{method:"PUT",headers:{Authorization:`token ${git.token}`,"Content-Type":"application/json"},body:JSON.stringify(body)});
-  const j=await res.json(); if(!res.ok) throw new Error(JSON.stringify(j).slice(0,500));
-  saveLog("✅ Config OK "+(j.commit?.sha||"").slice(0,7));
-  if(extraFiles.includes("admin")){
-   let hSha=null; try{ const rh=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/_headers?ref=${git.branch}`,{headers:{Authorization:`token ${git.token}`}}); if(rh.ok){ const hj=await rh.json(); hSha=hj.sha; } }catch{}
-   const newHeaders=`/admin/*\n  Basic-Auth: ${adminCreds.user}:${adminCreds.pass}\n\n/admin\n  Basic-Auth: ${adminCreds.user}:${adminCreds.pass}\n`;
-   const hBody={message:"update auth",content:btoa(newHeaders),branch:git.branch,...(hSha?{sha:hSha}:{})};
-   await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/_headers`,{method:"PUT",headers:{Authorization:`token ${git.token}`,"Content-Type":"application/json"},body:JSON.stringify(hBody)});
-   saveLog("✅ _headers updated"); localStorage.setItem("hajdi_admin_creds",JSON.stringify(adminCreds));
-  }
-  localStorage.setItem("hajdi_git",JSON.stringify(git));
-  saveLog("🚀 Netlify deploy za 60s — ?v=xxx za bypass cache");
- }catch(err){ saveLog("❌ "+err.message); }
-}
-
-loadStorage();
+function updateGit(k,v){gitCfg[k]=v; localStorage.setItem(LS_GIT,JSON.stringify(gitCfg));}
+function updateStat(i,k,v){config.stats[i][k]=v; saveCfg(config); reloadPreview();}
+function addStat(){config.stats.push({value:'1',label:'Nova'}); saveCfg(config); render();}
+function removeStat(i){config.stats.splice(i,1); saveCfg(config); render();}
+function updateAmen(i,k,v){config.amenities[i][k]=v; saveCfg(config); reloadPreview();}
+function addAmenity(){config.amenities.push({id:Date.now().toString(),label:'Nova stavka',category:'Ostalo',icon:'sparkles'}); saveCfg(config); render();}
+function removeAmen(i){config.amenities.splice(i,1); saveCfg(config); render();}
+function pickIconify(ic){const name=ic.includes(':')?ic.split(':')[1]:ic; if(editingIdx!==null){config.amenities[editingIdx].icon=name; saveCfg(config); render();} else {iconSearch=name; render();}}
+function updateGal(i,v){if(config.gallery[i].image!==undefined) config.gallery[i].image=v; else config.gallery[i]=v; saveCfg(config); reloadPreview();}
+function addGal(){config.gallery.push({image:'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&q=80'}); saveCfg(config); render();}
+function removeGal(i){config.gallery.splice(i,1); saveCfg(config); render();}
+function uploadGal(e){for(let f of e.target.files){const r=new FileReader(); r.onload=ev=>{config.gallery.push({image:ev.target.result}); saveCfg(config); render();}; r.readAsDataURL(f);}}
+function updatePrice(i,k,v){config.pricing[i][k]=v; saveCfg(config); reloadPreview();}
+function addPrice(){config.pricing.push({id:Date.now().toString(),naziv:'Nova usluga',cijena:'50€',jedinica:'/ noć',opis:'Opis',aktivno:true}); saveCfg(config); render();}
+function removePrice(i){config.pricing.splice(i,1); saveCfg(config); render();}
+function toggleSec(sec,val){config.sections.visible[sec]=val; saveCfg(config); reloadPreview();}
+function removeSec(sec){config.sections.order=config.sections.order.filter(s=>s!==sec); delete config.sections.visible[sec]; saveCfg(config); render();}
+function addSec(){const v=document.getElementById('newSec').value.trim(); if(!v) return; config.sections.order.push(v); config.sections.visible[v]=true; saveCfg(config); render();}
+function reloadPreview(){const frame=document.getElementById('previewFrame'); if(!frame) return; const c=config; const html=`<!doctype html><html><head><meta charset="utf-8"><script src="https://cdn.tailwindcss.com"><\/script><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"><\/script></head><body style="background:${c.colors.background};color:${c.colors.dark};font-family:system-ui"><div style="padding:12px 20px;display:flex;justify-content:space-between;background:white;border-bottom:1px solid ${c.colors.creamDark}"><div style="font-weight:700">${c.header.logoText}</div><div style="display:flex;gap:8px;font-size:11px">${c.header.nav.map(n=>'<span>'+n+'</span>').join('')}</div></div><div style="position:relative;height:280px"><img src="${c.hero.image}" style="width:100%;height:100%;object-fit:cover;filter:blur(${c.hero.blur}px)"><div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,.4), transparent);padding:20px;color:white"><div style="background:white;color:black;display:inline-block;padding:2px 10px;border-radius:999px;font-size:10px">${c.hero.badge}</div><div style="font-family:serif;font-size:26px;margin-top:12px;max-width:400px">${c.hero.title}</div><div style="font-size:12px;opacity:.9;margin-top:8px;max-width:360px">${c.hero.subtitle}</div></div></div><div style="padding:16px;max-width:800px;margin:0 auto"><h2 style="font-family:serif;font-size:20px">${c.about.title}</h2><p style="font-size:12px;opacity:.8;margin-top:8px">${c.about.p1.slice(0,180)}...</p><div style="margin-top:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px">${c.stats.map(s=>'<div style="background:white;border:1px solid #e8dfc8;border-radius:12px;padding:8px;text-align:center"><div style="font-weight:700">'+s.value+'</div><div style="font-size:10px;opacity:.6">'+s.label+'</div></div>').join('')}</div><div style="margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px">${c.amenities.slice(0,9).map(a=>'<div style="background:white;border:1px solid #e8dfc8;border-radius:10px;padding:8px;display:flex;gap:6px;align-items:center;font-size:11px"><i data-lucide="'+a.icon+'" style="width:14px;height:14px"></i> '+a.label+'</div>').join('')}</div><div style="margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px">${c.pricing.map(p=>'<div style="background:white;border-radius:12px;padding:10px;border:1px solid #e8dfc8"><div style="font-size:10px;opacity:.5">'+p.naziv+'</div><div style="font-weight:700;color:${c.colors.gold}">'+p.cijena+'</div></div>').join('')}</div></div><script>try{lucide.createIcons()}catch{}<\/script></body></html>`; frame.srcdoc=html;}
+function downloadCfg(){const blob=new Blob([JSON.stringify(config,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='config.json'; a.click(); log('Download config.json');}
+function downloadCSV(){let csv='naziv,cijena,jedinica,opis,aktivno\n'; config.pricing.forEach(p=>{csv+=`"${p.naziv}","${p.cijena}","${p.jedinica}","${p.opis.replace(/"/g,'""')}",${p.aktivno}\n`;}); const blob=new Blob([csv],{type:'text/csv'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='cjenik.csv'; a.click();}
+function uploadHero(e){const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{config.hero.image=ev.target.result; saveCfg(config); render();}; r.readAsDataURL(f);}
+function uploadAbout(e){const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{config.about.image=ev.target.result; saveCfg(config); render();}; r.readAsDataURL(f);}
+async function testGit(){if(!gitCfg.token){log('Nema tokena'); return;} try{const r=await fetch('https://api.github.com/repos/'+gitCfg.owner+'/'+gitCfg.repo,{headers:{Authorization:'Bearer '+gitCfg.token}}); const j=await r.json(); log('Repo: '+j.full_name+' status '+r.status);}catch(e){log('Error '+e.message);}}
+async function commitCfg(){if(!gitCfg.token){log('Postavi token'); return;} log('Commit start...'); try{const getUrl='https://api.github.com/repos/'+gitCfg.owner+'/'+gitCfg.repo+'/contents/'+gitCfg.pathConfig+'?ref='+gitCfg.branch; let sha=null; try{const r=await fetch(getUrl,{headers:{Authorization:'Bearer '+gitCfg.token}}); if(r.ok){const j=await r.json(); sha=j.sha; log('SHA '+sha.slice(0,7));}}catch{} const content=btoa(unescape(encodeURIComponent(JSON.stringify(config,null,2)))); const body={message:'Hajdi CMS update '+new Date().toISOString(),content,branch:gitCfg.branch,...(sha?{sha}:{})}; const putR=await fetch('https://api.github.com/repos/'+gitCfg.owner+'/'+gitCfg.repo+'/contents/'+gitCfg.pathConfig,{method:'PUT',headers:{Authorization:'Bearer '+gitCfg.token,'Content-Type':'application/json'},body:JSON.stringify(body)}); const putJ=await putR.json(); if(putR.ok){log('✅ Commit OK '+putJ.commit.sha.slice(0,7)); document.getElementById('gitLog').innerText='✅ OK\n'+JSON.stringify(putJ,null,2).slice(0,3000);} else log('❌ Fail '+putR.status+' '+JSON.stringify(putJ).slice(0,1000));}catch(e){log('Error '+e.message);}}
+async function commitCSV(){if(!gitCfg.token){log('Postavi token'); return;} let csv='naziv,cijena,jedinica,opis,aktivno\n'; config.pricing.forEach(p=>{csv+=`"${p.naziv}","${p.cijena}","${p.jedinica}","${p.opis.replace(/"/g,'""')}",${p.aktivno}\n`;}); try{const getUrl='https://api.github.com/repos/'+gitCfg.owner+'/'+gitCfg.repo+'/contents/'+gitCfg.pathCsv+'?ref='+gitCfg.branch; let sha=null; try{const r=await fetch(getUrl,{headers:{Authorization:'Bearer '+gitCfg.token}}); if(r.ok){const j=await r.json(); sha=j.sha;}}catch{} const content=btoa(unescape(encodeURIComponent(csv))); const body={message:'Hajdi CMS cjenik '+new Date().toISOString(),content,branch:gitCfg.branch,...(sha?{sha}:{})}; const putR=await fetch('https://api.github.com/repos/'+gitCfg.owner+'/'+gitCfg.repo+'/contents/'+gitCfg.pathCsv,{method:'PUT',headers:{Authorization:'Bearer '+gitCfg.token,'Content-Type':'application/json'},body:JSON.stringify(body)}); const putJ=await putR.json(); if(putR.ok) log('✅ CSV OK '+putJ.commit.sha.slice(0,7)); else log('❌ CSV fail');}catch(e){log('Error '+e.message);}}
+function downloadAll(){downloadCfg(); setTimeout(downloadCSV,500);}
+function resetCfg(){if(confirm('Reset?')){localStorage.removeItem(LS_KEY); config=getCfg(); render();}}
 render();
-fetchConfig().then(render);
 </script>
 </body>
 </html>

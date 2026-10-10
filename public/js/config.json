@@ -202,7 +202,7 @@
     {
       "id": "1",
       "naziv": "Noćenje 2-3 noći",
-      "cijena": "120€",
+      "cijena": "100€",
       "jedinica": "/ noć",
       "opis": "Cijena po noćenju za boravak 2-3 noći, za cijelu kuću (do 4 gosta). Minimalno 2 noći.",
       "aktivno": true
@@ -210,7 +210,7 @@
     {
       "id": "2",
       "naziv": "Noćenje 4 i više noćenja",
-      "cijena": "100€",
+      "cijena": "80€",
       "jedinica": "/ noć",
       "opis": "Popust za duži boravak, 4 i više noćenja. Minimalno 2 noći.",
       "aktivno": true

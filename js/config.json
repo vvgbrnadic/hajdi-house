@@ -12,7 +12,7 @@
   "hero": {
     "title": "Hajdi House — Kuća na brdu",
     "subtitle": "Drvena kuća za dušu, na rubu šume. Bez buke, bez žurbe. Samo vatra, knjiga i pogled koji ne staje.",
-    "badge": "Žumberak 750m",
+    "badge": "Žumberak 650m",
     "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/gallery/1790720528720-20251221-151127-1-.jpg",
     "blur": 12,
     "cta1": "Rezerviraj",
@@ -27,8 +27,8 @@
   },
   "stats": [
     {
-      "value": "2",
-      "label": "Spavaće sobe"
+      "value": "1",
+      "label": "Spavaća soba"
     },
     {
       "value": "1",
@@ -166,14 +166,9 @@
     }
   ],
   "gallery": [
-    "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=800&q=80&auto=format&fit=crop"
+    {
+      "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/gallery/1791657631970-20251221-151127-1-.jpg"
+    }
   ],
   "location": {
     "lat": "45.783450",
@@ -192,7 +187,7 @@
       },
       {
         "label": "Airbnb",
-        "url": "#"
+        "url": "https://www.airbnb.com/rooms/24417319"
       }
     ]
   },
