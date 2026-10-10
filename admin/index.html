@@ -2,89 +2,220 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hajdi House — FIXED</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<title>Hajdi House — ULTIMATE CMS (vanilla)</title>
 <style>
-:root{--bg:#f2ece0;--dark:#2c2a24;--creamDark:#e8dfc8;--cream:#fcfaf5}
-body{margin:0;font-family:sans-serif;background:var(--bg);color:var(--dark)}
-.card{background:#fff;border-radius:16px;padding:20px;margin:12px 0;box-shadow:0 8px 30px rgba(0,0,0,.06)}
-.input{width:100%;height:40px;border-radius:8px;border:1px solid #e8dfc8;padding:0 12px;margin:6px 0}
-.tab{height:36px;padding:0 14px;border-radius:999px;border:1px solid #e8dfc8;background:#fff;cursor:pointer}
-.tab.active{background:#2c2a24;color:#fff}
+:root{--bg:#f2ece0;--gold:#b8952a;--dark:#2c2a24;--creamDark:#e8dfc8;--cream:#fcfaf5;--red:#c2410c}
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,Inter,sans-serif;background:var(--bg);color:var(--dark);line-height:1.5}
+.card{background:#fff;border-radius:20px;padding:20px;box-shadow:0 8px 30px rgba(44,42,36,.06);border:1px solid var(--creamDark);margin:12px 0}
+.input{width:100%;height:44px;border-radius:12px;border:1px solid var(--creamDark);background:var(--cream);padding:0 14px;font-size:13px;margin:6px 0}
+.textarea{width:100%;min-height:120px;border-radius:12px;border:1px solid var(--creamDark);background:var(--cream);padding:12px 14px;font-size:13px;resize:vertical;margin:6px 0;font-family:monospace}
+.tab{height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--creamDark);background:#fff;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;margin:3px}
+.tab.active{background:var(--dark);color:#fff;border-color:var(--dark)}
+.btn{height:44px;padding:0 18px;border-radius:999px;border:0;cursor:pointer;font-weight:700;display:inline-flex;align-items:center;gap:8px}
+.btn-dark{background:var(--dark);color:#fff} .btn-gold{background:var(--gold);color:#fff} .btn-red{background:#c2410c;color:#fff}
+.badge{font-size:10px;letter-spacing:.8px;text-transform:uppercase;opacity:.6;font-weight:700}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hidden{display:none}
+#log{background:#2c2a24;color:#f2ece0;padding:12px;border-radius:12px;font-size:12px;white-space:pre-wrap;max-height:200px;overflow:auto}
 </style>
 </head>
-<body><div id="root"></div>
+<body>
+<div id="app"></div>
 <script>
-const ADMIN_USER="admin", ADMIN_PASS="Hajdi2026!";
 const DEFAULT_GIT={owner:"vvgbrnadic",repo:"hajdi-house",branch:"main",token:"",pathConfig:"public/js/config.json",pathImages:"public/images/gallery"};
-function App(){
- const [authed,setAuthed]=React.useState(()=>localStorage.getItem("hajdi_admin_auth")==="1");
- const [u,setU]=React.useState(""),[p,setP]=React.useState(""),[config,setConfig]=React.useState(null),[git,setGit]=React.useState(DEFAULT_GIT),[log,setLog]=React.useState(""),[saving,setSaving]=React.useState(false);
- React.useEffect(()=>{
-  if(!authed) return;
-  (async()=>{
-   for(const path of ["../public/js/config.json","public/js/config.json"]){ try{ const r=await fetch(path); if(r.ok){ setConfig(await r.json()); return; } }catch{} }
-   try{ const r=await fetch("https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/js/config.json"); if(r.ok) setConfig(await r.json()); else setConfig({hero:{}});}catch{ setConfig({hero:{}}); }
-  })();
-  try{ const sg=localStorage.getItem("hajdi_git"); if(sg){ const pr=JSON.parse(sg); setGit(o=>({...o,...pr,pathImages:pr.pathImages||DEFAULT_GIT.pathImages})); } }catch{}
- },[authed]);
- const saveLocal=()=>{ localStorage.setItem("hajdi_config",JSON.stringify(config)); setLog("✅ Lokalno spremljeno"); };
- const commitGit=async()=>{
-  if(!git.token){ setLog("❌ Unesi token"); return; } setSaving(true); setLog("Commitam...");
-  try{
-   const content=btoa(unescape(encodeURIComponent(JSON.stringify(config,null,2)))); let sha=null;
-   try{ const r=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${git.pathConfig}?ref=${git.branch}`,{headers:{Authorization:`token ${git.token}`}}); if(r.ok){ const j=await r.json(); sha=j.sha; } }catch{}
-   const body={message:`ADMIN FIX ${new Date().toISOString()}`,content,branch:git.branch,...(sha?{sha}:{})};
-   const res=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${git.pathConfig}`,{method:"PUT",headers:{Authorization:`token ${git.token}`,"Content-Type":"application/json"},body:JSON.stringify(body)});
-   const j=await res.json(); if(res.ok){ setLog("✅ Commit OK "+(j.commit?.sha||"").slice(0,7)); localStorage.setItem("hajdi_git",JSON.stringify(git)); } else setLog("❌ "+JSON.stringify(j).slice(0,500));
-  }catch(e){ setLog("❌ "+e.message); } setSaving(false);
- };
- const uploadImage=async(file)=>{
-  const imagesPath=git.pathImages||DEFAULT_GIT.pathImages; if(!git.token){ setLog("❌ Unesi token"); return null; } setLog("Uploadam "+file.name);
-  try{
-   const base64=await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result.split(",")[1]); r.onerror=rej; r.readAsDataURL(file); });
-   const safe=file.name.replace(/[^a-z0-9.-]/gi,"-").toLowerCase(); const path=`${imagesPath}/${Date.now()}-${safe}`;
-   const body={message:`upload ${safe}`,content:base64,branch:git.branch};
-   const res=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${path}`,{method:"PUT",headers:{Authorization:`token ${git.token}`,"Content-Type":"application/json"},body:JSON.stringify(body)});
-   const j=await res.json(); if(res.ok){ const raw=`https://raw.githubusercontent.com/${git.owner}/${git.repo}/${git.branch}/${path}`; setLog("✅ "+raw); return raw; } else { setLog("❌ "+JSON.stringify(j).slice(0,400)); return null; }
-  }catch(e){ setLog("❌ "+e.message); return null; }
- };
- if(!authed) return React.createElement("div",{style:{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center"}},
-  React.createElement("form",{onSubmit:e=>{ e.preventDefault(); if(u===ADMIN_USER&&p===ADMIN_PASS){ localStorage.setItem("hajdi_admin_auth","1"); setAuthed(true);} else alert("krivi"); },className:"card",style:{width:360}},
-   React.createElement("h2",null,"Hajdi CMS FIXED — bez Babel buga"),React.createElement("div",{style:{fontSize:11,opacity:.6,marginBottom:10}},"admin / Hajdi2026!"),
-   React.createElement("input",{placeholder:"user",value:u,onChange:e=>setU(e.target.value),className:"input"}),
-   React.createElement("input",{placeholder:"pass",type:"password",value:p,onChange:e=>setP(e.target.value),className:"input"}),
-   React.createElement("button",{type:"submit",style:{width:"100%",height:44,background:"#2c2a24",color:"#fff",borderRadius:999,marginTop:8}},"Uđi")
-  )
- );
- if(!config) return React.createElement("div",{style:{padding:20}},"Učitavam...");
- const hero=config.hero||{};
- return React.createElement("div",{style:{padding:20,maxWidth:800,margin:"0 auto"}},
-  React.createElement("h1",null,"Hajdi House — FIXED CMS"),React.createElement("div",{style:{fontSize:11,opacity:.6}},"Radi na python http.server — nema babel.min.js"),
-  React.createElement("div",{style:{display:"flex",gap:8,margin:"12px 0"}},
-   React.createElement("button",{onClick:saveLocal,className:"tab"},"💾 Spremi"),
-   React.createElement("button",{onClick:commitGit,disabled:saving,className:"tab active"},saving?"...":"🚀 Commitaj"),
-   React.createElement("button",{onClick:()=>{ localStorage.removeItem("hajdi_git"); setGit(DEFAULT_GIT); setLog("Očišćen cache"); },className:"tab"},"🧹 Očisti cache")
-  ),
-  log&&React.createElement("div",{style:{background:"#2c2a24",color:"#f2ece0",padding:10,borderRadius:8,fontSize:11,whiteSpace:"pre-wrap"}},log),
-  React.createElement("div",{className:"card"},
-   React.createElement("div",null,"Hero image URL"),
-   React.createElement("input",{value:hero.image||"",onChange:e=>setConfig({...config,hero:{...hero,image:e.target.value}}),className:"input"}),
-   React.createElement("div",null,"Blur: "+(hero.blur||0)),
-   React.createElement("input",{type:"range",min:0,max:20,value:hero.blur||6,onChange:e=>setConfig({...config,hero:{...hero,blur:parseInt(e.target.value)}}),style:{width:"100%"}}),
-   React.createElement("input",{type:"file",accept:"image/*",onChange:async e=>{ const f=e.target.files?.[0]; if(!f) return; const url=await uploadImage(f); if(url) setConfig(c=>({...c,hero:{...c.hero,image:url}})); },style:{marginTop:8}}),
-   hero.image&&React.createElement("img",{src:hero.image,style:{width:"100%",maxHeight:300,objectFit:"cover",borderRadius:12,marginTop:12,filter:`blur(${hero.blur||0}px)`}})
-  ),
-  React.createElement("div",{className:"card"},
-   React.createElement("div",null,"GIT"),
-   React.createElement("input",{placeholder:"owner",value:git.owner,onChange:e=>setGit({...git,owner:e.target.value}),className:"input"}),
-   React.createElement("input",{placeholder:"repo",value:git.repo,onChange:e=>setGit({...git,repo:e.target.value}),className:"input"}),
-   React.createElement("input",{placeholder:"token ghp_",type:"password",value:git.token,onChange:e=>setGit({...git,token:e.target.value}),className:"input"}),
-   React.createElement("input",{placeholder:"pathImages",value:git.pathImages,onChange:e=>setGit({...git,pathImages:e.target.value}),className:"input"})
-  )
- );
+const FALLBACK={
+ site:{name:"Hajdi House",domain:"www.hajdihouse.hr"},
+ header:{logo:"Hajdi House",cta:"Rezerviraj"},
+ hero:{title:"Hajdi House — Kuća na brdu",subtitle:"Drvena kuća za dušu...",badge:"Žumberak 750m",image:"https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1920&q=80",blur:6,cta1:"Rezerviraj",cta2:"Pogledaj kuću"},
+ about:{title:"Hajdi House nije apartman.",p1:"...",p2:"...",quote:"Dođi s knjigom..."},
+ gallery:[], pricing:{weekday:100,weekend:120}, footer:{email:"info@hajdihouse.hr"}, customSections:[]
+};
+let config = JSON.parse(JSON.stringify(FALLBACK));
+let git = {...DEFAULT_GIT};
+let adminCreds = {user:"admin",pass:"Hajdi2026!"};
+let activeTab="hero";
+let logText="";
+
+function loadStorage(){
+ try{ const sg=localStorage.getItem("hajdi_git"); if(sg) git={...git,...JSON.parse(sg)}; }catch{}
+ try{ const sc=localStorage.getItem("hajdi_config"); if(sc) config=JSON.parse(sc); }catch{}
+ try{ const sa=localStorage.getItem("hajdi_admin_creds"); if(sa) adminCreds=JSON.parse(sa); }catch{}
 }
-ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
-</script></body></html>
+function saveLog(m){ logText=m+"\n"+logText; const el=document.getElementById("log"); if(el) el.textContent=logText; console.log(m); }
+
+async function fetchConfig(){
+ const paths=["/public/js/config.json","/js/config.json","./public/js/config.json","public/js/config.json"];
+ for(const p of paths){
+  try{ const r=await fetch(p+"?v="+Date.now(),{cache:"no-store"}); if(r.ok){ const t=await r.text(); if(t.trim().startsWith("{")){ config=JSON.parse(t); saveLog("✅ Učitan "+p); return; } } }catch{}
+ }
+ try{ const r=await fetch("https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/js/config.json?v="+Date.now()); if(r.ok){ config=await r.json(); saveLog("✅ Učitan sa GitHub raw"); return; } }catch{}
+ saveLog("⚠️ Koristim fallback config (preview mode)");
+}
+
+function isAuthed(){ return localStorage.getItem("hajdi_admin_auth")==="1"; }
+
+function render(){
+ const app=document.getElementById("app");
+ if(!isAuthed()){
+  app.innerHTML=`<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--bg)">
+   <form id="loginForm" class="card" style="width:380px;max-width:100%">
+    <div style="text-align:center;margin-bottom:16px"><div style="font-family:serif;font-size:28px">Hajdi House</div><div class="badge">ULTIMATE CMS — vanilla</div><div style="font-size:11px;opacity:.6;margin-top:8px">Radi bez CDN-a, bez Reacta</div></div>
+    <input id="u" placeholder="Korisničko ime" class="input" autocomplete="username">
+    <input id="p" placeholder="Lozinka" type="password" class="input" autocomplete="current-password">
+    <button type="submit" class="btn btn-dark" style="width:100%;margin-top:12px;justify-content:center">Prijava</button>
+    <div style="font-size:10px;opacity:.5;margin-top:10px;text-align:center">Login spremljen lokalno — ne prikazuje se default</div>
+   </form></div>`;
+  document.getElementById("loginForm").addEventListener("submit", e=>{
+   e.preventDefault();
+   const u=document.getElementById("u").value, p=document.getElementById("p").value;
+   if(u===adminCreds.user && p===adminCreds.pass){ localStorage.setItem("hajdi_admin_auth","1"); render(); fetchConfig().then(render); }
+   else alert("Krivi podaci");
+  });
+  return;
+ }
+
+ // authed view
+ app.innerHTML=`
+  <div style="max-width:1000px;margin:0 auto;padding:20px">
+   <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+    <h1 style="font-family:serif;font-size:28px;margin:0">Hajdi House — ULTIMATE (vanilla)</h1>
+    <div style="display:flex;gap:6px"><button id="publishBtn" class="btn btn-gold">🚀 OBJAVI SVE</button><button id="logoutBtn" class="tab">Odjava</button></div>
+   </div>
+   <div style="display:flex;flex-wrap:wrap;gap:6px;margin:16px 0">
+    <button class="tab ${activeTab==='hero'?'active':''}" data-tab="hero">🏔️ HERO</button>
+    <button class="tab ${activeTab==='gallery'?'active':''}" data-tab="gallery">🖼️ GALERIJA</button>
+    <button class="tab ${activeTab==='about'?'active':''}" data-tab="about">📖 ABOUT</button>
+    <button class="tab ${activeTab==='pricing'?'active':''}" data-tab="pricing">💰 CJENIK</button>
+    <button class="tab ${activeTab==='custom'?'active':''}" data-tab="custom">🧩 SEKCIJE</button>
+    <button class="tab ${activeTab==='security'?'active':''}" data-tab="security">🔒 SECURITY</button>
+    <button class="tab ${activeTab==='git'?'active':''}" data-tab="git">⚙️ GIT</button>
+    <button class="tab ${activeTab==='raw'?'active':''}" data-tab="raw">{} RAW</button>
+   </div>
+   <div id="log">${logText}</div>
+   <div id="tabContent"></div>
+  </div>`;
+
+ document.getElementById("logoutBtn").onclick=()=>{ localStorage.removeItem("hajdi_admin_auth"); render(); };
+ document.getElementById("publishBtn").onclick=()=> publishAll();
+ document.querySelectorAll("[data-tab]").forEach(b=> b.onclick=()=>{ activeTab=b.dataset.tab; render(); });
+
+ const tc=document.getElementById("tabContent");
+
+ if(activeTab==="hero"){
+  tc.innerHTML=`<div class="card"><h3>Hero — blur LIVE (radi 100%)</h3>
+   <div class="badge">Naslov</div><input id="heroTitle" class="input" value="${(config.hero?.title||'').replace(/"/g,'&quot;')}">
+   <div class="badge">Podnaslov</div><textarea id="heroSub" class="textarea" style="min-height:80px">${config.hero?.subtitle||''}</textarea>
+   <div class="badge">Badge</div><input id="heroBadge" class="input" value="${config.hero?.badge||''}">
+   <div class="badge">Slika URL</div><input id="heroImage" class="input" value="${config.hero?.image||''}">
+   <div class="badge">Blur: <span id="blurVal">${config.hero?.blur||6}</span>px — POVUCI SLIDER</div>
+   <input id="heroBlur" type="range" min="0" max="20" value="${config.hero?.blur||6}" style="width:100%;height:30px;accent-color:#b8952a">
+   <div style="margin-top:10px"><input id="heroFile" type="file" accept="image/*"><div style="font-size:11px;opacity:.6">Upload direktno na GitHub</div></div>
+   ${config.hero?.image?`<div style="position:relative;margin-top:16px;border-radius:16px;overflow:hidden;background:#000"><img id="heroPreviewImg" src="${config.hero.image}" style="width:100%;height:320px;object-fit:cover;display:block;filter:blur(${config.hero?.blur||6}px);transition:filter 0.1s"><div id="blurLabel" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.6);color:#fff;padding:8px 16px;border-radius:999px;font-size:14px;font-weight:700">Blur ${config.hero?.blur||6}px — ${config.hero?.blur==0?'bez':'blago'} mutno</div></div>`:''}
+  </div>`;
+  const ht=tc.querySelector("#heroTitle"); if(ht) ht.oninput=e=>{config.hero.title=e.target.value; localSave();};
+  const hs=tc.querySelector("#heroSub"); if(hs) hs.oninput=e=>{config.hero.subtitle=e.target.value; localSave();};
+  const hb=tc.querySelector("#heroBadge"); if(hb) hb.oninput=e=>{config.hero.badge=e.target.value; localSave();};
+  const hi=tc.querySelector("#heroImage"); if(hi) hi.oninput=e=>{config.hero.image=e.target.value; localSave(); const img=document.getElementById("heroPreviewImg"); if(img) img.src=e.target.value;};
+  const hbl=tc.querySelector("#heroBlur"); if(hbl) hbl.oninput=e=>{
+   const v=parseInt(e.target.value);
+   config.hero.blur=v;
+   const bv=document.getElementById("blurVal"); if(bv) bv.textContent=v;
+   const img=document.getElementById("heroPreviewImg"); if(img) img.style.filter=`blur(${v}px)`;
+   const label=document.getElementById("blurLabel"); if(label) label.textContent=`Blur ${v}px`;
+   localSave();
+  };
+  const hf=tc.querySelector("#heroFile"); if(hf) hf.onchange=async e=>{const f=e.target.files[0]; if(!f) return; const url=await uploadImage(f); if(url){config.hero.image=url; localSave(); render();}};
+ }
+
+
+ if(activeTab==="gallery"){
+  const gal=config.gallery||[];
+  tc.innerHTML=`<div class="card"><h3>Galerija — dodaj / obriši bilo koju sliku</h3>
+   <div style="border:2px dashed #e8dfc8;border-radius:16px;padding:20px;text-align:center;background:#fcfaf5;margin-bottom:12px">
+    <input id="galFiles" type="file" accept="image/*" multiple><div class="badge" style="margin-top:8px">Više slika odjednom</div>
+   </div>
+   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px">
+    ${gal.map((g,i)=>{ const src=typeof g==="string"?g:g.image; return `<div style="border:1px solid #e8dfc8;border-radius:12px;overflow:hidden;background:#fff"><img src="${src}" style="width:100%;height:100px;object-fit:cover"><button data-del="${i}" class="btn btn-red" style="width:100%;border-radius:0;height:32px;font-size:11px">🗑️ Obriši</button></div>`; }).join('')}
+   </div>
+   ${gal.length===0?'<div style="opacity:.6;font-size:13px;margin-top:10px">Nema slika — dodaj gore</div>':''}
+  </div>`;
+  tc.querySelector("#galFiles").onchange=async e=>{ const files=Array.from(e.target.files); for(const f of files){ const url=await uploadImage(f); if(url){ config.gallery=[...(config.gallery||[]),{image:url}]; localSave(); } } render(); };
+  tc.querySelectorAll("[data-del]").forEach(b=> b.onclick=()=>{ const i=parseInt(b.dataset.del); config.gallery.splice(i,1); localSave(); render(); });
+ }
+
+ if(activeTab==="raw"){
+  tc.innerHTML=`<div class="card"><h3>RAW JSON — kontroliraš apsolutno sve</h3><div class="badge">Ovdje možeš dodati bilo koju sekciju, bilo koji header/footer/url</div><textarea id="rawJson" class="textarea" style="min-height:500px">${JSON.stringify(config,null,2)}</textarea><div style="display:flex;gap:8px;margin-top:8px"><button id="saveRaw" class="btn btn-dark">Spremi JSON</button><button id="copyRaw" class="tab">Kopiraj</button></div></div>`;
+  tc.querySelector("#saveRaw").onclick=()=>{ try{ const j=JSON.parse(document.getElementById("rawJson").value); config=j; localSave(); saveLog("✅ JSON spremljen"); render(); }catch(err){ saveLog("❌ JSON error: "+err.message); } };
+  tc.querySelector("#copyRaw").onclick=()=>{ navigator.clipboard.writeText(JSON.stringify(config,null,2)); saveLog("✅ Kopirano"); };
+ }
+
+ if(activeTab==="security"){
+  tc.innerHTML=`<div class="card"><h3>🔒 Security — promijeni login</h3><div class="badge" style="color:#c2410c">Ovo mijenja i _headers Basic-Auth na Netlifyju</div><div class="badge">User</div><input id="secUser" class="input" value="${adminCreds.user}"><div class="badge">Pass</div><input id="secPass" type="password" class="input" value="${adminCreds.pass}"><button id="secSave" class="btn btn-red" style="margin-top:10px">💾 Spremi i objavi novi login</button></div>`;
+  tc.querySelector("#secUser").oninput=e=> adminCreds.user=e.target.value;
+  tc.querySelector("#secPass").oninput=e=> adminCreds.pass=e.target.value;
+  tc.querySelector("#secSave").onclick=()=> publishAll(["admin"]);
+ }
+
+ if(activeTab==="git"){
+  tc.innerHTML=`<div class="card"><h3>GitHub</h3><div class="badge">Owner</div><input id="gitOwner" class="input" value="${git.owner}"><div class="badge">Repo</div><input id="gitRepo" class="input" value="${git.repo}"><div class="badge">Token ghp_...</div><input id="gitToken" type="password" class="input" value="${git.token}"><div class="badge">Path config</div><input id="gitPath" class="input" value="${git.pathConfig}"><div class="badge">Path images</div><input id="gitImg" class="input" value="${git.pathImages}"><button id="gitSave" class="btn btn-dark" style="margin-top:10px">Spremi Git</button><div style="font-size:11px;opacity:.6;margin-top:12px;white-space:pre-wrap">_redirects mora biti:
+/admin/* /admin/index.html 200
+/js/* /js/:splat 200
+/public/js/* /public/js/:splat 200
+/public/images/* /public/images/:splat 200
+/* /index.html 200</div></div>`;
+  tc.querySelector("#gitOwner").oninput=e=> git.owner=e.target.value;
+  tc.querySelector("#gitRepo").oninput=e=> git.repo=e.target.value;
+  tc.querySelector("#gitToken").oninput=e=> git.token=e.target.value;
+  tc.querySelector("#gitPath").oninput=e=> git.pathConfig=e.target.value;
+  tc.querySelector("#gitImg").oninput=e=> git.pathImages=e.target.value;
+  tc.querySelector("#gitSave").onclick=()=>{ localStorage.setItem("hajdi_git",JSON.stringify(git)); saveLog("✅ Git spremljeno"); };
+ }
+
+ if(["about","pricing","custom"].includes(activeTab)){
+  tc.innerHTML=`<div class="card"><h3>${activeTab.toUpperCase()}</h3><div class="badge">Editiraj preko RAW taba za potpunu kontrolu — tamo možeš dodati bilo što</div><button class="tab" onclick="document.querySelector('[data-tab=raw]').click()">Otvori RAW JSON</button><pre style="background:#fcfaf5;padding:12px;border-radius:12px;font-size:12px;white-space:pre-wrap;margin-top:12px">${JSON.stringify(config[activeTab]||config, null, 2).slice(0,2000)}</pre></div>`;
+ }
+}
+
+function localSave(){ localStorage.setItem("hajdi_config", JSON.stringify(config)); }
+
+async function uploadImage(file){
+ if(!git.token){ saveLog("❌ Unesi token u GIT tab"); return null; }
+ saveLog("Uploadam "+file.name+"...");
+ try{
+  const base64=await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result.split(",")[1]); r.onerror=rej; r.readAsDataURL(file); });
+  const safe=file.name.replace(/[^a-z0-9.-]/gi,"-").toLowerCase();
+  const path=`${git.pathImages}/${Date.now()}-${safe}`;
+  const body={message:`upload ${safe}`,content:base64,branch:git.branch};
+  const res=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${path}`,{method:"PUT",headers:{Authorization:`token ${git.token}`,"Content-Type":"application/json"},body:JSON.stringify(body)});
+  const j=await res.json(); if(res.ok){ const raw=`https://raw.githubusercontent.com/${git.owner}/${git.repo}/${git.branch}/${path}`; saveLog("✅ "+raw); return raw; } else { saveLog("❌ "+JSON.stringify(j).slice(0,500)); return null; }
+ }catch(err){ saveLog("❌ "+err.message); return null; }
+}
+
+async function publishAll(extraFiles=[]){
+ if(!git.token){ saveLog("❌ Unesi GitHub token u GIT tab"); return; }
+ saveLog("Commitam config.json...");
+ try{
+  const content=btoa(unescape(encodeURIComponent(JSON.stringify(config,null,2))));
+  let sha=null; try{ const r=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${git.pathConfig}?ref=${git.branch}`,{headers:{Authorization:`token ${git.token}`}}); if(r.ok){ const j=await r.json(); sha=j.sha; } }catch{}
+  const body={message:`ULTIMATE VANILLA ${new Date().toISOString()}`,content,branch:git.branch,...(sha?{sha}:{})};
+  const res=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/${git.pathConfig}`,{method:"PUT",headers:{Authorization:`token ${git.token}`,"Content-Type":"application/json"},body:JSON.stringify(body)});
+  const j=await res.json(); if(!res.ok) throw new Error(JSON.stringify(j).slice(0,500));
+  saveLog("✅ Config OK "+(j.commit?.sha||"").slice(0,7));
+  if(extraFiles.includes("admin")){
+   let hSha=null; try{ const rh=await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/_headers?ref=${git.branch}`,{headers:{Authorization:`token ${git.token}`}}); if(rh.ok){ const hj=await rh.json(); hSha=hj.sha; } }catch{}
+   const newHeaders=`/admin/*\n  Basic-Auth: ${adminCreds.user}:${adminCreds.pass}\n\n/admin\n  Basic-Auth: ${adminCreds.user}:${adminCreds.pass}\n`;
+   const hBody={message:"update auth",content:btoa(newHeaders),branch:git.branch,...(hSha?{sha:hSha}:{})};
+   await fetch(`https://api.github.com/repos/${git.owner}/${git.repo}/contents/_headers`,{method:"PUT",headers:{Authorization:`token ${git.token}`,"Content-Type":"application/json"},body:JSON.stringify(hBody)});
+   saveLog("✅ _headers updated"); localStorage.setItem("hajdi_admin_creds",JSON.stringify(adminCreds));
+  }
+  localStorage.setItem("hajdi_git",JSON.stringify(git));
+  saveLog("🚀 Netlify deploy za 60s — ?v=xxx za bypass cache");
+ }catch(err){ saveLog("❌ "+err.message); }
+}
+
+loadStorage();
+render();
+fetchConfig().then(render);
+</script>
+</body>
+</html>
