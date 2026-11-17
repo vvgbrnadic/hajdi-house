@@ -112,7 +112,26 @@
       "icon": "dog"
     }
   ],
-  "gallery": [],
+  "gallery": [
+    {
+      "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/gallery/1794916311796-IMG_0732_2.jpeg"
+    },
+    {
+      "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/gallery/1794916493327-gallery_07.jpg"
+    },
+    {
+      "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/gallery/1794916571765-gallery_08.jpg"
+    },
+    {
+      "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/gallery/1794916634859-gallery_06.jpg"
+    },
+    {
+      "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/gallery/1794916716605-gallery_01.jpg"
+    },
+    {
+      "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/gallery/1794916977004-gallery_04.jpg"
+    }
+  ],
   "location": {
     "lat": "45.783450",
     "lng": "15.568973",
@@ -150,7 +169,10 @@
       "cijena": "120€",
       "jedinica": "/ noć",
       "opis": "Cijena po noćenju za boravak 2-3 noći, za cijelu kuću (do 4 gosta). Minimalno 2 noći.",
-      "aktivno": true
+      "aktivno": true,
+      "sidrena": "120.00",
+      "posebniOblik": "NE",
+      "nazivPosebnog": ""
     },
     {
       "id": "2",
@@ -158,7 +180,10 @@
       "cijena": "100€",
       "jedinica": "/ noć",
       "opis": "Popust za duži boravak, 4 i više noćenja. Minimalno 2 noći.",
-      "aktivno": true
+      "aktivno": true,
+      "sidrena": "100.00",
+      "posebniOblik": "NE",
+      "nazivPosebnog": ""
     },
     {
       "id": "3",
@@ -166,7 +191,10 @@
       "cijena": "30€",
       "jedinica": "/ boravak",
       "opis": "Jednokratno završno čišćenje kuće",
-      "aktivno": true
+      "aktivno": true,
+      "sidrena": "30.00",
+      "posebniOblik": "NE",
+      "nazivPosebnog": ""
     }
   ],
   "translations": {
@@ -255,7 +283,14 @@
       "Ime": "Name",
       "Email": "E-mail",
       "Poruka": "Message",
-      "Pošalji upit": "Send an inquiry"
+      "Pošalji upit": "Send an inquiry",
+      "Sidrena cijena": "Anchor price",
+      "Posebni oblik prodaje": "Special form of sale",
+      "Usluga": "Service",
+      "Maloprodajna cijena": "Retail price",
+      "Posebni oblik": "Special form",
+      "Preuzmi cjenik (CSV)": "Download price list (CSV)",
+      "Uz važeću cijenu istaknuta je sidrena cijena s danom 10. 9. 2026., sukladno NN 101/2026.": "The anchor price from 10 September 2026 is shown next to the current price, in line with NN 101/2026."
     },
     "DE": {
       "Hajdi House — Kuća na brdu": "Hajdi House — Haus auf dem Hügel",
@@ -338,7 +373,14 @@
       "Ime": "Name",
       "Email": "E-Mail",
       "Poruka": "Nachricht",
-      "Pošalji upit": "Senden Sie eine Anfrage"
+      "Pošalji upit": "Senden Sie eine Anfrage",
+      "Sidrena cijena": "Ankerpreis",
+      "Posebni oblik prodaje": "Besondere Verkaufsform",
+      "Usluga": "Leistung",
+      "Maloprodajna cijena": "Verkaufspreis",
+      "Posebni oblik": "Sonderform",
+      "Preuzmi cjenik (CSV)": "Preisliste herunterladen (CSV)",
+      "Uz važeću cijenu istaknuta je sidrena cijena s danom 10. 9. 2026., sukladno NN 101/2026.": "Neben dem aktuellen Preis steht der Ankerpreis vom 10. 9. 2026., gemäß NN 101/2026."
     },
     "IT": {
       "Hajdi House — Kuća na brdu": "Hajdi House — Casa sulla collina",
@@ -421,7 +463,14 @@
       "Ime": "Nome",
       "Email": "E-mail",
       "Poruka": "Messaggio",
-      "Pošalji upit": "Invia una richiesta"
+      "Pošalji upit": "Invia una richiesta",
+      "Sidrena cijena": "Prezzo di riferimento",
+      "Posebni oblik prodaje": "Forma speciale di vendita",
+      "Usluga": "Servizio",
+      "Maloprodajna cijena": "Prezzo al dettaglio",
+      "Posebni oblik": "Forma speciale",
+      "Preuzmi cjenik (CSV)": "Scarica il listino (CSV)",
+      "Uz važeću cijenu istaknuta je sidrena cijena s danom 10. 9. 2026., sukladno NN 101/2026.": "Accanto al prezzo attuale è indicato il prezzo di riferimento del 10. 9. 2026., ai sensi della NN 101/2026."
     },
     "SL": {
       "Hajdi House — Kuća na brdu": "Hajdi House — Hiša na hribu",
@@ -504,7 +553,14 @@
       "Ime": "Ime",
       "Email": "E-pošta",
       "Poruka": "Sporočilo",
-      "Pošalji upit": "Pošljite povpraševanje"
+      "Pošalji upit": "Pošljite povpraševanje",
+      "Sidrena cijena": "Sidrna cena",
+      "Posebni oblik prodaje": "Posebna oblika prodaje",
+      "Usluga": "Storitev",
+      "Maloprodajna cijena": "Maloprodajna cena",
+      "Posebni oblik": "Posebna oblika",
+      "Preuzmi cjenik (CSV)": "Prenesi cenik (CSV)",
+      "Uz važeću cijenu istaknuta je sidrena cijena s danom 10. 9. 2026., sukladno NN 101/2026.": "Ob veljavni ceni je navedena sidrna cena z dne 10. 9. 2026, skladno z NN 101/2026."
     }
   },
   "features": [
@@ -590,10 +646,18 @@
     "amenitiesTitle": "Što te čeka",
     "pricingTitle": "Cjenik",
     "pricingNote": "Minimalno 2 noći — sve transparentno",
-    "galleryTitle": "Galerija"
+    "galleryTitle": "Galerija",
+    "pricingCsv": "Preuzmi cjenik (CSV)",
+    "pricingLaw": "Uz važeću cijenu istaknuta je sidrena cijena s danom 10. 9. 2026., sukladno NN 101/2026."
   },
   "seo": {
     "title": "Hajdi House — Kuća na brdu",
     "description": "Drvena kuća za dušu, na rubu šume. Bez buke, bez žurbe. Samo vatra, knjiga i pogled koji ne staje."
+  },
+  "cjenik": {
+    "datumSidrene": "10.09.2026",
+    "oznaka": "001",
+    "pohrana": 1,
+    "datoteka": "/cjenik/kuca_norsic-selo-52b-10430-samobor_001_1_20261117-1300.csv"
   }
 }

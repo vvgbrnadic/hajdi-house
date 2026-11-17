@@ -1,4 +1,4 @@
-naziv,cijena,jedinica,opis,aktivno
-"Noćenje 2-3 noći","120€","/ noć","Cijena po noćenju za boravak 2-3 noći, za cijelu kuću (do 4 gosta). Minimalno 2 noći.",true
-"Noćenje 4 i više noćenja","100€","/ noć","Popust za duži boravak, 4 i više noćenja. Minimalno 2 noći.",true
-"Završno čišćenje","30€","/ boravak","Jednokratno završno čišćenje kuće",true
+﻿naziv_usluge;maloprodajna_cijena_eur;posebni_oblik_prodaje;naziv_posebnog_oblika_prodaje;sidrena_cijena_eur;datum_sidrene_cijene
+Noćenje 2–3 noći, cijela kuća do 4 gosta, Noršić Selo 52B (cijena po noći);120.00;NE;;120.00;10.09.2026
+Noćenje 4 i više noći, cijela kuća do 4 gosta, Noršić Selo 52B (cijena po noći);100.00;NE;;100.00;10.09.2026
+Završno čišćenje, Noršić Selo 52B (jednokratno po boravku);30.00;NE;;30.00;10.09.2026

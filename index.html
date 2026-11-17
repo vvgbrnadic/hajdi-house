@@ -77,6 +77,8 @@ body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--dark)
 <h2 id="pricingTitle" class="serif text-[28px] md:text-[44px]">Cjenik</h2>
 <p id="pricingNote" class="mt-2 text-[13px] opacity-60"></p>
 <div id="pricingGrid" class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+<div class="mt-8 overflow-x-auto"><table id="cjenikTable" class="w-full text-left text-[13px] border-collapse"></table></div>
+<p id="cjenikFile" class="mt-4 text-[13px]"></p>
 </section>
 
 <section id="galerija" data-sec="gallery" class="max-w-[1240px] mx-auto px-4 md:px-8 py-12">
@@ -351,7 +353,13 @@ function apply(c){
 
   trNode(document.getElementById('pricingTitle'), labels.pricingTitle||'Cjenik');
   trNode(document.getElementById('pricingNote'), labels.pricingNote||'');
-  document.getElementById('pricingGrid').innerHTML = (c.pricing||[]).filter(p=>p.aktivno!==false).map(p=>`<div class="rounded-[24px] bg-white border p-6"><div class="text-[11px] opacity-50">${esc(t(p.naziv||''))}</div><div class="serif text-[32px] mt-2" style="color:var(--gold)">${esc(p.cijena||'')} <span class="text-[13px] opacity-60">${esc(t(p.jedinica||''))}</span></div><div class="text-[13px] opacity-70 mt-2">${esc(t(p.opis||''))}</div></div>`).join('');
+  const anchorDate = (c.cjenik&&c.cjenik.datumSidrene)||'10.09.2026';
+  const euroLabel = (v)=>{ const n=parseFloat(String(v||'').replace('€','').replace(/\s/g,'').replace(',','.')); return isFinite(n)?n.toFixed(2).replace('.',',')+' €':(v||''); };
+  document.getElementById('pricingGrid').innerHTML = (c.pricing||[]).filter(p=>p.aktivno!==false).map(p=>`<div class="rounded-[24px] bg-white border p-6"><div class="text-[11px] opacity-50">${esc(t(p.naziv||''))}</div><div class="serif text-[32px] mt-2" style="color:var(--gold)">${esc(p.cijena||'')} <span class="text-[13px] opacity-60">${esc(t(p.jedinica||''))}</span></div><div class="text-[13px] mt-3">${esc(t('Sidrena cijena'))} ${esc(anchorDate)}: <b>${esc(euroLabel(p.sidrena||p.cijena))}</b></div>${p.posebniOblik==='DA'?`<div class="text-[12px] mt-1">${esc(t('Posebni oblik prodaje'))}: ${esc(p.nazivPosebnog||'')}</div>`:''}<div class="text-[13px] opacity-70 mt-2">${esc(t(p.opis||''))}</div></div>`).join('');
+  const rows=(c.pricing||[]).filter(p=>p.aktivno!==false);
+  document.getElementById('cjenikTable').innerHTML = `<thead><tr><th class="py-2 pr-3 border-b">${esc(t('Usluga'))}</th><th class="py-2 pr-3 border-b">${esc(t('Maloprodajna cijena'))}</th><th class="py-2 pr-3 border-b">${esc(t('Posebni oblik'))}</th><th class="py-2 border-b">${esc(t('Sidrena cijena'))} ${esc(anchorDate)}</th></tr></thead><tbody>${rows.map(p=>`<tr><td class="py-2 pr-3 border-b">${esc(p.naziv||'')}</td><td class="py-2 pr-3 border-b">${esc(euroLabel(p.cijena))}</td><td class="py-2 pr-3 border-b">${esc(p.posebniOblik==='DA'?(p.nazivPosebnog||'DA'):'NE')}</td><td class="py-2 border-b">${esc(euroLabel(p.sidrena||p.cijena))}</td></tr>`).join('')}</tbody>`;
+  const file=(c.cjenik&&c.cjenik.datoteka)||'/public/js/cjenik.csv';
+  document.getElementById('cjenikFile').innerHTML = `<a class="underline" href="${esc(file)}">${esc(t(labels.pricingCsv||'Preuzmi cjenik (CSV)'))}</a><span class="opacity-70"> · ${esc(t(labels.pricingLaw||''))}</span>`;
 
   trNode(document.getElementById('galleryTitle'), labels.galleryTitle||'Galerija');
   document.getElementById('galleryGrid').innerHTML = (c.gallery||[]).map(g=>{
