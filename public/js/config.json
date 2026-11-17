@@ -21,7 +21,7 @@
   "about": {
     "title": "Hajdi House nije apartman.",
     "p1": "To je mala drvena kuća na rubu šume, sagrađena da diše zajedno s brdom. Nema susjeda koji zaviruju. Nema prometa. Samo ti i tišina.",
-    "p2": "Unutra — peć na drva koja pucketa dok vani pada magla, kuhinja s pogledom gdje kava miriše drugačije, dva topla krevetna gnijezda za spore jutra, i polica knjiga koja te tjera da ostaneš duže. Sve je dirljivo jednostavno, a opet luksuzno u onom pravom smislu.",
+    "p2": "Unutra — kamin koji pucketa dok vani pada magla, kuhinja s pogledom gdje kava miriše drugačije, dva topla krevetna gnijezda za spore jutra Sve je dirljivo jednostavno, a opet luksuzno u onom pravom smislu.",
     "quote": "Dođi s knjigom. Otići ćeš s pričom.",
     "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/hero/1794914699284-20251221_151127_1_.jpg",
     "kicker": "O kući — 01"
@@ -36,7 +36,7 @@
       "label": "Kupaona"
     },
     {
-      "value": "32 m²",
+      "value": "72 m²",
       "label": "Površina"
     },
     {
@@ -112,12 +112,31 @@
       "icon": "dog"
     }
   ],
-  "gallery": [],
+  "gallery": [
+    {
+      "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/gallery/1794916311796-IMG_0732_2.jpeg"
+    },
+    {
+      "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/gallery/1794916493327-gallery_07.jpg"
+    },
+    {
+      "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/gallery/1794916571765-gallery_08.jpg"
+    },
+    {
+      "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/gallery/1794916634859-gallery_06.jpg"
+    },
+    {
+      "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/gallery/1794916716605-gallery_01.jpg"
+    },
+    {
+      "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/gallery/1794916977004-gallery_04.jpg"
+    }
+  ],
   "location": {
     "lat": "45.783450",
     "lng": "15.568973",
     "address": "Noršić Selo 52B, 10430 Samobor",
-    "desc": "Na rubu Parka prirode Žumberak, 40 minuta od Zagreba. Zadnja kuća prije šume, prva iznad magle. Put je makadam zadnjih 800m - dio doživljaja.",
+    "desc": "Na rubu Parka prirode Žumberak, 40 minuta od Zagreba. Zadnja kuća prije šume, prva iznad magle. Put je asfaltiran.",
     "googleMapsLink": "https://maps.google.com/?q=45.783450,15.568973",
     "title": "Zadnja kuća prije šume.",
     "mapCta": "Otvori Maps"
@@ -511,19 +530,19 @@
     {
       "id": "1",
       "title": "Sve za sporiji dan.",
-      "desc": "Kuća je opremljena za boravak bez žurbe — knjige, društvene igre, deka za terasu.",
+      "desc": "Kuća je za boravak bez žurbe — knjige, društvene igre.",
       "icon": "books"
     },
     {
       "id": "2",
       "title": "Vatra cijelu noć",
-      "desc": "Peć na drva koja grije i daje atmosferu — drva su uključena u cijenu.",
+      "desc": "Kamin koji grije i daje atmosferu — drva su uključena u cijenu.",
       "icon": "flame"
     },
     {
       "id": "3",
       "title": "Kava iz džezve",
-      "desc": "Kava aparat, džezva i pogled na šumu — jutarnji ritual koji ne preskačeš.",
+      "desc": "Kava i pogled na šumu — jutarnji ritual koji ne preskačeš.",
       "icon": "coffee"
     },
     {
@@ -546,7 +565,7 @@
       "Kontakt"
     ],
     "cta": "Rezerviraj",
-    "logoImage": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/logo/1794914442728-20251221_151127_1_.jpg"
+    "logoImage": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/logo/1794916417007-logo_opt.webp"
   },
   "sections": {
     "order": [
