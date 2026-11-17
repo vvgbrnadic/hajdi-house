@@ -15,10 +15,12 @@ body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--dark)
 .serif{font-family:'Playfair Display',serif}
 .hero-h{height:100svh;height:100dvh;min-height:560px}
 .lang-btn.active{background:var(--dark);color:var(--bg)}
+.pic{border-radius:24px;overflow:hidden;-webkit-mask-image:-webkit-radial-gradient(#fff,#000);isolation:isolate}
+@media (max-width:767px){#heroImg{filter:none !important}}
 </style>
 </head>
 <body>
-<header class="sticky top-0 z-20 backdrop-blur-xl border-b" style="background:color-mix(in srgb, var(--bg) 80%, transparent);border-color:var(--creamDark)">
+<header class="sticky top-0 z-20 border-b" style="background:color-mix(in srgb, var(--bg) 94%, transparent);border-color:var(--creamDark)">
 <div class="max-w-[1240px] mx-auto px-4 md:px-8 h-[56px] md:h-[64px] flex items-center justify-between gap-3">
 <div class="flex items-center gap-3 min-w-0"><div id="logoMark" class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-[12px] shrink-0 overflow-hidden" style="background:var(--dark);color:var(--bg)">H</div><div class="min-w-0"><div id="logoText" class="text-[13px] font-semibold leading-none truncate">Hajdi House</div><div id="logoSub" class="text-[10px] opacity-60 leading-none mt-1 truncate">Žumberak 650m</div></div></div>
 <nav id="navDesktop" class="hidden lg:flex gap-1"></nav>
@@ -57,7 +59,7 @@ body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--dark)
 <p id="aboutP2" class="mt-4 text-[14px] opacity-80 leading-[1.7]"></p>
 <div id="aboutQuote" class="mt-6 italic opacity-60 border-l-2 pl-4" style="border-color:var(--gold)"></div>
 </div>
-<div class="rounded-[24px] overflow-hidden border" style="background:var(--creamDark)"><img id="aboutImg" alt="" class="w-full h-[380px] md:h-[520px] object-cover opacity-0" style="transition:opacity .45s ease" loading="lazy"></div>
+<div class="pic border" style="background:var(--creamDark)"><img id="aboutImg" alt="" class="w-full h-[380px] md:h-[520px] object-cover opacity-0" style="transition:opacity .45s ease" loading="lazy"></div>
 </section>
 
 <section id="stats" data-sec="stats" class="max-w-[1240px] mx-auto px-4 md:px-8 pb-8">
@@ -371,7 +373,7 @@ function apply(c){
   document.getElementById('galleryGrid').innerHTML = (c.gallery||[]).map(g=>{
     const src = typeof g==='string'?g:(g.image||'');
     if(!src) return '';
-    return `<div class="rounded-[24px] overflow-hidden border"><img alt="" src="${esc(src)}" data-fallback="1" class="w-full h-[220px] md:h-[240px] object-cover cursor-zoom-in" loading="lazy"></div>`;
+    return `<div class="pic border"><img alt="" src="${esc(src)}" data-fallback="1" class="w-full h-[220px] md:h-[240px] object-cover cursor-zoom-in" loading="lazy" decoding="async"></div>`;
   }).join('');
   document.querySelectorAll('#galleryGrid img').forEach(img=>{
     setImg(img, img.getAttribute('src'));
@@ -414,7 +416,7 @@ function apply(c){
     el.dataset.sec = id;
     el.dataset.custom = '1';
     el.className = 'max-w-[1240px] mx-auto px-4 md:px-8 py-12';
-    el.innerHTML = `<div class="grid md:grid-cols-2 gap-8 items-center"><div><h2 class="serif text-[28px] md:text-[40px]">${esc(t(s.title||''))}</h2><p class="mt-4 text-[14px] opacity-80 leading-[1.7] whitespace-pre-wrap">${esc(t(s.body||''))}</p></div>${s.image?`<div class="rounded-[24px] overflow-hidden border"><img alt="" data-fallback="1" src="${esc(s.image)}" class="w-full h-[320px] object-cover"></div>`:''}</div>`;
+    el.innerHTML = `<div class="grid md:grid-cols-2 gap-8 items-center"><div><h2 class="serif text-[28px] md:text-[40px]">${esc(t(s.title||''))}</h2><p class="mt-4 text-[14px] opacity-80 leading-[1.7] whitespace-pre-wrap">${esc(t(s.body||''))}</p></div>${s.image?`<div class="pic border"><img alt="" data-fallback="1" src="${esc(s.image)}" class="w-full h-[320px] object-cover" loading="lazy" decoding="async"></div>`:''}</div>`;
     sectionsRoot.appendChild(el);
   });
   document.querySelectorAll('#sections > [data-custom="1"] img').forEach(img=>setImg(img, img.getAttribute('src')));
