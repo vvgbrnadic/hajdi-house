@@ -21,7 +21,7 @@
   "about": {
     "title": "Hajdi House nije apartman.",
     "p1": "To je mala drvena kuća na rubu šume, sagrađena da diše zajedno s brdom. Nema susjeda koji zaviruju. Nema prometa. Samo ti i tišina.",
-    "p2": "Unutra — peć na drva koja pucketa dok vani pada magla, kuhinja s pogledom gdje kava miriše drugačije, dva topla krevetna gnijezda za spore jutra, i polica knjiga koja te tjera da ostaneš duže. Sve je dirljivo jednostavno, a opet luksuzno u onom pravom smislu.",
+    "p2": "Unutra — peć na drva koja pucketa dok vani pada magla, kuhinja s pogledom gdje kava miriše drugačije, dva topla krevetna gnijezda za spora jutra, i polica knjiga koja te tjera da ostaneš duže. Sve je dirljivo jednostavno, a opet luksuzno u onom pravom smislu.",
     "quote": "Dođi s knjigom. Otići ćeš s pričom.",
     "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/hero/1794914699284-20251221_151127_1_.jpg",
     "kicker": "O kući — 01"
@@ -42,6 +42,14 @@
     {
       "value": "4",
       "label": "Gosta"
+    },
+    {
+      "value": "1",
+      "label": "Blagavaona"
+    },
+    {
+      "value": "1",
+      "label": "Terasa"
     }
   ],
   "amenities": [
@@ -571,19 +579,19 @@
     {
       "id": "1",
       "title": "Sve za sporiji dan.",
-      "desc": "Kuća je opremljena za boravak bez žurbe — knjige, društvene igre, deka za terasu.",
+      "desc": "Kuća je za boravak bez žurbe — knjige, društvene igre, projektor.",
       "icon": "books"
     },
     {
       "id": "2",
       "title": "Vatra cijelu noć",
-      "desc": "Peć na drva koja grije i daje atmosferu — drva su uključena u cijenu.",
+      "desc": "Kamin koji grije i daje atmosferu — drva su uključena u cijenu.",
       "icon": "flame"
     },
     {
       "id": "3",
       "title": "Kava iz džezve",
-      "desc": "Kava aparat, džezva i pogled na šumu — jutarnji ritual koji ne preskačeš.",
+      "desc": "Kava  i pogled na šumu — jutarnji ritual koji ne preskačeš.",
       "icon": "coffee"
     },
     {
@@ -606,7 +614,7 @@
       "Kontakt"
     ],
     "cta": "Rezerviraj",
-    "logoImage": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/logo/1794918656035-b9eca87509f71625-logo_opt.webp"
+    "logoImage": ""
   },
   "sections": {
     "order": [
@@ -661,7 +669,7 @@
   "cjenik": {
     "datumSidrene": "10.09.2026",
     "oznaka": "001",
-    "pohrana": 2,
-    "datoteka": "/cjenik/kuca_norsic-selo-52b-10430-samobor_001_2_20261117-1326.csv"
+    "pohrana": 3,
+    "datoteka": "/cjenik/kuca_norsic-selo-52b-10430-samobor_001_3_20261117-1333.csv"
   }
 }
