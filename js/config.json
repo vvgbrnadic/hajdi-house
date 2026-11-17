@@ -622,12 +622,12 @@
       "about",
       "stats",
       "amenities",
+      "features",
       "pricing",
       "gallery",
       "location",
       "contact",
-      "footer",
-      "features"
+      "footer"
     ],
     "visible": {
       "hero": true,
