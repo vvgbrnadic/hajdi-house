@@ -112,10 +112,12 @@ body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--dark)
 <p id="contactSub" class="mt-3 opacity-70 text-[14px]"></p>
 <div id="contactDirect" class="mt-4 text-[13px] opacity-80 grid gap-1"></div>
 </div>
-<form id="contactForm" class="bg-white rounded-2xl p-5 grid gap-3" style="color:var(--dark)">
-<input id="fName" name="ime" class="h-11 rounded-xl border px-4 bg-[#fcfaf5] min-h-[44px]">
-<input id="fEmail" name="email" type="email" class="h-11 rounded-xl border px-4 bg-[#fcfaf5] min-h-[44px]">
-<textarea id="fMsg" name="poruka" class="min-h-[100px] rounded-xl border p-4 bg-[#fcfaf5]"></textarea>
+<form id="contactForm" name="upit" method="POST" action="/hvala.html" data-netlify="true" netlify-honeypot="bot-field" class="bg-white rounded-2xl p-5 grid gap-3" style="color:var(--dark)">
+<input type="hidden" name="form-name" value="upit">
+<p class="hidden" aria-hidden="true"><label>Ne popunjavaj ovo <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+<input id="fName" name="ime" required class="h-11 rounded-xl border px-4 bg-[#fcfaf5] min-h-[44px]">
+<input id="fEmail" name="email" type="email" required class="h-11 rounded-xl border px-4 bg-[#fcfaf5] min-h-[44px]">
+<textarea id="fMsg" name="poruka" required class="min-h-[100px] rounded-xl border p-4 bg-[#fcfaf5]"></textarea>
 <button id="fSend" type="submit" class="text-white rounded-full h-12 min-h-[48px]" style="background:var(--dark)">Pošalji upit</button>
 <p id="formNote" class="text-[12px] opacity-60"></p>
 </form>
@@ -426,21 +428,6 @@ function apply(c){
 }
 
 document.getElementById('mBtn').addEventListener('click',()=>document.getElementById('mMenu').classList.toggle('hidden'));
-document.getElementById('contactForm').addEventListener('submit',(e)=>{
-  e.preventDefault();
-  const email = (SITE && SITE.contact && SITE.contact.email) || '';
-  const note = document.getElementById('formNote');
-  if(!email){
-    note.textContent = t('Upiši email u adminu (Kontakt), pa će se upit otvoriti u mailu.');
-    return;
-  }
-  const name = document.getElementById('fName').value.trim();
-  const from = document.getElementById('fEmail').value.trim();
-  const msg = document.getElementById('fMsg').value.trim();
-  const subject = encodeURIComponent('Upit — '+(SITE.site&&SITE.site.name||'Hajdi House'));
-  const body = encodeURIComponent('Ime: '+name+'\nEmail: '+from+'\n\n'+msg);
-  location.href = 'mailto:'+email+'?subject='+subject+'&body='+body;
-});
 
 function openLightbox(src){const box=document.getElementById('lightbox'); const img=document.getElementById('lightboxImg'); if(!box||!img||!src) return; img.src=src; box.classList.remove('hidden'); box.classList.add('flex');}
 function closeLightbox(){const box=document.getElementById('lightbox'); if(!box) return; box.classList.add('hidden'); box.classList.remove('flex'); const img=document.getElementById('lightboxImg'); if(img) img.removeAttribute('src');}
