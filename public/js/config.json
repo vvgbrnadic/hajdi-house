@@ -13,7 +13,7 @@
     "title": "Hajdi House — Kuća na brdu",
     "subtitle": "Drvena kuća za dušu, na rubu šume. Bez buke, bez žurbe. Samo vatra, knjiga i pogled koji ne staje.",
     "badge": "Žumberak 650m",
-    "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/gallery/1790720528720-20251221-151127-1-.jpg",
+    "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80&auto=format&fit=crop",
     "blur": 12,
     "cta1": "Rezerviraj",
     "cta2": "Pogledaj kuću"
@@ -23,7 +23,8 @@
     "p1": "To je mala drvena kuća na rubu šume, sagrađena da diše zajedno s brdom. Terasa od ariša gleda na Žumberak, a veliki prozori puštaju svjetlo da radi posao. Nema susjeda koji zaviruju. Nema prometa. Samo ti i tišina.",
     "p2": "Unutra — peć na drva koja pucketa dok vani pada magla, kuhinja s pogledom gdje kava miriše drugačije, dva topla krevetna gnijezda za spore jutra, i polica knjiga koja te tjera da ostaneš duže. Sve je dirljivo jednostavno, a opet luksuzno u onom pravom smislu.",
     "quote": "Dođi s knjigom. Otići ćeš s pričom.",
-    "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80&auto=format&fit=crop"
+    "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80&auto=format&fit=crop",
+    "kicker": "O kući — 01"
   },
   "stats": [
     {
@@ -54,43 +55,43 @@
       "id": "2",
       "label": "Kamin",
       "category": "Toplina",
-      "icon": "fire"
+      "icon": "flame"
     },
     {
       "id": "3",
       "label": "Sauna",
       "category": "Toplina",
-      "icon": "sauna"
+      "icon": "bath"
     },
     {
       "id": "4",
       "label": "Terasa od ariša",
       "category": "Priroda",
-      "icon": "terasa"
+      "icon": "fence"
     },
     {
       "id": "5",
       "label": "Veliki prozori",
       "category": "Priroda",
-      "icon": "window"
+      "icon": "app-window"
     },
     {
       "id": "6",
       "label": "Bazen (ljetni)",
       "category": "Priroda",
-      "icon": "bazen"
+      "icon": "waves"
     },
     {
       "id": "7",
       "label": "Kuhinja s pogledom",
       "category": "Kuhinja",
-      "icon": "kitchen"
+      "icon": "cooking-pot"
     },
     {
       "id": "8",
       "label": "Roštilj",
       "category": "Kuhinja",
-      "icon": "grill"
+      "icon": "beef"
     },
     {
       "id": "9",
@@ -108,13 +109,13 @@
       "id": "11",
       "label": "Bračni krevet",
       "category": "Spavanje",
-      "icon": "bed"
+      "icon": "bed-double"
     },
     {
       "id": "12",
       "label": "Knjige",
       "category": "Ostalo",
-      "icon": "books"
+      "icon": "book-open"
     },
     {
       "id": "13",
@@ -126,7 +127,7 @@
       "id": "14",
       "label": "Parking",
       "category": "Ostalo",
-      "icon": "parking"
+      "icon": "car"
     },
     {
       "id": "15",
@@ -144,7 +145,7 @@
       "id": "17",
       "label": "Pješačke staze",
       "category": "Aktivnosti",
-      "icon": "hike"
+      "icon": "footprints"
     },
     {
       "id": "18",
@@ -167,7 +168,7 @@
   ],
   "gallery": [
     {
-      "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/gallery/1791657631970-20251221-151127-1-.jpg"
+      "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80&auto=format&fit=crop"
     }
   ],
   "location": {
@@ -175,7 +176,9 @@
     "lng": "15.568973",
     "address": "Noršić Selo 52B, 10430 Samobor",
     "desc": "Na rubu Parka prirode Žumberak, 40 minuta od Zagreba. Zadnja kuća prije šume, prva iznad magle. Put je makadam zadnjih 800m - dio doživljaja.",
-    "googleMapsLink": "https://maps.google.com/?q=45.783450,15.568973"
+    "googleMapsLink": "https://maps.google.com/?q=45.783450,15.568973",
+    "title": "Zadnja kuća prije šume.",
+    "mapCta": "Otvori Maps"
   },
   "footer": {
     "text": "© 2026 Hajdi House — Noršić Selo 52B, Žumberak. Kuća na brdu.",
@@ -281,7 +284,7 @@
       "id": "1",
       "title": "Sve za sporiji dan.",
       "desc": "Kuća je opremljena za boravak bez žurbe — knjige, društvene igre, deka za terasu.",
-      "icon": "books"
+      "icon": "book-open"
     },
     {
       "id": "2",
@@ -302,5 +305,68 @@
       "icon": "trees"
     }
   ],
-  "customSections": []
+  "customSections": [],
+  "header": {
+    "logoText": "Hajdi House",
+    "logoSub": "Žumberak 650m",
+    "nav": [
+      "O nama",
+      "Sadržaj",
+      "Cjenik",
+      "Galerija",
+      "Lokacija",
+      "Kontakt"
+    ],
+    "cta": "Rezerviraj"
+  },
+  "contact": {
+    "title": "Rezerviraj svoj mir",
+    "subtitle": "Javi se direktno — bez posrednika, bez provizije.",
+    "email": "",
+    "phone": "",
+    "airbnb": "https://www.airbnb.com/rooms/24417319",
+    "instagram": "#",
+    "namePh": "Ime",
+    "emailPh": "Email",
+    "msgPh": "Poruka",
+    "send": "Pošalji upit"
+  },
+  "labels": {
+    "amenitiesTitle": "Što te čeka",
+    "pricingTitle": "Cjenik",
+    "pricingNote": "Minimalno 2 noći — sve transparentno",
+    "galleryTitle": "Galerija"
+  },
+  "seo": {
+    "title": "Hajdi House — Kuća na brdu",
+    "description": "Drvena kuća za dušu, na rubu šume. Noršić Selo 52B, Žumberak."
+  },
+  "sections": {
+    "order": [
+      "hero",
+      "about",
+      "stats",
+      "features",
+      "amenities",
+      "pricing",
+      "gallery",
+      "location",
+      "contact",
+      "custom",
+      "footer"
+    ],
+    "visible": {
+      "hero": true,
+      "about": true,
+      "stats": true,
+      "features": true,
+      "amenities": true,
+      "pricing": true,
+      "gallery": true,
+      "location": true,
+      "contact": true,
+      "custom": true,
+      "footer": true
+    }
+  }
 }

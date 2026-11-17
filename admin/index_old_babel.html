@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Hajdi House — FULL CMS Admin</title>
+<script>location.replace('/admin/');</script>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -26,7 +27,7 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);color:var(--dark
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel" data-presets="react">
 const ADMIN_USER = "admin";
-const ADMIN_PASS = "Hajdi2026!";
+const ADMIN_PASS = "";
 const DEFAULT_CONFIG = {
   "site": {
     "name": "Hajdi House",
@@ -346,7 +347,7 @@ function Login({onLogin}){
     <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
       <form onSubmit={submit} className="card" style={{maxWidth:380,width:"100%",padding:32}}>
         <div className="serif" style={{fontSize:28}}>Hajdi House</div>
-        <div style={{fontSize:11,opacity:.6,marginBottom:24,letterSpacing:1,textTransform:"uppercase"}}>FULL CMS • login admin / Hajdi2026!</div>
+        <div style={{fontSize:11,opacity:.6,marginBottom:24,letterSpacing:1,textTransform:"uppercase"}}>FULL CMS • zastarjela verzija, koristi /admin/</div>
         <div className="badge">Username</div><input value={u} onChange={e=>setU(e.target.value)} className="input" style={{marginBottom:12}}/>
         <div className="badge">Password</div><input type="password" value={p} onChange={e=>setP(e.target.value)} className="input" style={{marginBottom:12}}/>
         {err && <div style={{color:"#b91c1c",fontSize:11,marginBottom:12}}>{err}</div>}
