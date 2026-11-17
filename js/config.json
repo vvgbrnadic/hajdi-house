@@ -21,7 +21,7 @@
   "about": {
     "title": "Hajdi House nije apartman.",
     "p1": "To je mala drvena kuća na rubu šume, sagrađena da diše zajedno s brdom. Nema susjeda koji zaviruju. Nema prometa. Samo ti i tišina.",
-    "p2": "Unutra — kamin koji pucketa dok vani pada magla, kuhinja s pogledom gdje kava miriše drugačije, dva topla kreveta za spora jutra. Sve je dirljivo jednostavno, a opet luksuzno u onom pravom smislu.",
+    "p2": "Unutra — peć na drva koja pucketa dok vani pada magla, kuhinja s pogledom gdje kava miriše drugačije, dva topla krevetna gnijezda za spora jutra, i polica knjiga koja te tjera da ostaneš duže. Sve je dirljivo jednostavno, a opet luksuzno u onom pravom smislu.",
     "quote": "Dođi s knjigom. Otići ćeš s pričom.",
     "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/hero/1794914699284-20251221_151127_1_.jpg",
     "kicker": "O kući — 01"
@@ -645,7 +645,7 @@
   "contact": {
     "title": "Rezerviraj svoj mir",
     "subtitle": "Pošalji upit, odgovaramo unutar par sati.",
-    "email": "info@hajdihouse.hr",
+    "email": "brnadichtc@gmail.com",
     "phone": "091 892 4152",
     "airbnb": "https://www.airbnb.com/rooms/24417319",
     "instagram": "#",
@@ -670,6 +670,6 @@
     "datumSidrene": "10.09.2026",
     "oznaka": "001",
     "pohrana": 4,
-    "datoteka": "/cjenik/kuca_norsic-selo-52b-10430-samobor_001_4_20261117-1335.csv"
+    "datoteka": "/cjenik/kuca_norsic-selo-52b-10430-samobor_001_4_20261117-1339.csv"
   }
 }
