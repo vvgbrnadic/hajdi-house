@@ -290,7 +290,8 @@
       "Maloprodajna cijena": "Retail price",
       "Posebni oblik": "Special form",
       "Preuzmi cjenik (CSV)": "Download price list (CSV)",
-      "Uz važeću cijenu istaknuta je sidrena cijena s danom 10. 9. 2026., sukladno NN 101/2026.": "The anchor price from 10 September 2026 is shown next to the current price, in line with NN 101/2026."
+      "Uz važeću cijenu istaknuta je sidrena cijena s danom 10. 9. 2026., sukladno NN 101/2026.": "The anchor price from 10 September 2026 is shown next to the current price, in line with NN 101/2026.",
+      "Cijena": "Price"
     },
     "DE": {
       "Hajdi House — Kuća na brdu": "Hajdi House — Haus auf dem Hügel",
@@ -380,7 +381,8 @@
       "Maloprodajna cijena": "Verkaufspreis",
       "Posebni oblik": "Sonderform",
       "Preuzmi cjenik (CSV)": "Preisliste herunterladen (CSV)",
-      "Uz važeću cijenu istaknuta je sidrena cijena s danom 10. 9. 2026., sukladno NN 101/2026.": "Neben dem aktuellen Preis steht der Ankerpreis vom 10. 9. 2026., gemäß NN 101/2026."
+      "Uz važeću cijenu istaknuta je sidrena cijena s danom 10. 9. 2026., sukladno NN 101/2026.": "Neben dem aktuellen Preis steht der Ankerpreis vom 10. 9. 2026., gemäß NN 101/2026.",
+      "Cijena": "Preis"
     },
     "IT": {
       "Hajdi House — Kuća na brdu": "Hajdi House — Casa sulla collina",
@@ -470,7 +472,8 @@
       "Maloprodajna cijena": "Prezzo al dettaglio",
       "Posebni oblik": "Forma speciale",
       "Preuzmi cjenik (CSV)": "Scarica il listino (CSV)",
-      "Uz važeću cijenu istaknuta je sidrena cijena s danom 10. 9. 2026., sukladno NN 101/2026.": "Accanto al prezzo attuale è indicato il prezzo di riferimento del 10. 9. 2026., ai sensi della NN 101/2026."
+      "Uz važeću cijenu istaknuta je sidrena cijena s danom 10. 9. 2026., sukladno NN 101/2026.": "Accanto al prezzo attuale è indicato il prezzo di riferimento del 10. 9. 2026., ai sensi della NN 101/2026.",
+      "Cijena": "Prezzo"
     },
     "SL": {
       "Hajdi House — Kuća na brdu": "Hajdi House — Hiša na hribu",
@@ -560,7 +563,8 @@
       "Maloprodajna cijena": "Maloprodajna cena",
       "Posebni oblik": "Posebna oblika",
       "Preuzmi cjenik (CSV)": "Prenesi cenik (CSV)",
-      "Uz važeću cijenu istaknuta je sidrena cijena s danom 10. 9. 2026., sukladno NN 101/2026.": "Ob veljavni ceni je navedena sidrna cena z dne 10. 9. 2026, skladno z NN 101/2026."
+      "Uz važeću cijenu istaknuta je sidrena cijena s danom 10. 9. 2026., sukladno NN 101/2026.": "Ob veljavni ceni je navedena sidrna cena z dne 10. 9. 2026, skladno z NN 101/2026.",
+      "Cijena": "Cena"
     }
   },
   "features": [

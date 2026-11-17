@@ -84,6 +84,10 @@ body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--dark)
 <section id="galerija" data-sec="gallery" class="max-w-[1240px] mx-auto px-4 md:px-8 py-12">
 <h2 id="galleryTitle" class="serif text-[24px] md:text-[28px] mb-6">Galerija</h2>
 <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3"></div>
+<div id="lightbox" class="fixed inset-0 z-[80] hidden bg-black/85 p-4 items-center justify-center" role="dialog">
+<button type="button" id="lightboxClose" class="absolute top-4 right-4 text-white text-[13px] px-3 h-10 rounded-full border border-white/40">Zatvori</button>
+<img id="lightboxImg" alt="" class="max-w-full max-h-[92vh] object-contain">
+</div>
 </section>
 
 <section id="lokacija" data-sec="location" class="max-w-[1240px] mx-auto px-4 md:px-8 py-12">
@@ -357,7 +361,7 @@ function apply(c){
   const euroLabel = (v)=>{ const n=parseFloat(String(v||'').replace('€','').replace(/\s/g,'').replace(',','.')); return isFinite(n)?n.toFixed(2).replace('.',',')+' €':(v||''); };
   document.getElementById('pricingGrid').innerHTML = (c.pricing||[]).filter(p=>p.aktivno!==false).map(p=>`<div class="rounded-[24px] bg-white border p-6"><div class="text-[11px] opacity-50">${esc(t(p.naziv||''))}</div><div class="serif text-[32px] mt-2" style="color:var(--gold)">${esc(p.cijena||'')} <span class="text-[13px] opacity-60">${esc(t(p.jedinica||''))}</span></div><div class="text-[13px] mt-3">${esc(t('Sidrena cijena'))} ${esc(anchorDate)}: <b>${esc(euroLabel(p.sidrena||p.cijena))}</b></div>${p.posebniOblik==='DA'?`<div class="text-[12px] mt-1">${esc(t('Posebni oblik prodaje'))}: ${esc(p.nazivPosebnog||'')}</div>`:''}<div class="text-[13px] opacity-70 mt-2">${esc(t(p.opis||''))}</div></div>`).join('');
   const rows=(c.pricing||[]).filter(p=>p.aktivno!==false);
-  document.getElementById('cjenikTable').innerHTML = `<thead><tr><th class="py-2 pr-3 border-b">${esc(t('Usluga'))}</th><th class="py-2 pr-3 border-b">${esc(t('Maloprodajna cijena'))}</th><th class="py-2 pr-3 border-b">${esc(t('Posebni oblik'))}</th><th class="py-2 border-b">${esc(t('Sidrena cijena'))} ${esc(anchorDate)}</th></tr></thead><tbody>${rows.map(p=>`<tr><td class="py-2 pr-3 border-b">${esc(p.naziv||'')}</td><td class="py-2 pr-3 border-b">${esc(euroLabel(p.cijena))}</td><td class="py-2 pr-3 border-b">${esc(p.posebniOblik==='DA'?(p.nazivPosebnog||'DA'):'NE')}</td><td class="py-2 border-b">${esc(euroLabel(p.sidrena||p.cijena))}</td></tr>`).join('')}</tbody>`;
+  document.getElementById('cjenikTable').innerHTML = `<thead><tr><th class="py-2 pr-3 border-b">${esc(t('Usluga'))}</th><th class="py-2 pr-3 border-b">${esc(t('Cijena'))}</th><th class="py-2 pr-3 border-b">${esc(t('Posebni oblik'))}</th><th class="py-2 border-b">${esc(t('Sidrena cijena'))} ${esc(anchorDate)}</th></tr></thead><tbody>${rows.map(p=>`<tr><td class="py-2 pr-3 border-b">${esc(p.naziv||'')}</td><td class="py-2 pr-3 border-b">${esc(euroLabel(p.cijena))}</td><td class="py-2 pr-3 border-b">${esc(p.posebniOblik==='DA'?(p.nazivPosebnog||'DA'):'NE')}</td><td class="py-2 border-b">${esc(euroLabel(p.sidrena||p.cijena))}</td></tr>`).join('')}</tbody>`;
   const file=(c.cjenik&&c.cjenik.datoteka)||'/public/js/cjenik.csv';
   document.getElementById('cjenikFile').innerHTML = `<a class="underline" href="${esc(file)}">${esc(t(labels.pricingCsv||'Preuzmi cjenik (CSV)'))}</a><span class="opacity-70"> · ${esc(t(labels.pricingLaw||''))}</span>`;
 
@@ -365,9 +369,12 @@ function apply(c){
   document.getElementById('galleryGrid').innerHTML = (c.gallery||[]).map(g=>{
     const src = typeof g==='string'?g:(g.image||'');
     if(!src) return '';
-    return `<div class="rounded-[24px] overflow-hidden border"><img alt="" src="${esc(src)}" data-fallback="1" class="w-full h-[220px] md:h-[240px] object-cover" loading="lazy"></div>`;
+    return `<div class="rounded-[24px] overflow-hidden border"><img alt="" src="${esc(src)}" data-fallback="1" class="w-full h-[220px] md:h-[240px] object-cover cursor-zoom-in" loading="lazy"></div>`;
   }).join('');
-  document.querySelectorAll('#galleryGrid img').forEach(img=>setImg(img, img.getAttribute('src')));
+  document.querySelectorAll('#galleryGrid img').forEach(img=>{
+    setImg(img, img.getAttribute('src'));
+    img.addEventListener('click', ()=>openLightbox(img.currentSrc||img.src));
+  });
 
   const loc = c.location||{};
   trNode(document.getElementById('locTitle'), loc.title||'');
@@ -435,6 +442,10 @@ document.getElementById('contactForm').addEventListener('submit',(e)=>{
   location.href = 'mailto:'+email+'?subject='+subject+'&body='+body;
 });
 
+function openLightbox(src){const box=document.getElementById('lightbox'); const img=document.getElementById('lightboxImg'); if(!box||!img||!src) return; img.src=src; box.classList.remove('hidden'); box.classList.add('flex');}
+function closeLightbox(){const box=document.getElementById('lightbox'); if(!box) return; box.classList.add('hidden'); box.classList.remove('flex'); const img=document.getElementById('lightboxImg'); if(img) img.removeAttribute('src');}
+document.getElementById('lightbox').addEventListener('click', (e)=>{ if(e.target.id==='lightbox'||e.target.id==='lightboxClose') closeLightbox(); });
+document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeLightbox(); });
 loadConfig().then(cfg=>{ if(cfg) apply(cfg); else try{ lucide.createIcons(); }catch(e){} });
 </script>
 </body>
