@@ -23,7 +23,8 @@
     "p1": "To je mala drvena kuća na rubu šume, sagrađena da diše zajedno s brdom. Nema susjeda koji zaviruju. Nema prometa. Samo ti i tišina.",
     "p2": "Unutra — peć na drva koja pucketa dok vani pada magla, kuhinja s pogledom gdje kava miriše drugačije, dva topla krevetna gnijezda za spore jutra, i polica knjiga koja te tjera da ostaneš duže. Sve je dirljivo jednostavno, a opet luksuzno u onom pravom smislu.",
     "quote": "Dođi s knjigom. Otići ćeš s pričom.",
-    "image": ""
+    "image": "",
+    "kicker": "O kući — 01"
   },
   "stats": [
     {
@@ -171,7 +172,9 @@
     "lng": "15.568973",
     "address": "Noršić Selo 52B, 10430 Samobor",
     "desc": "Na rubu Parka prirode Žumberak, 40 minuta od Zagreba. Zadnja kuća prije šume, prva iznad magle. Put je makadam zadnjih 800m - dio doživljaja.",
-    "googleMapsLink": "https://maps.google.com/?q=45.783450,15.568973"
+    "googleMapsLink": "https://maps.google.com/?q=45.783450,15.568973",
+    "title": "Zadnja kuća prije šume.",
+    "mapCta": "Otvori Maps"
   },
   "footer": {
     "text": "© 2026 Hajdi House — Noršić Selo 52B, Žumberak. Kuća na brdu.",
@@ -596,7 +599,8 @@
       "Cjenik",
       "Kontakt"
     ],
-    "cta": "Rezerviraj"
+    "cta": "Rezerviraj",
+    "logoImage": ""
   },
   "sections": {
     "order": [
@@ -608,7 +612,8 @@
       "gallery",
       "location",
       "contact",
-      "footer"
+      "footer",
+      "features"
     ],
     "visible": {
       "hero": true,
@@ -619,7 +624,8 @@
       "gallery": true,
       "location": true,
       "contact": true,
-      "footer": true
+      "footer": true,
+      "features": true
     }
   },
   "contact": {
@@ -628,6 +634,20 @@
     "email": "info@hajdihouse.hr",
     "phone": "091 892 4152",
     "airbnb": "https://www.airbnb.com/rooms/24417319",
-    "instagram": "#"
+    "instagram": "#",
+    "namePh": "Ime",
+    "emailPh": "Email",
+    "msgPh": "Poruka",
+    "send": "Pošalji upit"
+  },
+  "labels": {
+    "amenitiesTitle": "Što te čeka",
+    "pricingTitle": "Cjenik",
+    "pricingNote": "Minimalno 2 noći — sve transparentno",
+    "galleryTitle": "Galerija"
+  },
+  "seo": {
+    "title": "Hajdi House — Kuća na brdu",
+    "description": "Drvena kuća za dušu, na rubu šume. Bez buke, bez žurbe. Samo vatra, knjiga i pogled koji ne staje."
   }
 }
