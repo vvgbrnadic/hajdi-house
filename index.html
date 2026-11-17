@@ -188,9 +188,14 @@ function setImg(img, url){
   img.src = src;
 }
 function t(text){
-  if(currentLang==='HR' || !SITE || !SITE.translations) return text;
-  const dict = SITE.translations[currentLang] || {};
-  return dict[text] || text;
+  if(text==null) return '';
+  const lang = String(currentLang||'HR').toUpperCase();
+  if(lang==='HR' || !SITE || !SITE.translations) return text;
+  const dict = SITE.translations[lang] || SITE.translations[currentLang] || {};
+  if(dict[text]) return dict[text];
+  const trimmed = String(text).trim();
+  if(trimmed!==text && dict[trimmed]) return dict[trimmed];
+  return text;
 }
 function trNode(el, text){
   if(!el) return;
@@ -253,7 +258,8 @@ function renderLangs(codes){
   const draw = (el, mobile)=>{
     el.innerHTML = codes.map(code=>`<button type="button" data-lang="${esc(code)}" class="lang-btn px-2 h-7 rounded-full border text-[10px] font-semibold ${code===currentLang?'active':''}">${esc(code)}</button>`).join('');
     el.querySelectorAll('button').forEach(btn=>btn.addEventListener('click',()=>{
-      currentLang = btn.dataset.lang;
+      currentLang = String(btn.dataset.lang||'HR').toUpperCase();
+      document.documentElement.lang = currentLang.toLowerCase();
       try{ localStorage.setItem('hajdi_lang', currentLang); }catch(e){}
       if(mobile) document.getElementById('mMenu').classList.add('hidden');
       apply(SITE);
@@ -275,6 +281,7 @@ function renderNav(items){
 function apply(c){
   if(!c) return;
   SITE = c;
+  document.documentElement.lang = String(currentLang||'HR').toLowerCase();
   const colors = c.colors||{};
   if(colors.background) document.documentElement.style.setProperty('--bg', colors.background);
   if(colors.gold) document.documentElement.style.setProperty('--gold', colors.gold);
@@ -284,7 +291,8 @@ function apply(c){
   document.body.style.color = colors.dark || '';
 
   const seo = c.seo||{};
-  if(seo.title) document.title = t(seo.title);
+  const pageTitle = seo.title || (c.hero&&c.hero.title) || '';
+  if(pageTitle) document.title = t(pageTitle);
   const md = document.querySelector('meta[name="description"]');
   if(md && seo.description) md.setAttribute('content', t(seo.description));
   if(new URLSearchParams(location.search).has('cmspreview')){
@@ -348,6 +356,7 @@ function apply(c){
   trNode(document.getElementById('galleryTitle'), labels.galleryTitle||'Galerija');
   document.getElementById('galleryGrid').innerHTML = (c.gallery||[]).map(g=>{
     const src = typeof g==='string'?g:(g.image||'');
+    if(!src) return '';
     return `<div class="rounded-[24px] overflow-hidden border"><img alt="" src="${esc(src)}" data-fallback="1" class="w-full h-[220px] md:h-[240px] object-cover" loading="lazy"></div>`;
   }).join('');
   document.querySelectorAll('#galleryGrid img').forEach(img=>setImg(img, img.getAttribute('src')));
@@ -395,7 +404,7 @@ function apply(c){
 
   const footer = c.footer||{};
   trNode(document.getElementById('footerText'), footer.text||'');
-  document.getElementById('footerLinks').innerHTML = (footer.links||[]).map(l=>`<a href="${esc(l.url||'#')}" ${l.url&&l.url!=='#'?'target="_blank" rel="noopener"':''}>${esc(t(l.label||''))}</a>`).join('');
+  document.getElementById('footerLinks').innerHTML = (footer.links||[]).filter(l=>l&&l.url&&l.url!=='#').map(l=>`<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(t(l.label||''))}</a>`).join('');
 
   applyOrder(c);
   try{ lucide.createIcons(); }catch(e){}
@@ -407,7 +416,7 @@ document.getElementById('contactForm').addEventListener('submit',(e)=>{
   const email = (SITE && SITE.contact && SITE.contact.email) || '';
   const note = document.getElementById('formNote');
   if(!email){
-    note.textContent = 'Upiši email u adminu (Kontakt), pa će se upit otvoriti u mailu.';
+    note.textContent = t('Upiši email u adminu (Kontakt), pa će se upit otvoriti u mailu.');
     return;
   }
   const name = document.getElementById('fName').value.trim();
