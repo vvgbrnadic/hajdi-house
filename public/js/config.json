@@ -36,7 +36,7 @@
       "label": "Kupaona"
     },
     {
-      "value": "32 m²",
+      "value": "72 m²",
       "label": "Površina"
     },
     {
@@ -147,7 +147,7 @@
     "links": [
       {
         "label": "Instagram",
-        "url": "#"
+        "url": "https://www.instagram.com/hajdi_house?dlrf=MWZzZnpqejhkbmI0dA=="
       },
       {
         "label": "Airbnb",
@@ -650,9 +650,9 @@
     "amenitiesTitle": "Što te čeka",
     "pricingTitle": "Cjenik",
     "pricingNote": "Minimalno 2 noći — sve transparentno",
-    "galleryTitle": "Galerija",
     "pricingCsv": "Preuzmi cjenik (CSV)",
-    "pricingLaw": "Uz važeću cijenu istaknuta je sidrena cijena s danom 10. 9. 2026., sukladno NN 101/2026."
+    "pricingLaw": "Uz važeću cijenu istaknuta je sidrena cijena s danom 10. 9. 2026., sukladno NN 101/2026.",
+    "galleryTitle": "Galerija"
   },
   "seo": {
     "title": "Hajdi House — Kuća na brdu",
@@ -661,7 +661,7 @@
   "cjenik": {
     "datumSidrene": "10.09.2026",
     "oznaka": "001",
-    "pohrana": 1,
-    "datoteka": "/cjenik/kuca_norsic-selo-52b-10430-samobor_001_1_20261117-1300.csv"
+    "pohrana": 2,
+    "datoteka": "/cjenik/kuca_norsic-selo-52b-10430-samobor_001_2_20261117-1326.csv"
   }
 }
