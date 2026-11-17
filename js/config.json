@@ -42,14 +42,6 @@
     {
       "value": "4",
       "label": "Gosta"
-    },
-    {
-      "value": "1",
-      "label": "Blagavaona"
-    },
-    {
-      "value": "1",
-      "label": "Terasa"
     }
   ],
   "amenities": [
@@ -669,7 +661,7 @@
   "cjenik": {
     "datumSidrene": "10.09.2026",
     "oznaka": "001",
-    "pohrana": 4,
-    "datoteka": "/cjenik/kuca_norsic-selo-52b-10430-samobor_001_4_20261117-1339.csv"
+    "pohrana": 5,
+    "datoteka": "/cjenik/kuca_norsic-selo-52b-10430-samobor_001_5_20261117-1600.csv"
   }
 }
