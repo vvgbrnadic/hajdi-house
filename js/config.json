@@ -13,7 +13,7 @@
     "title": "Hajdi House — Kuća na brdu",
     "subtitle": "Drvena kuća za dušu, na rubu šume. Bez buke, bez žurbe. Samo vatra, knjiga i pogled koji ne staje.",
     "badge": "Žumberak 650m",
-    "image": "",
+    "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/hero/1794914699284-20251221_151127_1_.jpg",
     "blur": 7,
     "cta1": "Rezerviraj",
     "cta2": "Pogledaj kuću"
@@ -23,7 +23,7 @@
     "p1": "To je mala drvena kuća na rubu šume, sagrađena da diše zajedno s brdom. Nema susjeda koji zaviruju. Nema prometa. Samo ti i tišina.",
     "p2": "Unutra — peć na drva koja pucketa dok vani pada magla, kuhinja s pogledom gdje kava miriše drugačije, dva topla krevetna gnijezda za spore jutra, i polica knjiga koja te tjera da ostaneš duže. Sve je dirljivo jednostavno, a opet luksuzno u onom pravom smislu.",
     "quote": "Dođi s knjigom. Otići ćeš s pričom.",
-    "image": "",
+    "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/hero/1794914699284-20251221_151127_1_.jpg",
     "kicker": "O kući — 01"
   },
   "stats": [
@@ -46,40 +46,10 @@
   ],
   "amenities": [
     {
-      "id": "1",
-      "label": "Peć na drva",
-      "category": "Toplina",
-      "icon": "flame"
-    },
-    {
       "id": "2",
       "label": "Kamin",
       "category": "Toplina",
       "icon": "fire"
-    },
-    {
-      "id": "3",
-      "label": "Sauna",
-      "category": "Toplina",
-      "icon": "sauna"
-    },
-    {
-      "id": "4",
-      "label": "Terasa od ariša",
-      "category": "Priroda",
-      "icon": "terasa"
-    },
-    {
-      "id": "5",
-      "label": "Veliki prozori",
-      "category": "Priroda",
-      "icon": "window"
-    },
-    {
-      "id": "6",
-      "label": "Bazen (ljetni)",
-      "category": "Priroda",
-      "icon": "bazen"
     },
     {
       "id": "7",
@@ -92,18 +62,6 @@
       "label": "Roštilj",
       "category": "Kuhinja",
       "icon": "grill"
-    },
-    {
-      "id": "9",
-      "label": "Kava aparat",
-      "category": "Kuhinja",
-      "icon": "coffee"
-    },
-    {
-      "id": "10",
-      "label": "Puna kuhinja",
-      "category": "Kuhinja",
-      "icon": "utensils"
     },
     {
       "id": "11",
@@ -119,7 +77,7 @@
     },
     {
       "id": "13",
-      "label": "WiFi Starlink",
+      "label": "WiFi",
       "category": "Tehnologija",
       "icon": "wifi"
     },
@@ -128,12 +86,6 @@
       "label": "Parking",
       "category": "Ostalo",
       "icon": "parking"
-    },
-    {
-      "id": "15",
-      "label": "Bluetooth zvučnik",
-      "category": "Tehnologija",
-      "icon": "speaker"
     },
     {
       "id": "16",
@@ -158,12 +110,6 @@
       "label": "Psi dobrodošli",
       "category": "Ostalo",
       "icon": "dog"
-    },
-    {
-      "id": "20",
-      "label": "Zalazak sunca",
-      "category": "Priroda",
-      "icon": "sunset"
     }
   ],
   "gallery": [],
@@ -600,7 +546,7 @@
       "Kontakt"
     ],
     "cta": "Rezerviraj",
-    "logoImage": ""
+    "logoImage": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/logo/1794914442728-20251221_151127_1_.jpg"
   },
   "sections": {
     "order": [
