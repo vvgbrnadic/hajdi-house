@@ -155,7 +155,7 @@
     "links": [
       {
         "label": "Instagram",
-        "url": "https://www.instagram.com/hajdi_house?dlrf=MWZzZnpqejhkbmI0dA=="
+        "url": "https://www.instagram.com/hajdi_house/"
       },
       {
         "label": "Airbnb",
@@ -648,7 +648,7 @@
     "email": "brnadichtc@gmail.com",
     "phone": "091 892 4152",
     "airbnb": "https://www.airbnb.com/rooms/24417319",
-    "instagram": "#",
+    "instagram": "https://www.instagram.com/hajdi_house/",
     "namePh": "Ime",
     "emailPh": "Email",
     "msgPh": "Poruka",
