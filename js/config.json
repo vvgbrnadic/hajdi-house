@@ -46,40 +46,10 @@
   ],
   "amenities": [
     {
-      "id": "1",
-      "label": "Peć na drva",
-      "category": "Toplina",
-      "icon": "flame"
-    },
-    {
       "id": "2",
       "label": "Kamin",
       "category": "Toplina",
       "icon": "fire"
-    },
-    {
-      "id": "3",
-      "label": "Sauna",
-      "category": "Toplina",
-      "icon": "sauna"
-    },
-    {
-      "id": "4",
-      "label": "Terasa od ariša",
-      "category": "Priroda",
-      "icon": "terasa"
-    },
-    {
-      "id": "5",
-      "label": "Veliki prozori",
-      "category": "Priroda",
-      "icon": "window"
-    },
-    {
-      "id": "6",
-      "label": "Bazen (ljetni)",
-      "category": "Priroda",
-      "icon": "bazen"
     },
     {
       "id": "7",
@@ -92,18 +62,6 @@
       "label": "Roštilj",
       "category": "Kuhinja",
       "icon": "grill"
-    },
-    {
-      "id": "9",
-      "label": "Kava aparat",
-      "category": "Kuhinja",
-      "icon": "coffee"
-    },
-    {
-      "id": "10",
-      "label": "Puna kuhinja",
-      "category": "Kuhinja",
-      "icon": "utensils"
     },
     {
       "id": "11",
@@ -119,7 +77,7 @@
     },
     {
       "id": "13",
-      "label": "WiFi Starlink",
+      "label": "WiFi",
       "category": "Tehnologija",
       "icon": "wifi"
     },
@@ -128,12 +86,6 @@
       "label": "Parking",
       "category": "Ostalo",
       "icon": "parking"
-    },
-    {
-      "id": "15",
-      "label": "Bluetooth zvučnik",
-      "category": "Tehnologija",
-      "icon": "speaker"
     },
     {
       "id": "16",
@@ -158,12 +110,6 @@
       "label": "Psi dobrodošli",
       "category": "Ostalo",
       "icon": "dog"
-    },
-    {
-      "id": "20",
-      "label": "Zalazak sunca",
-      "category": "Priroda",
-      "icon": "sunset"
     }
   ],
   "gallery": [],
