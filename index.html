@@ -7,6 +7,7 @@
 <meta name="description" content="Drvena kuća za dušu, na rubu šume. Noršić Selo 52B, Žumberak.">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="preload" href="/public/js/config.json" as="fetch" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f2ece0;--gold:#b8952a;--dark:#2c2a24;--creamDark:#e8dfc8}
@@ -34,8 +35,8 @@ body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--dark)
 </header>
 
 <div id="sections">
-<section id="hero" data-sec="hero" class="relative hero-h overflow-hidden">
-<img id="heroImg" alt="Hajdi House" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover" style="filter:blur(12px)">
+<section id="hero" data-sec="hero" class="relative hero-h overflow-hidden" style="background:#2c2a24">
+<img id="heroImg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-0" style="transition:opacity .45s ease">
 <div class="absolute inset-0 bg-gradient-to-b from-black/40 to-black/40"></div>
 <div class="relative z-10 max-w-[1240px] mx-auto px-5 md:px-8 h-full flex flex-col justify-center">
 <div id="heroBadge" class="bg-white/90 rounded-full px-3 py-1.5 text-[11px] tracking-widest w-fit mb-4">Žumberak 650m</div>
@@ -56,7 +57,7 @@ body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--dark)
 <p id="aboutP2" class="mt-4 text-[14px] opacity-80 leading-[1.7]"></p>
 <div id="aboutQuote" class="mt-6 italic opacity-60 border-l-2 pl-4" style="border-color:var(--gold)"></div>
 </div>
-<div class="rounded-[24px] overflow-hidden border"><img id="aboutImg" alt="" src="" class="w-full h-[380px] md:h-[520px] object-cover" loading="lazy"></div>
+<div class="rounded-[24px] overflow-hidden border" style="background:var(--creamDark)"><img id="aboutImg" alt="" class="w-full h-[380px] md:h-[520px] object-cover opacity-0" style="transition:opacity .45s ease" loading="lazy"></div>
 </section>
 
 <section id="stats" data-sec="stats" class="max-w-[1240px] mx-auto px-4 md:px-8 pb-8">
@@ -166,8 +167,24 @@ function navHref(item){
 }
 function setImg(img, url){
   if(!img) return;
-  const src = url || FALLBACK_IMG;
-  img.onerror = function(){ if(img.src!==FALLBACK_IMG) img.src = FALLBACK_IMG; };
+  const src = url || '';
+  img.onload = function(){ img.style.opacity = '1'; };
+  img.onerror = function(){
+    if(img.dataset.fallback === 'done') return;
+    img.dataset.fallback = 'done';
+    img.src = FALLBACK_IMG;
+  };
+  if(!src){
+    img.style.opacity = '0';
+    img.removeAttribute('src');
+    return;
+  }
+  if(img.getAttribute('src') === src && img.complete && img.naturalWidth){
+    img.style.opacity = '1';
+    return;
+  }
+  img.style.opacity = '0';
+  delete img.dataset.fallback;
   img.src = src;
 }
 function t(text){
