@@ -13,7 +13,7 @@
     "title": "Hajdi House — Kuća na brdu",
     "subtitle": "Drvena kuća za dušu, na rubu šume. Bez buke, bez žurbe. Samo vatra, knjiga i pogled koji ne staje.",
     "badge": "Žumberak 650m",
-    "image": "",
+    "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/hero/1794914699284-20251221_151127_1_.jpg",
     "blur": 7,
     "cta1": "Rezerviraj",
     "cta2": "Pogledaj kuću"
@@ -23,7 +23,7 @@
     "p1": "To je mala drvena kuća na rubu šume, sagrađena da diše zajedno s brdom. Nema susjeda koji zaviruju. Nema prometa. Samo ti i tišina.",
     "p2": "Unutra — peć na drva koja pucketa dok vani pada magla, kuhinja s pogledom gdje kava miriše drugačije, dva topla krevetna gnijezda za spore jutra, i polica knjiga koja te tjera da ostaneš duže. Sve je dirljivo jednostavno, a opet luksuzno u onom pravom smislu.",
     "quote": "Dođi s knjigom. Otići ćeš s pričom.",
-    "image": "",
+    "image": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/hero/1794914699284-20251221_151127_1_.jpg",
     "kicker": "O kući — 01"
   },
   "stats": [
@@ -546,7 +546,7 @@
       "Kontakt"
     ],
     "cta": "Rezerviraj",
-    "logoImage": ""
+    "logoImage": "https://raw.githubusercontent.com/vvgbrnadic/hajdi-house/main/public/images/logo/1794914442728-20251221_151127_1_.jpg"
   },
   "sections": {
     "order": [
