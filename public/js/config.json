@@ -605,7 +605,7 @@
   ],
   "customSections": [],
   "header": {
-    "logoText": "Hajdi House",
+    "logoText": "Hajdi House - Robinson kuća za odmor",
     "logoSub": "Kuća na brdu",
     "nav": [
       "O kući",
@@ -671,7 +671,7 @@
   "cjenik": {
     "datumSidrene": "10.09.2026",
     "oznaka": "001",
-    "pohrana": 6,
-    "datoteka": "/cjenik/kuca_norsic-selo-52b-10430-samobor_001_6_20261117-2242.csv"
+    "pohrana": 7,
+    "datoteka": "/cjenik/kuca_norsic-selo-52b-10430-samobor_001_7_20261118-2149.csv"
   }
 }
