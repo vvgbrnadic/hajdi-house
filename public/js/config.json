@@ -1,7 +1,7 @@
 {
   "site": {
     "name": "Hajdi House",
-    "domain": "www.hajdihouse.hr"
+    "domain": "hajdihouse.hr"
   },
   "colors": {
     "background": "#f2ece0",
@@ -285,7 +285,11 @@
       "Posebni oblik": "Special form",
       "Preuzmi cjenik (CSV)": "Download price list (CSV)",
       "Uz važeću cijenu istaknuta je sidrena cijena s danom 10. 9. 2026., sukladno NN 101/2026.": "The anchor price from 10 September 2026 is shown next to the current price, in line with NN 101/2026.",
-      "Cijena": "Price"
+      "Cijena": "Price",
+      "Kuća za odmor Žumberak — Hajdi House, Noršić Selo": "Holiday house Žumberak — Hajdi House, Noršić Selo",
+      "Drvena kuća za odmor do 4 gosta u Noršić Selu, Žumberak, 40 minuta od Zagreba. Cijela kuća, noćenje od 100 €.": "A wooden holiday house for up to 4 guests in Noršić Selo, Žumberak, 40 minutes from Zagreb. The whole house, from €100 a night.",
+      "Kuća za odmor Hajdi House na Žumberku": "Hajdi House holiday home in Žumberak",
+      "Unutrašnjost kuće Hajdi House": "Inside Hajdi House"
     },
     "DE": {
       "Hajdi House — Kuća na brdu": "Hajdi House — Haus auf dem Hügel",
@@ -376,7 +380,11 @@
       "Posebni oblik": "Sonderform",
       "Preuzmi cjenik (CSV)": "Preisliste herunterladen (CSV)",
       "Uz važeću cijenu istaknuta je sidrena cijena s danom 10. 9. 2026., sukladno NN 101/2026.": "Neben dem aktuellen Preis steht der Ankerpreis vom 10. 9. 2026., gemäß NN 101/2026.",
-      "Cijena": "Preis"
+      "Cijena": "Preis",
+      "Kuća za odmor Žumberak — Hajdi House, Noršić Selo": "Ferienhaus Žumberak — Hajdi House, Noršić Selo",
+      "Drvena kuća za odmor do 4 gosta u Noršić Selu, Žumberak, 40 minuta od Zagreba. Cijela kuća, noćenje od 100 €.": "Hölzernes Ferienhaus für bis zu 4 Gäste in Noršić Selo, Žumberak, 40 Minuten von Zagreb. Das ganze Haus, ab 100 € pro Nacht.",
+      "Kuća za odmor Hajdi House na Žumberku": "Ferienhaus Hajdi House im Žumberak",
+      "Unutrašnjost kuće Hajdi House": "Im Inneren von Hajdi House"
     },
     "IT": {
       "Hajdi House — Kuća na brdu": "Hajdi House — Casa sulla collina",
@@ -467,7 +475,11 @@
       "Posebni oblik": "Forma speciale",
       "Preuzmi cjenik (CSV)": "Scarica il listino (CSV)",
       "Uz važeću cijenu istaknuta je sidrena cijena s danom 10. 9. 2026., sukladno NN 101/2026.": "Accanto al prezzo attuale è indicato il prezzo di riferimento del 10. 9. 2026., ai sensi della NN 101/2026.",
-      "Cijena": "Prezzo"
+      "Cijena": "Prezzo",
+      "Kuća za odmor Žumberak — Hajdi House, Noršić Selo": "Casa vacanze Žumberak — Hajdi House, Noršić Selo",
+      "Drvena kuća za odmor do 4 gosta u Noršić Selu, Žumberak, 40 minuta od Zagreba. Cijela kuća, noćenje od 100 €.": "Casa di legno per fino a 4 ospiti a Noršić Selo, Žumberak, a 40 minuti da Zagabria. Tutta la casa, da 100 € a notte.",
+      "Kuća za odmor Hajdi House na Žumberku": "Casa vacanze Hajdi House sullo Žumberak",
+      "Unutrašnjost kuće Hajdi House": "Interno di Hajdi House"
     },
     "SL": {
       "Hajdi House — Kuća na brdu": "Hajdi House — Hiša na hribu",
@@ -558,7 +570,11 @@
       "Posebni oblik": "Posebna oblika",
       "Preuzmi cjenik (CSV)": "Prenesi cenik (CSV)",
       "Uz važeću cijenu istaknuta je sidrena cijena s danom 10. 9. 2026., sukladno NN 101/2026.": "Ob veljavni ceni je navedena sidrna cena z dne 10. 9. 2026, skladno z NN 101/2026.",
-      "Cijena": "Cena"
+      "Cijena": "Cena",
+      "Kuća za odmor Žumberak — Hajdi House, Noršić Selo": "Počitniška hiša Žumberak — Hajdi House, Noršić Selo",
+      "Drvena kuća za odmor do 4 gosta u Noršić Selu, Žumberak, 40 minuta od Zagreba. Cijela kuća, noćenje od 100 €.": "Lesena počitniška hiša za do 4 goste v Noršić Selu na Žumberku, 40 minut od Zagreba. Cela hiša, od 100 € na noč.",
+      "Kuća za odmor Hajdi House na Žumberku": "Počitniška hiša Hajdi House na Žumberku",
+      "Unutrašnjost kuće Hajdi House": "Notranjost hiše Hajdi House"
     }
   },
   "features": [
@@ -649,8 +665,8 @@
     "galleryTitle": "Galerija"
   },
   "seo": {
-    "title": "Hajdi House — Kuća na brdu",
-    "description": "Drvena kuća za dušu, na rubu šume. Bez buke, bez žurbe. Samo vatra, knjiga i pogled koji ne staje."
+    "title": "Kuća za odmor Žumberak — Hajdi House, Noršić Selo",
+    "description": "Drvena kuća za odmor do 4 gosta u Noršić Selu, Žumberak, 40 minuta od Zagreba. Cijela kuća, noćenje od 100 €."
   },
   "cjenik": {
     "datumSidrene": "10.09.2026",
