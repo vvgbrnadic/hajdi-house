@@ -36,6 +36,10 @@ export default async (req) => {
     return Response.json(publicView(data));
   }
   if (req.method !== "POST") return new Response("Metoda nije podržana", { status: 405 });
+  const ua = String(req.headers.get("user-agent") || "");
+  if (ua.length < 12 || /bot|crawl|spider|slurp|preview|headless|lighthouse|pagespeed|wget|curl|python-requests|go-http|facebookexternalhit|embedly|whatsapp|telegrambot|applebot|bingpreview|petalbot|semrush|ahrefs|mj12bot|dotbot|yandex|duckduckbot|baiduspider/i.test(ua)) {
+    return Response.json({ ok: true, skipped: "bot" });
+  }
   let body = {};
   try { body = await req.json(); } catch (e) { body = {}; }
   const id = String(body.id || "").slice(0, 80);
