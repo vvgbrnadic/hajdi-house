@@ -440,6 +440,28 @@ function closeLightbox(){const box=document.getElementById('lightbox'); if(!box)
 document.getElementById('lightbox').addEventListener('click', (e)=>{ if(e.target.id==='lightbox'||e.target.id==='lightboxClose') closeLightbox(); });
 document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeLightbox(); });
 loadConfig().then(cfg=>{ if(cfg) apply(cfg); else try{ lucide.createIcons(); }catch(e){} });
+(function(){
+  if (new URLSearchParams(location.search).has('cmspreview')) return;
+  let id = '';
+  try { id = localStorage.getItem('hajdi_vid') || ''; if (!id) { id = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())); localStorage.setItem('hajdi_vid', id); } } catch (e) { return; }
+  const start = Date.now();
+  let counted = 0;
+  function send(view){
+    const total = Math.min(1800, Math.round((Date.now() - start) / 1000));
+    const seconds = Math.max(0, total - counted);
+    if (!view && seconds < 1) return;
+    counted = total;
+    const payload = JSON.stringify({ id: id, seconds: seconds, view: view === true });
+    try {
+      if (navigator.sendBeacon) navigator.sendBeacon('/api/posjete', new Blob([payload], { type: 'application/json' }));
+      else fetch('/api/posjete', { method: 'POST', headers: { 'content-type': 'application/json' }, body: payload, keepalive: true });
+    } catch (e) {}
+  }
+  send(true);
+  setInterval(function(){ if (document.visibilityState === 'visible') send(false); }, 15000);
+  document.addEventListener('visibilitychange', function(){ if (document.visibilityState === 'hidden') send(false); });
+  window.addEventListener('pagehide', function(){ send(false); });
+})();
 </script>
 </body>
 </html>
