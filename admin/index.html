@@ -95,7 +95,20 @@ function clearLogo(){config.header.logoImage=''; saveCfg(config); render();}
 function uploadLogo(e){const f=e.target.files&&e.target.files[0]; if(!f) return; storeUploadedImage(f,'logo').then(saved=>useUploaded(saved, url=>{config.header.logoImage=url;})).catch(err=>log('Upload error '+err.message));}
 function updateGal(i,v){if(config.gallery[i].image!==undefined) config.gallery[i].image=v; else config.gallery[i]=v; saveCfg(config); reloadPreview();}
 function addGal(){config.gallery.push({image:''}); saveCfg(config); render();}
-function removeGal(i){config.gallery.splice(i,1); saveCfg(config); render();}
+let gallerySave=Promise.resolve();
+function removeGal(i){
+  config.gallery.splice(i,1);
+  saveCfg(config);
+  render();
+  gallerySave=gallerySave.then(function(){return publishConfig('Hajdi: maknuta slika iz galerije');}).catch(function(e){log('Error '+e.message);});
+}
+async function publishConfig(message){
+  if(!cleanToken(gitCfg.token)){log('Slika je maknuta samo u ovom pregledniku. Na kartici Git Commit upiši token i stisni Commit, inače se vrati čim osvježiš admin.'); return;}
+  const text=JSON.stringify(config,null,2);
+  const putJ=await putGitFiles(configGitFiles(text), message+' '+new Date().toISOString());
+  log('✅ Slika je maknuta sa stranice '+(putJ.commit&&putJ.commit.sha?putJ.commit.sha.slice(0,7):''));
+  triggerDeploy();
+}
 function uploadGal(e){const files=[...e.target.files]; (async()=>{for(const f of files){try{const saved=await storeUploadedImage(f,'gallery'); await useUploaded(saved, url=>{config.gallery.push({image:url});});}catch(err){log('Upload error '+err.message);}}})();}
 function updatePrice(i,k,v){config.pricing[i][k]=v; saveCfg(config); reloadPreview();}
 function addPrice(){config.pricing.push({id:Date.now().toString(),naziv:'Nova usluga',cijena:'50€',jedinica:'/ noć',opis:'Opis',aktivno:true,sidrena:'50.00',posebniOblik:'NE',nazivPosebnog:''}); saveCfg(config); render();}
